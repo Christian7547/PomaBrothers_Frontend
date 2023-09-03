@@ -7,7 +7,7 @@
         public string Phone { get; set; } = null!;
         public string Manager { get; set; } = null!;
         public string Address { get; set; } = null!;
-        public string IdSupplier { get; set; } = null!;
+        public string Ci { get; set; } = null!;
         public DateTime RegisterDate { get; set; }
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
     }
