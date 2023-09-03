@@ -22,6 +22,7 @@ namespace PomaBrothers_Frontend.Controllers
         {
             var getItems = await GetItemsAsync();
             var getModels = await GetModelsAsync();
+            var getCategories = await GetCategoriesAsync();
             var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
                 (i, m) => new
                 {
@@ -34,6 +35,7 @@ namespace PomaBrothers_Frontend.Controllers
                     ModelID = m.Id
                 }).ToList();
             ViewBag.Data = query;
+            ViewBag.Category = getCategories;
             return View();
         }
 
@@ -138,6 +140,14 @@ namespace PomaBrothers_Frontend.Controllers
                 return JsonConvert.DeserializeObject<List<Category>>(serializeList);
             }
             return null!;
+        }
+
+        public async Task<List<Item>> GetItemsByCategoryAsync([FromQuery]int id)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"Item/FilterByCategory/{id}");
+            request.EnsureSuccessStatusCode();
+            var serializeList = request.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<List<Item>>(serializeList);
         }
         #endregion
     }
