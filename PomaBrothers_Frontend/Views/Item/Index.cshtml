@@ -1,0 +1,217 @@
+﻿@{
+    ViewData["Title"] = "Productos";
+}
+
+<h1>Productos</h1>
+<hr />
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var item in ViewBag.Data)
+    {
+        <div class="col">
+            <div class="card mb-3 border-success" style="max-width: 640px;">
+                <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        @* <img src="..." class="img-fluid rounded-start" alt="..."> *@
+                    </div>
+                    <div class="col-md-8"> 
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body">
+                                    <p>
+                                        <label class="text-sm fw-bold">Marca:</label>
+                                        <label class="text-sm">@item._Marker</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Precio($us):</label>
+                                        <label class="text-sm">@item._Price</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Color:</label>
+                                        <label class="text-sm">@item._Color</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Serie:</label>
+                                        <label class="text-sm">@item._Serie</label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-end">
+                                    <button type="button" 
+                                        onclick="showDetails(@item.ItemID)"
+                                        data-id="@item.ItemID"
+                                        data-toggle="modal"
+                                        data-target="#detailsModal"
+                                        class="btn btn-success w-100 mb-2">
+                                        Ver detalles
+                                    </button>
+                                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <button type="button"
+                                            data-id="@item.ItemID"
+                                            data-toggle="modal"
+                                            data-target="#deleteModal"
+                                            class="btn btn-danger w-100">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*Modal for delete*@
+<div class="modal" id="deleteModal">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar acción</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Desea eliminar el registro?</p>
+                <input id="logId" type="hidden"/>
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar"/>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*---------------------------*@
+
+@*Modal for details*@
+<div class="modal" id="detailsModal">
+    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Detalles del producto</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        <label for="lblName" class="fw-bold">Nombre:</label>
+                        <label id="lblName"></label>
+                    </p>
+                    <p>
+                        <label for="lblModel" class="fw-bold">Modelo:</label>
+                        <label id="lblModel"></label>
+                    </p>
+                    <p>
+                        <label for="lblMarker" class="fw-bold">Marca:</label>
+                        <label id="lblMarker"></label>
+                    </p>
+                    <p>
+                        <label for="lblSerie" class="fw-bold">Serie:</label>
+                        <label id="lblSerie"></label>
+                    </p>
+                    <p>
+                        <label for="lblDescription" class="fw-bold">Descripción:</label>
+                        <label id="lblDescription"></label>
+                    </p>
+                    <p>
+                        <label for="lblColor" class="fw-bold">Color:</label>
+                        <label id="lblColor"></label>
+                    </p>
+                    <p>
+                        <label for="lblPrice" class="fw-bold">Precio:</label>
+                        <label id="lblPrice"></label>
+                    </p>
+                    <p>
+                        <label for="lblWarranty" class="fw-bold">Garantía:</label>
+                        <label id="lblWarranty"></label>
+                    </p>
+                    <p>
+                        <label for="lblCapacity" id="lblInfo" class="fw-bold"></label>
+                        <label id="lblCapacity"></label>
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger w-100" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const txtId = document.getElementById('logId');
+
+        const lblName = document.getElementById('lblName');
+        const lblModel = document.getElementById('lblModel');
+        const lblMarker = document.getElementById('lblMarker');
+        const lblSerie = document.getElementById('lblSerie');
+        const lblDescription = document.getElementById('lblDescription');
+        const lblColor = document.getElementById('lblColor');
+        const lblPrice = document.getElementById('lblPrice');
+        const lblWarranty = document.getElementById('lblWarranty');
+        const lblInfo = document.getElementById('lblInfo');
+        const lblCapacity = document.getElementById('lblCapacity');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+            btnsDelete.forEach((button) => {
+                button.addEventListener('click', () => {
+                    var id = button.getAttribute('data-id');  
+                    txtId.value = id;
+                    console.log(id);
+                });
+            });
+        });
+
+        function showDetails(id){
+            fetch(`/Item/GetItem?id=${id}`)
+            .then(response => {
+                if(response.ok){
+                    return response.json();
+                }
+                else{
+                    console.error(response);
+                }
+            })
+            .then(data => {
+                lblName.textContent = data.name;
+                lblMarker.textContent = data.itemModel.marker;
+                lblModel.textContent = data.itemModel.modelName;
+                lblSerie.textContent = data.serie;
+                lblDescription.textContent = data.description;
+                lblColor.textContent = data.color;
+                lblPrice.textContent = `${data.price} $`;
+                lblWarranty.textContent = `${data.warranty} Año`;
+                lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                if(data.itemModel.id != 1){
+                    lblInfo.textContent = 'Capacidad: ';
+                }
+                else{
+                    lblInfo.textContent = 'Pantalla: ';
+                }
+            })
+            .catch(error => console.log(error))
+        }
+
+        function confirmDelete(){
+            const id = txtId.value;
+            fetch(`/Item/Delete?id=${id}`)
+            .then(response => {
+                if(response.ok){
+                    document.getElementById('deleteModal').style.display = 'none';
+                    location.reload();
+                }
+                else{
+                    console.log("Internal server error");
+                }
+            })
+            .catch(error => console.error(error))
+        }
+    </script>
+}
