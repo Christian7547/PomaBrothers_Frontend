@@ -142,7 +142,7 @@ namespace PomaBrothers_Frontend.Controllers
             return null!;
         }
 
-        public async Task<List<Item>> GetItemsByCategoryAsync([FromQuery]int id)
+        public async Task<List<Item>> GetItemsByCategory([FromQuery]int id)
         {
             HttpResponseMessage request = await httpClient.GetAsync($"Item/FilterByCategory/{id}");
             request.EnsureSuccessStatusCode();

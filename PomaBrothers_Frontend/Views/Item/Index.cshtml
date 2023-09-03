@@ -251,7 +251,7 @@
             cmb.addEventListener('change', () => {
                 console.log(cmb.value);
                 if (cmb.value != '0') {
-                    fetch(`/Item/GetItemsByCategoryAsync?id=${cmb.value}`)
+                    fetch(`/Item/GetItemsByCategory?id=${cmb.value}`)
                     .then(response => {
                         if (response.ok) {
                             return response.json();
