@@ -159,7 +159,14 @@
                             <label id="lblPrice"></label>
                         </div>
                         <div class="mt-1">
-                            <label id="lblWarranty"></label>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label id="lblWarranty"></label>
+                                </div>
+                                <div class="col-md-10">
+                                    <label id="lblTypeWarranty"></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-1">
                             <label id="lblCapacity"></label>
@@ -186,6 +193,7 @@
         const lblColor = document.getElementById('lblColor');
         const lblPrice = document.getElementById('lblPrice');
         const lblWarranty = document.getElementById('lblWarranty');
+        const lblTypeWarranty = document.getElementById('lblTypeWarranty');
         const lblInfo = document.getElementById('lblInfo');
         const lblCapacity = document.getElementById('lblCapacity');
 
@@ -220,7 +228,8 @@
                 lblDescription.textContent = data.description;
                 lblColor.textContent = data.color;
                 lblPrice.textContent = `${data.price} Bs.`;
-                lblWarranty.textContent = `${data.warranty} Años`;
+                lblWarranty.textContent = data.durationWarranty;
+                lblTypeWarranty.textContent = data.typeWarranty;
                 lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
                 if(data.itemModel.id != 1){
                     lblInfo.textContent = 'Capacidad: ';
@@ -251,7 +260,7 @@
             cmb.addEventListener('change', () => {
                 console.log(cmb.value);
                 if (cmb.value != '0') {
-                    fetch(`/Item/GetItemsByCategoryAsync?id=${cmb.value}`)
+                    fetch(`/Item/GetItemsByCategory?id=${cmb.value}`)
                     .then(response => {
                         if (response.ok) {
                             return response.json();

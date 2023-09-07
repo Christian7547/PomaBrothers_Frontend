@@ -6,23 +6,15 @@
 
 <h1>Actualizar</h1>
 <h4>Producto</h4>
-
 <hr />
-
 <form asp-action="Edit">
     <div class="row">
         <div class="col-md-4">
             <input asp-for="Id" type="hidden"/>
-            <input asp-for="ItemModel.Id" type="hidden"/>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemModel.ModelName" class="control-label"></label>
-                <input asp-for="ItemModel.ModelName" class="form-control" />
-                <span asp-validation-for="ItemModel.ModelName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Serie" class="control-label"></label>
@@ -34,7 +26,19 @@
                 <textarea asp-for="Description" rows="8" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Modelo:</label>
+                <div class="row">
+                    <div class="col">
+                        <input class="form-control" id="txtSearchModel" />
+                        <ul id="showModels"></ul>
+                        <input asp-for="ModelId" id="txtModelId" hidden/>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -47,14 +51,18 @@
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ItemModel.Marker" class="control-label"></label>
-                <input asp-for="ItemModel.Marker" class="form-control" />
-                <span asp-validation-for="ItemModel.Marker" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Warranty" class="control-label"></label>
-                <input asp-for="Warranty" class="form-control" />
-                <span asp-validation-for="Warranty" class="text-danger"></span>
+                <label asp-for="DurationWarranty" class="control-label"></label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input asp-for="DurationWarranty" class="form-control" />
+                    </div>
+                    <div class="col-md-8">
+                        <select asp-for="TypeWarranty" class="form-control">
+                            <option>Años</option>
+                            <option>Meses</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
@@ -65,21 +73,6 @@
                     }
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group" id="fieldCapacity">
-                <label asp-for="ItemModel.CapacityOrSize" class="control-label"></label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <input asp-for="ItemModel.CapacityOrSize" class="form-control" />
-                    </div>
-                    <div class="col-md-8">
-                        <select asp-for="ItemModel.MeasurementUnit" class="form-control">
-                            <option>Kilogramos</option>
-                            <option>Pulgadas</option>
-                            <option>Litros</option>
-                        </select>
-                    </div>
-                </div>
             </div>
             <br />
             <div class="form-group">
@@ -94,4 +87,48 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        const txtSearchModel = document.getElementById('txtSearchModel');
+        const showModels = document.getElementById('showModels');
+        const txtModelId = document.getElementById('txtModelId');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadModel(txtModelId.value);
+            txtSearchModel.addEventListener('input', () => {
+                showModels.style.display = 'block';
+                searchModel(txtSearchModel.value);
+            });
+        });
+
+        function searchModel(model){
+            fetch(`/Item/SearchModel?searchModel=${model}`)
+            .then(response => response.json())
+            .then(data => {
+                showModels.innerHTML = '';
+                data.forEach(model => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.style.cursor = 'pointer';
+                    li.textContent = model.modelName + ' - ' + model.marker;
+
+                    li.addEventListener('click', () => {
+                        showModels.style.display = 'none';
+                        txtSearchModel.value = li.textContent;
+                        txtModelId.value = model.id;
+                    });
+                    showModels.appendChild(li);
+                });
+            })
+            .catch(error => console.log(error))
+        }
+
+        function loadModel(id){
+            fetch(`/Item/GetModel?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                txtSearchModel.value = data.modelName + ' - ' + data.marker;
+            })
+            .catch(error => console.error(error))
+        }
+    </script>
 }
