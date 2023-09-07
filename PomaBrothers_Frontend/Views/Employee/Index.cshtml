@@ -1,75 +1,114 @@
-﻿@model Employee
-
-@{
-    ViewData["Title"] = "Añadir Empleado";
+﻿@{
+    ViewData["Title"] = "Empleados";
 }
 
-<h1>Añadir Empleado</h1>
-
-<h4>Empleado</h4>
-<hr />
-
-<form asp-action="Create">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<h1>Empleados</h1>
+<div class="row">
+    <div class="col-md-9">
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="fw-bold form-label">Filtrar por:</label>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SecondLastName" class="control-label"></label>
-                <input asp-for="SecondLastName" class="form-control" />
-                <span asp-validation-for="SecondLastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ci" class="control-label"></label>
-                <input asp-for="Ci" class="form-control" />
-                <span asp-validation-for="Ci" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="User" class="control-label"></label>
-                <input asp-for="User" class="form-control" />
-                <span asp-validation-for="User" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RegisterDate" class="control-label"></label>
-                <input asp-for="RegisterDate" type="datetime-local" class="form-control" />
-                <span asp-validation-for="RegisterDate" class="text-danger"></span>
-            </div>
-            <!-- Puedes agregar más campos según sea necesario -->
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-success w-25" />
-                <a asp-action="Index" class="btn btn-success w-25">Volver</a>
+            <div class="col">
+                <!-- Puedes agregar opciones de filtrado si es necesario -->
             </div>
         </div>
     </div>
-</form>
+</div>
+<hr />
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var employee in ViewBag.Data)
+    {
+        <div class="col">
+            <div class="card mb-3 border-success" style="max-width: 640px;">
+                <div class="card-header bg-transparent border-light fw-bold">@employee.Name @employee.LastName</div>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://via.placeholder.com/150" alt="Employee Image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body">
+                                    <p>
+                                        <label class="text-sm fw-bold">Cédula:</label>
+                                        <label class="text-sm">@employee.Ci</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Teléfono:</label>
+                                        <label class="text-sm">@employee.Phone</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Usuario:</label>
+                                        <label class="text-sm">@employee.User</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Rol:</label>
+                                        <label class="text-sm">@employee.Role</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Fecha de Registro:</label>
+                                        <label class="text-sm">@employee.RegisterDate.ToString("dd/MM/yyyy")</label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-end">
+                                    <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <button type="button"
+                                            data-id="@employee.Id"
+                                            data-toggle="modal"
+                                            data-target="#deleteModal"
+                                            class="btn btn-danger w-100">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Modal for delete -->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar acción</h4>
+            </div>
+            <div class="modal-body">
+                <p>Desea eliminar el registro?</p>
+                <input id="employeeId" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script>
+        const employeeId = document.getElementById('employeeId');
+
+        var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+        btnsDelete.forEach((button) => {
+            button.addEventListener('click', () => {
+                var id = button.getAttribute('data-id');
+                employeeId.value = id;
+            });
+        });
+
+        function confirmDelete() {
+            const id = employeeId.value;
+            // Puedes llamar a la función JavaScript correspondiente para eliminar el registro de Employee aquí
+            // Por ejemplo, puedes usar fetch para enviar una solicitud DELETE a tu API
+        }
+    </script>
 }
