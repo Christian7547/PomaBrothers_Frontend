@@ -75,7 +75,7 @@ namespace PomaBrothers_Frontend.Controllers
             ViewBag.Data = await GetCategoriesAsync();
             return View(item);
         }
-        #region Modify Item
+
         [HttpPost]
         public async Task<IActionResult> Edit(Item item)
         {
@@ -91,15 +91,6 @@ namespace PomaBrothers_Frontend.Controllers
             }
         }
 
-        public async Task<ActionResult> GetModel(int id)
-        {
-            HttpResponseMessage request = await httpClient.GetAsync($"ItemModel/GetOne/{id}");
-            request.EnsureSuccessStatusCode();
-            var serializeModel = request.Content.ReadAsStringAsync().Result;
-            var getModel = JsonConvert.DeserializeObject<ItemModel>(serializeModel);
-            return Json(getModel);
-        }
-        #endregion
         public async Task<Item> GetItemAsync(int id) //Get One
         {
             HttpResponseMessage request = await httpClient.GetAsync($"Item/GetOne/{id}");
@@ -132,7 +123,7 @@ namespace PomaBrothers_Frontend.Controllers
             return NoContent();
         }
 
-        #region GetInfo
+        #region Get Models
         public async Task<List<ItemModel>> GetModelsAsync()
         {
             HttpResponseMessage request = await httpClient.GetAsync("ItemModel/GetMany");
@@ -144,6 +135,18 @@ namespace PomaBrothers_Frontend.Controllers
             return null!;
         }
 
+        public async Task<ActionResult> GetModel(int id)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"ItemModel/GetOne/{id}");
+            request.EnsureSuccessStatusCode();
+            var serializeModel = request.Content.ReadAsStringAsync().Result;
+            var getModel = JsonConvert.DeserializeObject<ItemModel>(serializeModel);
+            return Json(getModel);
+        }
+
+        #endregion
+
+        #region Filters & Browser
         public async Task<List<Category>> GetCategoriesAsync()
         {
             HttpResponseMessage request = await httpClient.GetAsync("Category/GetMany");
@@ -157,10 +160,19 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<List<Item>> GetItemsByCategory([FromQuery]int id)
         {
+            List<Item> items = new();
             HttpResponseMessage request = await httpClient.GetAsync($"Item/FilterByCategory/{id}");
             request.EnsureSuccessStatusCode();
             var serializeList = request.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<List<Item>>(serializeList);
+            var filterItems = JsonConvert.DeserializeObject<List<Item>>(serializeList);
+            var getModels = await GetModelsAsync();
+            foreach (Item item in filterItems)
+            {
+                var model = getModels.Find(x => x.Id == item.ModelId);
+                item.ItemModel = model!;
+                items.Add(item);
+            }
+            return items;
         }
 
         public async Task<ActionResult> SearchModel(string searchModel)
