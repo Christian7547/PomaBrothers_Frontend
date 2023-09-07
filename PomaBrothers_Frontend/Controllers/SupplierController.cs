@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
+using System.Reflection;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -19,7 +20,16 @@ namespace PomaBrothers_Frontend.Controllers
         public async Task<ActionResult> Index()
         {
             var getSupplier = await GetSupplierAsync();
-            var query= getSupplier.ToList();    
+            var query = getSupplier.Select(item => new
+            {
+                _BussinesName = item.BussinesName,
+                _Manager = item.Manager,
+                _Phone = item.Phone,
+                _Ci = item.Ci,
+                _Address = item.Address,
+                SupID = item.Id
+            }).ToList();
+
             ViewBag.Data = query;
             return View();
         }
@@ -98,9 +108,18 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            HttpResponseMessage request = await httpClient.DeleteAsync($"Supplier/RemoveSupplier/{id}");
-            request.EnsureSuccessStatusCode();
-            return NoContent();
+            try
+            {
+                HttpResponseMessage request = await httpClient.DeleteAsync($"Supplier/RemoveSupplier/{id}");
+                request.EnsureSuccessStatusCode();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

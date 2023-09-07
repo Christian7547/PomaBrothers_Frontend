@@ -8,7 +8,7 @@
     {
         <div class="col">
             <div class="card mb-3 border-success" style="max-width: 640px;">
-                <div class="card-header bg-transparent border-light fw-bold">@item.BussinesName</div>
+                <div class="card-header bg-transparent border-light fw-bold">@item._BussinesName</div>
                 <div class="row g-0">
                     <div class="col-md-8">
                         <div class="row">
@@ -16,19 +16,19 @@
                                 <div class="card-body">
                                     <p>
                                         <label class="text-sm fw-bold">Teléfono:</label>
-                                        <label class="text-sm">@item.Phone</label>
+                                        <label class="text-sm">@item._Phone</label>
                                     </p>
                                     <p>
                                         <label class="text-sm fw-bold">Encargado:</label>
-                                        <label class="text-sm">@item.Manager</label>
+                                        <label class="text-sm">@item._Manager</label>
                                     </p>
                                     <p>
                                         <label class="text-sm fw-bold">CI:</label>
-                                        <label class="text-sm">@item.Ci</label>
+                                        <label class="text-sm">@item._Ci</label>
                                     </p>
                                     <p>
                                         <label class="text-sm fw-bold">Dirección:</label>
-                                        <label class="text-sm">@item.Address</label>
+                                        <label class="text-sm">@item._Address</label>
                                     </p>
                                     
                                 </div>
@@ -36,16 +36,16 @@
                             <div class="col d-flex align-items-center justify-content-center">
                                 <div class="d-flex flex-column align-items-end">
                                     <button type="button"
-                                            onclick="showDetails(@item.Id)"
-                                            data-id="@item.Id"
+                                            onclick="showDetails(@item.SupID)"
+                                            data-id="@item.SupID"
                                             data-toggle="modal"
                                             data-target="#detailsModal"
                                             class="btn btn-success w-100 mb-2">
                                         Ver detalles
                                     </button>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <a asp-action="Edit" asp-route-id="@item.SupID" class="btn btn-success w-100 mb-2">Actualizar</a>
                                     <button type="button"
-                                            data-id="@item.Id"
+                                            data-id="@item.SupID"
                                             data-toggle="modal"
                                             data-target="#deleteModal"
                                             class="btn btn-danger w-100">
@@ -76,7 +76,7 @@
             </div>
 
             <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <input type="submit" id="btnDeleteS" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
