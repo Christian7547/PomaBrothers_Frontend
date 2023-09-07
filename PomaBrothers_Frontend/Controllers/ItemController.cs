@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
-using System.Net;
 using System.Net.Http.Headers;
 
 namespace PomaBrothers_Frontend.Controllers
@@ -39,7 +37,7 @@ namespace PomaBrothers_Frontend.Controllers
             return View();
         }
 
-        public async Task<List<Item>> GetItemsAsync()
+        public async Task<List<Item>> GetItemsAsync() //Get All
         {
             HttpResponseMessage request = await httpClient.GetAsync("Item/GetMany");
             if (request.IsSuccessStatusCode)
@@ -77,13 +75,12 @@ namespace PomaBrothers_Frontend.Controllers
             ViewBag.Data = await GetCategoriesAsync();
             return View(item);
         }
-
+        #region Modify Item
         [HttpPost]
         public async Task<IActionResult> Edit(Item item)
         {
             try
             {
-                item.ModelId = item.ItemModel.Id;
                 HttpResponseMessage request = await httpClient.PutAsJsonAsync("Item/Edit", item);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Item");
@@ -94,19 +91,35 @@ namespace PomaBrothers_Frontend.Controllers
             }
         }
 
-        public async Task<Item> GetItemAsync(int id)
+        public async Task<ActionResult> GetModel(int id)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"ItemModel/GetOne/{id}");
+            request.EnsureSuccessStatusCode();
+            var serializeModel = request.Content.ReadAsStringAsync().Result;
+            var getModel = JsonConvert.DeserializeObject<ItemModel>(serializeModel);
+            return Json(getModel);
+        }
+        #endregion
+        public async Task<Item> GetItemAsync(int id) //Get One
         {
             HttpResponseMessage request = await httpClient.GetAsync($"Item/GetOne/{id}");
             if (request.IsSuccessStatusCode)
             {
-                var serializeObject = request.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Item>(serializeObject);
+                var serializeItem = request.Content.ReadAsStringAsync().Result;
+                var getItem =  JsonConvert.DeserializeObject<Item>(serializeItem);
+
+                HttpResponseMessage getModel = await httpClient.GetAsync($"ItemModel/GetOne/{getItem.ModelId}");
+                var serializeModel = getModel.Content.ReadAsStringAsync().Result;
+                var deserializeModel = JsonConvert.DeserializeObject<ItemModel>(serializeModel);
+
+                getItem.ItemModel = deserializeModel;
+                return getItem;
             }
             return null!;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Item>> GetItem([FromQuery]int id)
+        public async Task<ActionResult<Item>> GetItem([FromQuery]int id) //This method obtains the id from the interface to send it to the method that connects to the API
         {
             var item = await GetItemAsync(id);
             return Ok(item);
@@ -122,7 +135,7 @@ namespace PomaBrothers_Frontend.Controllers
         #region GetInfo
         public async Task<List<ItemModel>> GetModelsAsync()
         {
-            HttpResponseMessage request = await httpClient.GetAsync("Item/GetModels");
+            HttpResponseMessage request = await httpClient.GetAsync("ItemModel/GetMany");
             if (request.IsSuccessStatusCode)
             {
                 var serializeList = request.Content.ReadAsStringAsync().Result;
@@ -148,6 +161,14 @@ namespace PomaBrothers_Frontend.Controllers
             request.EnsureSuccessStatusCode();
             var serializeList = request.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Item>>(serializeList);
+        }
+
+        public async Task<ActionResult> SearchModel(string searchModel)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"ItemModel/SearchModel/{searchModel}");
+            var serializeList = request.Content.ReadAsStringAsync().Result;
+            List<ItemModel> list = JsonConvert.DeserializeObject<List<ItemModel>>(serializeList);
+            return Json(list);
         }
         #endregion
     }
