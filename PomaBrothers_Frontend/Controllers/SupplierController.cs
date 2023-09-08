@@ -22,12 +22,13 @@ namespace PomaBrothers_Frontend.Controllers
             var getSupplier = await GetSupplierAsync();
             var query = getSupplier.Select(item => new
             {
+                _SupID = item.Id,
                 _BussinesName = item.BussinesName,
                 _Manager = item.Manager,
                 _Phone = item.Phone,
                 _Ci = item.Ci,
-                _Address = item.Address,
-                SupID = item.Id
+                _Address = item.Address
+                
             }).ToList();
 
             ViewBag.Data = query;

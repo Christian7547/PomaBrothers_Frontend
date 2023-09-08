@@ -36,16 +36,16 @@
                             <div class="col d-flex align-items-center justify-content-center">
                                 <div class="d-flex flex-column align-items-end">
                                     <button type="button"
-                                            onclick="showDetails(@item.SupID)"
-                                            data-id="@item.SupID"
+                                            onclick="showDetails(@item._SupID)"
+                                            data-id="@item._SupID"
                                             data-toggle="modal"
                                             data-target="#detailsModal"
                                             class="btn btn-success w-100 mb-2">
                                         Ver detalles
                                     </button>
-                                    <a asp-action="Edit" asp-route-id="@item.SupID" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <a asp-action="Edit" asp-route-id="@item._SupID" class="btn btn-success w-100 mb-2">Actualizar</a>
                                     <button type="button"
-                                            data-id="@item.SupID"
+                                            data-id="@item._SupID"
                                             data-toggle="modal"
                                             data-target="#deleteModal"
                                             class="btn btn-danger w-100">
@@ -72,11 +72,11 @@
 
             <div class="modal-body">
                 <p>Desea eliminar el registro?</p>
-                <input id="logId" type="hidden" />
+                <input id="IdS" type="hidden" />
             </div>
 
             <div class="modal-footer">
-                <input type="submit" id="btnDeleteS" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -95,16 +95,16 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mt-1">
-                            <label for="lblPhone" class="fw-bold">Teléfono:</label>
+                            <label for="lblphone" class="fw-bold">Teléfono:</label>
                         </div>
                         <div class="mt-1">
-                            <label for="lblManager" class="fw-bold">Encargado:</label>
+                            <label for="lblmanager" class="fw-bold">Encargado:</label>
                         </div>
                         <div class="mt-1">
-                            <label for="lblCi" class="fw-bold">CI:</label>
+                            <label for="lblci" class="fw-bold">CI:</label>
                         </div>
                         <div class="mt-1">
-                            <label for="lblAddress" class="fw-bold">Dirección:</label>
+                            <label for="lbladdress" class="fw-bold">Dirección:</label>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -132,7 +132,7 @@
 
 @section Scripts{
     <script>
-        const txtId = document.getElementById('logId');
+        const txtId = document.getElementById('IdS');
         const lblBussinesName = document.getElementById('lblBussinesName');
         const lblPhone = document.getElementById('lblPhone');
         const lblManager = document.getElementById('lblManager');
@@ -140,7 +140,6 @@
         const lblAddress = document.getElementById('lblAddress');
 
         document.addEventListener('DOMContentLoaded', () => {
-            filter();
             var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
             btnsDelete.forEach((button) => {
                 button.addEventListener('click', () => {
@@ -161,11 +160,11 @@
                     }
                 })
                 .then(data => {
-                    lblBussinesName.textContent = data.bussinesName;
-                    lblPhone.textContent = data.phone;
-                    lblManager.textContent = data.manager;
-                    lblCi.textContent = data.ci;
-                    lblAddress.textContent = data.address;
+                    lblBussinesName.textContent = data[0].bussinesName;
+                    lblPhone.textContent = data[0].phone;
+                    lblManager.textContent = data[0].manager;
+                    lblCi.textContent = data[0].ci;
+                    lblAddress.textContent = data[0].address;
                 })
                 .catch(error => console.log(error))
         }
