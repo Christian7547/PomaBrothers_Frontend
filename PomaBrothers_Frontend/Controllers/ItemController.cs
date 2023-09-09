@@ -72,6 +72,7 @@ namespace PomaBrothers_Frontend.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             Item item = await GetItemAsync(id);
+            ViewBag.Type = item.TypeWarranty;
             ViewBag.Data = await GetCategoriesAsync();
             return View(item);
         }

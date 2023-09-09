@@ -30,10 +30,13 @@
             <div class="form-group">
                 <label class="control-label">Modelo:</label>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-10">
                         <input class="form-control" id="txtSearchModel" placeholder="Buscar..."/>
                         <ul id="showModels"></ul>
                         <input asp-for="ModelId" id="txtModelId" hidden/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success fw-bold" type="button">+</button>
                     </div>
                 </div>
             </div>
@@ -54,12 +57,13 @@
                 <label asp-for="DurationWarranty" class="control-label"></label>
                 <div class="row">
                     <div class="col-md-4">
-                        <input asp-for="DurationWarranty" class="form-control" />
+                        <input asp-for="DurationWarranty" class="form-control" id="txtDurationWarranty" />
                     </div>
                     <div class="col-md-8">
-                        <select asp-for="TypeWarranty" class="form-control">
-                            <option>Años</option>
-                            <option>Meses</option>
+                        <select asp-for="TypeWarranty" class="form-control" id="cmbTypeWarranty">
+                            <option value="" selected disabled>@ViewBag.Type</option>
+                            <option value=""></option>
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>
@@ -92,12 +96,33 @@
         const showModels = document.getElementById('showModels');
         const txtModelId = document.getElementById('txtModelId');
 
+        const txtDurationWarranty = document.getElementById('txtDurationWarranty');
+        const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
+
         document.addEventListener('DOMContentLoaded', () => {
             loadModel(txtModelId.value);
             txtSearchModel.addEventListener('input', () => {
                 showModels.style.display = 'block';
                 searchModel(txtSearchModel.value);
             });
+        });
+
+        txtDurationWarranty.addEventListener('input', () => {
+            cmbTypeWarranty.options[0].text = 'Seleccione tipo de garantía';
+            if (txtDurationWarranty.value === '1') {
+                cmbTypeWarranty.options[1].text = 'Año';
+                cmbTypeWarranty.options[1].value = 'Año';
+
+                cmbTypeWarranty.options[2].text = 'Mes';
+                cmbTypeWarranty.options[2].value = 'Mes';
+            }
+            else {
+                cmbTypeWarranty.options[1].text = 'Años';
+                cmbTypeWarranty.options[1].value = 'Años';
+
+                cmbTypeWarranty.options[2].text = 'Meses';
+                cmbTypeWarranty.options[2].value = 'Meses';
+            }
         });
 
         function searchModel(model){
