@@ -231,7 +231,13 @@
                 lblPrice.textContent = `${data.price} Bs.`;
                 lblWarranty.textContent = data.durationWarranty;
                 lblTypeWarranty.textContent = data.typeWarranty;
-                lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null){
+                    lblInfo.style.display = 'none';
+                    lblCapacity.style.display = 'none';
+                }
+                else{
+                    lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                }
                 if(data.itemModel.id != 1){
                     lblInfo.textContent = 'Capacidad: ';
                 }

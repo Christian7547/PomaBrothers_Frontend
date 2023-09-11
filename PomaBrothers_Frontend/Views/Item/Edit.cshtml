@@ -31,12 +31,12 @@
                 <label class="control-label">Modelo:</label>
                 <div class="row">
                     <div class="col-md-10">
-                        <input class="form-control" id="txtSearchModel" placeholder="Buscar..."/>
+                        <input class="form-control" id="txtSearchModel" placeholder="Buscar..." />
                         <ul id="showModels"></ul>
-                        <input asp-for="ModelId" id="txtModelId" hidden/>
+                        <input asp-for="ModelId" id="txtModelId" hidden />
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success fw-bold" type="button">+</button>
+                        <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#editModel">+</button>
                     </div>
                 </div>
             </div>
@@ -87,6 +87,52 @@
     </div>
 </form>
 
+<div class="modal fade" id="editModel">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir modelo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtModel" class="col-form-label">Modelo:</label>
+                        <input type="text" class="form-control" id="txtModel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtMarker" class="col-form-label">Marca:</label>
+                        <input type="text" class="form-control" id="txtMarker">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity" />
+                            <label for="cbxCapacity" class="form-check-label">Añadir capacidades o tamaño</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="capacityDiv">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad" />
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control" id="cmbMeasurementUnit">
+                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                    <option value="Kilogramos">Kilogramos</option>
+                                    <option value="Pulgadas">Pulgadas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -99,12 +145,20 @@
         const txtDurationWarranty = document.getElementById('txtDurationWarranty');
         const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
 
+        const cbxCapacity = document.getElementById('cbxCapacity');
+        const txtModel = document.getElementById('txtModel');
+        const txtMarker = document.getElementById('txtMarker');
+        const txtCapacityOrSize = document.getElementById('txtCapacityOrSize');
+        const cmbMeasurementUnit = document.getElementById('cmbMeasurementUnit');
+        const capacityDiv = document.getElementById('capacityDiv');
+
         document.addEventListener('DOMContentLoaded', () => {
             loadModel(txtModelId.value);
             txtSearchModel.addEventListener('input', () => {
                 showModels.style.display = 'block';
                 searchModel(txtSearchModel.value);
             });
+            capacityDiv.style.display = 'none';
         });
 
         txtDurationWarranty.addEventListener('input', () => {
@@ -124,6 +178,41 @@
                 cmbTypeWarranty.options[2].value = 'Meses';
             }
         });
+
+        cbxCapacity.addEventListener('change', () => {
+            if (cbxCapacity.checked) {
+                capacityDiv.style.display = 'block';
+            }
+            else {
+                capacityDiv.style.display = 'none';
+            }
+        });
+
+        function addModel() {
+            const modal = document.getElementById('newModel');
+            let model = {
+                modelName: txtModel.value,
+                marker: txtMarker.value,
+                ...(txtCapacityOrSize.value && { capacityOrSize: txtCapacityOrSize.value }),
+                ...(cmbMeasurementUnit.value && { measurementUnit: cmbMeasurementUnit.value })
+            };
+
+            fetch('/ItemModel/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(model)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Modelo guardado correctamente');
+                    } else {
+                        console.log('Error de envío');
+                    }
+                })
+                .catch(error => console.error(error))
+        }
 
         function searchModel(model){
             fetch(`/Item/SearchModel?searchModel=${model}`)

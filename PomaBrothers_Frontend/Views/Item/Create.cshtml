@@ -128,7 +128,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" id="btnAdd" onclick="addModel()" class="btn btn-success" value="Añadir" />
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -193,8 +193,8 @@
             let model = {
                 modelName: txtModel.value,
                 marker: txtMarker.value,
-                capacityOrSize: txtCapacityOrSize.value,
-                measurementUnit: cmbMeasurementUnit.value
+                ...(txtCapacityOrSize.value && { capacityOrSize: txtCapacityOrSize.value }),
+                ...(cmbMeasurementUnit.value && { measurementUnit: cmbMeasurementUnit.value })
             };
 
             fetch('/ItemModel/Create', {
@@ -206,10 +206,7 @@
             })
             .then(response => {
                 if(response.ok){
-                    modal.classList.remove('show');
-                    modal.style.display = 'none';
-                    document.body.classList.remove('modal-open');
-                    document.body.style.paddingRight = '0';
+                    alert('Modelo guardado correctamente');
                 }else{
                     console.log('Error de envío');
                 }
