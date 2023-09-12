@@ -8,7 +8,8 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Color { get; set; }
-        public string Warranty { get; set; }
+        public byte DurationWarranty { get; set; }
+        public string TypeWarranty { get; set; }
         public int CategoryId { get; set; }
         public DateTime RegisterDate { get; set; }
         public int ModelId { get; set; }
