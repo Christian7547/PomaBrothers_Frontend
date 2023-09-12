@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: #5DDF64;
+}
+
+/* CSS personalizado para el efecto de transición de opacidad */
+.img-fade {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-inner .carousel-item:not(.active) .img-fade {
+    opacity: 0.5; /* Establece la opacidad deseada para las imágenes no activas */
+}
