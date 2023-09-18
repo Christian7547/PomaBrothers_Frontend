@@ -86,7 +86,7 @@
                 <input id="employeeId" type="hidden" />
             </div>
             <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" data-dismiss="modal" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -97,18 +97,26 @@
     <script>
         const employeeId = document.getElementById('employeeId');
 
-        var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
-        btnsDelete.forEach((button) => {
-            button.addEventListener('click', () => {
-                var id = button.getAttribute('data-id');
-                employeeId.value = id;
-            });
-        });
-
         function confirmDelete() {
             const id = employeeId.value;
-            // Puedes llamar a la función JavaScript correspondiente para eliminar el registro de Employee aquí
-            // Por ejemplo, puedes usar fetch para enviar una solicitud DELETE a tu API
+
+            // Enviar una solicitud DELETE a tu API
+            fetch(`/api/Employee/Delete?id={employeeId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Actualizar la página o realizar otras acciones después de la eliminación
+                        location.reload(); // Esto recargará la página después de la eliminación
+                    } else {
+                        // Manejar el caso de error, por ejemplo, mostrar un mensaje de error
+                        console.error('Error al eliminar el empleado');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar el empleado', error);
+                });
         }
     </script>
+
 }

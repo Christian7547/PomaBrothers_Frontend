@@ -65,7 +65,7 @@ namespace PomaBrothers_Frontend.Controllers
         {
             try
             {
-                HttpResponseMessage request = await httpClient.PutAsJsonAsync("api/Employee/{id}", employee);
+                HttpResponseMessage request = await httpClient.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Employee");
             }
@@ -93,11 +93,11 @@ namespace PomaBrothers_Frontend.Controllers
             return Ok(employee);
         }
 
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             HttpResponseMessage request = await httpClient.DeleteAsync($"api/Employee/{id}");
             request.EnsureSuccessStatusCode();
-            return NoContent();
+            return RedirectToAction("Index", "Employee");
         }
     }
 }
