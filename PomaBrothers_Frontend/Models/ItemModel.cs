@@ -7,5 +7,6 @@
         public string Marker { get; set; }
         public int? CapacityOrSize { get; set; }
         public string? MeasurementUnit { get; set; }
+        public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }

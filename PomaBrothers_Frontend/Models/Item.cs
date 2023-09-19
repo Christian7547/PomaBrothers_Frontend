@@ -17,6 +17,5 @@
         public virtual ItemModel ItemModel { get; set; }
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
-        public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }

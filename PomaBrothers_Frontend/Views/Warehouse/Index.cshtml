@@ -1,0 +1,250 @@
+﻿@{
+
+}
+
+<h1>Almacenes</h1>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Almacen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var warehouse in (List<Warehouse>)ViewBag.Warehouses)
+        {
+            <tr>
+                <td>@warehouse.Name</td>
+                <td>
+                    <button type="button"
+                            onclick="getModelsAsync(@warehouse.Id)"
+                            data-id="@warehouse.Id"
+                            data-toggle="modal"
+                            data-target="#showItemsModal"
+                            class="btn btn-success">
+                        Inspeccionar
+                    </button>
+                    <button type="button"
+                            data-id="@warehouse.Id"
+                            data-toggle="modal"
+                            data-target="#deleteModal"
+                            class="btn btn-danger">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Modal for delete*@
+<div class="modal fade" id="deleteModal">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar acción</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Desea eliminar el almacén y todo lo que contiene?</p>
+                <input id="logId" type="hidden" />
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal for Items*@
+<div class="modal fade" id="showItemsModal">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Productos disponibles</h4>
+                <button type="button" class="btn-close" id="btnCloseModal" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bodyContainerModal">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnClearModal" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const txtId = document.getElementById('logId');
+        const showItems = document.getElementById('showItems');
+        const itemContainer = document.getElementById('itemContainer');
+        const bodyContainerModal = document.getElementById('bodyContainerModal');
+
+        var printItemsDiv;
+        var itemsQuantity;
+        
+
+        function getModelsAsync(id) {
+            fetch(`/Warehouse/ShowModelsAvailable?id=${id}`)
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return null;
+            })
+            .then(data => {
+                let getQuantity = undefined;
+                data.forEach(model => {
+                    printModels(model);
+                    // if(getQuantity != model){
+                    //     getQuantity = model;
+                    //     printQuantity(getQuantity.id);
+                    // }
+                });
+            })
+            .catch(error => console.error(error))
+        }
+        
+        function printModels(model){
+            const html = `<div class="row">
+                               <div class="col-md-5 p-3">
+                                  <p>
+                                    <label for="lblName" class="fw-bold">Modelo:</label>
+                                    <label id="lblName">${model.modelName}</label>
+                                  </p>
+                                  <p>
+                                    <label for="lblMarker" class="fw-bold">Marca:</label>
+                                    <label id="lblMarker">${model.marker}</label>
+                                  </p>
+                                  <p>
+                                    <label>${model.capacityOrSize + ' ' + model.measurementUnit}</label>
+                                  </p>
+                                  <p>
+                                    <label for="lblQuantity" class="fw-bold">Cantidad:</label>
+                                    <label id="lblQuantity"></label>
+                                  </p>
+                               </div>
+                               <div class="col-md-4">
+                                  <button id="btnShowModels" onclick="printItems(${model.id})"
+                                            class="btn btn-success h-50 fw-bold mt-5"
+                                            type="button">
+                                     Ver Productos
+                                  </button>
+                               </div>
+                          </div>
+                          
+                          <hr/>
+                          <div id="printItemsDiv"></div>`;
+            bodyContainerModal.insertAdjacentHTML('beforeend', html);
+            printItemsDiv = document.getElementById('printItemsDiv');
+            itemsQuantity = document.getElementById('lblQuantity');
+        }
+
+        function printQuantity(modelId){
+            fetch(`/Warehouse/GetQuantityModels/${modelId}`)
+            .then(res => {
+                if(res.ok){
+                    return res.json();
+                }
+            })
+            .then(data => {
+                if (data != 0) {
+                    itemsQuantity.textContent = data;
+                }
+                else{
+                    itemsQuantity.textContent = 'Sin stock';
+                }
+            })
+            .catch(error => console.error(error))
+        }
+
+        function printItems(id){
+            printItemsDiv.innerHTML = '';
+            fetch(`/Warehouse/ShowItemsAvailable/${id}`)
+            .then(res => {
+                if(res.ok){
+                    return res.json();
+                }
+                return null;
+            })
+            .then(data => {
+                if (data != null) {
+                    const containerCenter = document.createElement('div');
+                    containerCenter.classList.add('container');
+                    for (let i = 0; i < data.length; i += 2) {
+                        const row = document.createElement('div');
+                        row.classList.add('row', 'mb-3', 'justify-content-center');
+                        for (let j = i; j < i + 2 && j < data.length; j++) {
+                            const item = data[j];
+                            const html = `<div class="col-md-6">
+                                            <div class="card mb-3 border-success" style="max-width: 640px;">
+                                                <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="card-body">
+                                                                    <p>
+                                                                        <label class="text-sm fw-bold">Color:</label>
+                                                                        <label class="text-sm">${item.color}</label>
+                                                                    </p>
+                                                                    <p>
+                                                                        <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                                        <label class="text-sm">${item.price}</label>
+                                                                    </p>
+                                                                    <p>
+                                                                        <label class="text-sm fw-bold">N° de serie:</label>
+                                                                        <label class="text-sm">${item.serie}</label>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                            const temp = document.createElement('div');
+                            temp.innerHTML = html;
+                            row.appendChild(temp.firstChild);
+                        }
+                        containerCenter.appendChild(row);
+                    }
+                    printItemsDiv.appendChild(containerCenter);
+                }
+            })
+            .catch(error => console.error(error))
+        }
+
+        function confirmDelete() {
+            const id = txtId.value;
+            fetch(`/Warehouse/Delete?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
+        }
+
+
+        const btnClearModal = document.getElementById('btnClearModal');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        btnClearModal.addEventListener('click', () => {
+            bodyContainerModal.innerHTML = '';
+        });
+        btnCloseModal.addEventListener('click', () => {
+            bodyContainerModal.innerHTML = '';
+        });
+    </script>
+}
