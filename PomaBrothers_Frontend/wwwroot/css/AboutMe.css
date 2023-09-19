@@ -1,0 +1,42 @@
+﻿/* ABOUT ME WRAPPER */
+#aboutme {
+    margin-top: 5px;
+    margin-bottom: 100px;
+    background: #5DDF64;
+    color: white;
+}
+
+p {
+    font-size: 25px;
+    color: #fff;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-family: Roboto Slab;
+}
+
+    p:hover {
+        color: black;
+        /* Agrega cualquier otra propiedad que desees para el efecto de transición */
+        transition: color 0.3s ease; /* Efecto de transición suave de color en 0.3 segundos */
+    }
+
+h4 {
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 35px; /* Ajusta el tamaño de la letra según tus preferencias */
+    font-family: Roboto Slab;
+}
+
+    h4:hover {
+        color: black;
+        /* Agrega cualquier otra propiedad que desees para el efecto de transición */
+        transition: color 0.3s ease; /* Efecto de transición suave de color en 0.3 segundos */
+    }
+
+.img-round {
+    border-radius: 50%;
+    max-width: 80%; /* Ajusta el ancho máximo según tus necesidades */
+
+
+    height: auto; /* Para mantener la proporción original de la imagen */
+}
