@@ -99,5 +99,35 @@ namespace PomaBrothers_Frontend.Controllers
             request.EnsureSuccessStatusCode();
             return RedirectToAction("Index", "Employee");
         }
+
+
+        //// GET: Employee/Login
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(string user, string password)
+        //{
+        //    // Validar las credenciales (aquí puedes verificar en tu base de datos)
+        //    //var employee = await _context.Employees.FirstOrDefaultAsync(e => e.User == user && e.Password == password);
+
+        //    //if (employee != null)
+        //    //{
+        //    //    // Autenticación exitosa
+        //    //    // Puedes agregar lógica adicional aquí
+
+        //    //    // Redireccionar a la página de inicio después del inicio de sesión
+        //    //    return RedirectToAction("Index", "Home");
+        //    //}
+        //    //else
+        //    //{
+        //    //    // Autenticación fallida
+        //    //    ViewBag.ErrorMessage = "Credenciales incorrectas";
+        //    //    return View();
+        //    //}
+        //}
     }
 }
