@@ -31,6 +31,5 @@
 #pragma warning restore CS8618 // Un campo que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de declararlo como que admite un valor NULL.
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
-        public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }
