@@ -7,10 +7,10 @@ namespace PomaBrothers_Frontend.Models
     {
         public int Id { get; set; }
         public int WarehouseId { get; set; }
-        public int ItemId { get; set; }
-        public int ItemQuantity { get; set; }
+        public int ModelId { get; set; }
+        public int ModelQuantity { get; set; }
         public string Name { get; set; } = null!;
-        public virtual Item Item { get; set; } = null!;
+        public virtual ItemModel ItemModel { get; set; } = null!;
         public virtual Warehouse Warehouse { get; set; } = null!;
     }
 }

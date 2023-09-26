@@ -1,10 +1,150 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AboutMe.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Cards.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ContactUs.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PomaBrothers_Frontend.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body style="background-color:#5DDF64">
+    <main>
+        <div class="site-outer">
+            <div class="site-inner">
+                <section id="carrusel" class="container-fluid">
+                    <!-- ACCORDION ROW -->
+                    <div class="row">
+                        <ul class="accordion-group" id="accordion">
+                            <li style="background-image: url('https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');">
+                                <div class="accordion-overlay"></div>
+                                
+                                <section class="hidden-xs">
+                                    <article>
+                                        <p>Calidad y confiabilidad</p>
+                                    </article>
+                                </section>
+                            </li>
+                            <li class="out" style="background-image: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1953&q=80');">
+                                <div class="accordion-overlay"></div>
+                                
+                                <section class="hidden-xs">
+                                    <article>
+                                        <p>
+                                            Las mejores marcas, los mejores precios.
+                                        </p>
+                                    </article>
+                                </section>
+                            </li>
+                            <li style="background-image: url('https://media.istockphoto.com/id/1196974664/es/foto/set-de-electrodom%C3%A9sticos-de-cocina-en-la-habitaci%C3%B3n-en-el-fondo-de-la-pared.jpg?s=612x612&w=0&k=20&c=d7r44Bfcn89FYyVcsUizkSq8m2-4Lr0fqx2rT1aC8Wg=');">
+                                <div class="accordion-overlay"></div>
+                                
+                                <section class="hidden-xs">
+                                    <article>
+                                        <p>Innovación para tu cocina y tu hogar.</p>
+                                    </article>
+                                </section>
+                            </li>
+                            <li style="background-image: url('https://media.istockphoto.com/id/1127551092/es/foto/electrodom%C3%A9sticos-de-cocina-sobre-un-fondo-neutro.jpg?s=612x612&w=0&k=20&c=HLqK0oUGlmXXD28HVyr6ic8DneITNNth8xTPe7jfRqA=');">
+                                <div class="accordion-overlay"></div>
+                                
+                                <section class="hidden-xs">
+                                    <article>
+                                        <p>Tu comodidad, nuestra prioridad.</p>
+                                    </article>
+                                </section>
+                            </li>
+                            <li style="background-image: url('https://media.istockphoto.com/id/171589331/es/foto/para-electrodom%C3%A9sticos.jpg?s=612x612&w=0&k=20&c=GrurYJzfDpp52cgkQ-ZABMIn8Y5g3YlYQZNWqbr-mwI=');">
+                                <div class="accordion-overlay"></div>
+                                
+                                <section class="hidden-xs">
+                                    <article>
+                                        <p>Hacemos tu vida más fácil</p>
+                                    </article>
+                                </section>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--Acerca de nosotros-->
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>Prueba </p>
-    <p>Prueba de chris</p>
-</div>
+               
+                <section id="cards" class="centered-section">
+                    <div id="carrusel" class="slider">
+                        <h4>NUESTROS PRODUCTOS</h4><br />
+                        <div id="carrusel-slides" class="slides" >
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                            <div class="slide"><img src="~/images/carusel1/im1.jpg" /></div>
+                        </div>
+                        <button class="btn-prev"></button>
+                        <button class="btn-next"></button>
+                    </div>
+                </section>
+                <section>
+                    <div id="aboutme" class="container-fluid">
+                        <div class="row" style="padding-top: 50px">
+                            <div class="col-md-4">
+                                <h4>ACERCA DE NOSOTROS</h4><br><br /><br />
+                                <p class="tu-clase-css">Bienvenido a Hermanos Poma, tu destino de confianza para todas tus necesidades de electrodomésticos. En nuestro cálido y acogedor espacio, nos enorgullece ofrecerte una amplia gama de soluciones innovadoras para hacer tu vida más cómoda y eficiente. Desde refrigeradores de última generación hasta lavadoras de alto rendimiento y cocinas vanguardistas, en Hermanos Poma encontrarás productos de las marcas más reconocidas que se adaptan a tu estilo de vida y presupuesto.</p>
+                                <br /><br /><br />
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <br />
+                                <div class="d-flex justify-content-center">
+                                    <img src="https://s3.amazonaws.com/semanaeconomica.bucket/semanaeconomica2/articles/banner/30937_1628994732_banner.jpg" class="img-round" alt="Imagen Circular"> </
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer class="container-fluid">
+        <div id="contactUs">
+            <h4>¿Dónde Nos Encontramos?</h4>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-map-marker-alt fa-3x" style="color: #EFFDED;"></i><br /> <h1>Dirección: Calle Principal, Número 123</h1>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-envelope fa-3x" style="color: #EFFDED;"></i><br /> <h1>Correo Electrónico: <a href="mailto:info@tudominio.com">info@tudominio.com</a></h1>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-phone fa-3x" style="color: #EFFDED;"></i><br /> <h1>Teléfono: <a href="tel:+123456789">+123 456 789</a></h1>
+                </div>
+            </div>
+            <div class="social-container">
+                <a href="#" class="social-icon"><i class="fab fa-facebook fa-3x" style="font-size: 24px; color: #EFFDED;"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter fa-3x" style="font-size: 24px; color: #EFFDED;"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram fa-3x" style="font-size: 24px; color: #EFFDED;"></i></a>
+                <h4>HERMANOS POMA - HP</h4>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/menu.js" asp-append-version="true"></script>
+    <script src="~/js/Card.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,37 @@
+﻿.social-container {
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Alinea el texto horizontalmente en el centro */
+    height: 10vh; /* Esto asegura que la sección sea al menos del tamaño de la ventana */
+}
+
+.social-icon i {
+    font-size: 30px; /* Ajusta el tamaño de los íconos según tus necesidades */
+}
+#contactUs {
+    margin-top: 0px;
+    margin-bottom: 100px;
+    background: #779974;
+    color: white;
+}
+
+i:hover {
+    color: white;
+    /* Agrega cualquier otra propiedad que desees para el efecto de transición */
+    transition: color 0.3s ease; /* Efecto de transición suave de color en 0.3 segundos */
+}
+
+h1 {
+    font-size: 25px;
+    color: #5DDF64;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-family: Roboto Slab;
+}
+
+    h1:hover {
+        color: white;
+        /* Agrega cualquier otra propiedad que desees para el efecto de transición */
+        transition: color 0.3s ease; /* Efecto de transición suave de color en 0.3 segundos */
+    }

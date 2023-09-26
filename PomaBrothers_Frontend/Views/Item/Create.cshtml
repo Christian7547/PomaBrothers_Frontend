@@ -18,11 +18,6 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ItemModel.ModelName" class="control-label"></label>
-                <input asp-for="ItemModel.ModelName" class="form-control" />
-                <span asp-validation-for="ItemModel.ModelName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Serie" class="control-label"></label>
                 <input asp-for="Serie" class="form-control" />
                 <span asp-validation-for="Serie" class="text-danger"></span>
@@ -32,7 +27,23 @@
                 <textarea asp-for="Description" rows="8" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Modelo:</label>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input class="form-control" id="txtSearchModel" placeholder="Buscar..."/>
+                        <ul id="showModels"></ul>
+                        <input asp-for="ModelId" id="txtModelId" hidden />
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newModel">+</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
         <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -45,14 +56,19 @@
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ItemModel.Marker" class="control-label"></label>
-                <input asp-for="ItemModel.Marker" class="form-control" />
-                <span asp-validation-for="ItemModel.Marker" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Warranty" class="control-label"></label>
-                <input asp-for="Warranty" class="form-control" />
-                <span asp-validation-for="Warranty" class="text-danger"></span>
+                <label asp-for="DurationWarranty" class="control-label">Garantía:</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input asp-for="DurationWarranty" class="form-control" id="txtDurationWarranty"/>
+                    </div>
+                    <div class="col-md-8">
+                        <select asp-for="TypeWarranty" class="form-control" id="cmbTypeWarranty">
+                            <option value="" disabled selected>Seleccione tipo de garantía</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
@@ -64,21 +80,6 @@
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemModel.CapacityOrSize" class="control-label"></label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <input asp-for="ItemModel.CapacityOrSize" class="form-control" />
-                    </div>
-                    <div class="col-md-8">
-                        <select asp-for="ItemModel.MeasurementUnit" class="form-control">
-                            <option>Kilogramos</option>
-                            <option>Pulgadas</option>
-                            <option>Litros</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-success w-25" />
@@ -88,8 +89,154 @@
     </div>
 </form>
 
+<div class="modal fade" id="newModel">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir modelo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtModel" class="col-form-label">Modelo:</label>
+                        <input type="text" class="form-control" id="txtModel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtMarker" class="col-form-label">Marca:</label>
+                        <input type="text" class="form-control" id="txtMarker">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity"/>
+                            <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="capacityDiv">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad"/>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control" id="cmbMeasurementUnit">
+                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                    <option value="Litros">Litros</option>
+                                    <option value="Kilogramos">Kilogramos</option>
+                                    <option value="Pulgadas">Pulgadas</option>
+                                    <option value="Watts">Watts</option>
+                                    <option value="Metros/hora">M3/h </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        const txtSearchModel = document.getElementById('txtSearchModel');
+        const showModels = document.getElementById('showModels');
+        const txtModelId = document.getElementById('txtModelId');
+
+        const txtDurationWarranty = document.getElementById('txtDurationWarranty');
+        const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
+
+        const cbxCapacity = document.getElementById('cbxCapacity');
+        const txtModel = document.getElementById('txtModel');
+        const txtMarker = document.getElementById('txtMarker');
+        const txtCapacityOrSize = document.getElementById('txtCapacityOrSize');
+        const cmbMeasurementUnit = document.getElementById('cmbMeasurementUnit');
+        const capacityDiv = document.getElementById('capacityDiv');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            txtSearchModel.addEventListener('input', () => {
+                showModels.style.display = 'block';
+                searchModel(txtSearchModel.value);
+            });
+            capacityDiv.style.display = 'none';
+        });
+
+        txtDurationWarranty.addEventListener('input', () => {
+            if (txtDurationWarranty.value === '1') {
+                cmbTypeWarranty.options[1].text = 'Año';
+                cmbTypeWarranty.options[1].value = 'Año';
+
+                cmbTypeWarranty.options[2].text = 'Mes';
+                cmbTypeWarranty.options[2].value = 'Mes';
+            }
+            else{
+                cmbTypeWarranty.options[1].text = 'Años';
+                cmbTypeWarranty.options[1].value = 'Años';
+
+                cmbTypeWarranty.options[2].text = 'Meses';
+                cmbTypeWarranty.options[2].value = 'Meses';
+            }
+        });
+
+        cbxCapacity.addEventListener('change', () => {
+            if(cbxCapacity.checked){
+                capacityDiv.style.display = 'block';
+            }
+            else{
+                capacityDiv.style.display = 'none';
+            }
+        });
+
+        function addModel(){
+            const modal = document.getElementById('newModel');
+            let model = {
+                modelName: txtModel.value,
+                marker: txtMarker.value,
+                ...(txtCapacityOrSize.value && { capacityOrSize: txtCapacityOrSize.value }),
+                ...(cmbMeasurementUnit.value && { measurementUnit: cmbMeasurementUnit.value })
+            };
+
+            fetch('/ItemModel/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(model)
+            })
+            .then(response => {
+                if(response.ok){
+                    alert('Modelo guardado correctamente');
+                }else{
+                    console.log('Error de envío');
+                }
+            })
+            .catch(error => console.error(error))
+        }
+
+        function searchModel(findModel) {
+            fetch(`/Item/SearchModel?searchModel=${findModel}`)
+            .then(response => response.json())
+            .then(data => {
+                showModels.innerHTML = '';
+                data.forEach(model => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.style.cursor = 'pointer';
+                    li.textContent = model.modelName + ' - ' + model.marker;
+
+                    li.addEventListener('click', () => {
+                        showModels.style.display = 'none';
+                        txtSearchModel.value = li.textContent;
+                        txtModelId.value = model.id;
+                    });
+                    showModels.appendChild(li);
+                });
+            })
+            .catch(error => console.log(error))
+        }
+    </script>
 }
