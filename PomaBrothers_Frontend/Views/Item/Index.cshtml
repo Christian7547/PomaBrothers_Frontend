@@ -27,14 +27,14 @@
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var item in ViewBag.Data)
     {
-        <div class="col" id="itemContainer">
+        <div class="col">
             <div class="card mb-3 border-success" style="max-width: 640px;">
                 <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
                     </div>
-                    <div class="col-md-8"> 
+                    <div class="col-md-8">
                         <div class="row">
                             <div class="col">
                                 <div class="card-body">
@@ -58,12 +58,12 @@
                             </div>
                             <div class="col d-flex align-items-center justify-content-center">
                                 <div class="d-flex flex-column align-items-end">
-                                    <button type="button" 
-                                        onclick="showDetails(@item.ItemID)"
-                                        data-id="@item.ItemID"
-                                        data-toggle="modal"
-                                        data-target="#detailsModal"
-                                        class="btn btn-success w-100 mb-2">
+                                    <button type="button"
+                                            onclick="showDetails(@item.ItemID)"
+                                            data-id="@item.ItemID"
+                                            data-toggle="modal"
+                                            data-target="#detailsModal"
+                                            class="btn btn-success w-100 mb-2">
                                         Ver detalles
                                     </button>
                                     <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-success w-100 mb-2">Actualizar</a>
@@ -84,7 +84,8 @@
     }
 </div>
 @*Modal for delete*@
-<div class="modal fade" id="deleteModal"> @* "fade" is for adding animation*@
+<div class="modal fade" id="deleteModal">
+    @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -94,11 +95,11 @@
 
             <div class="modal-body">
                 <p>Desea eliminar el registro?</p>
-                <input id="logId" type="hidden"/>
+                <input id="logId" type="hidden" />
             </div>
 
             <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar"/>
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -107,7 +108,7 @@
 @*---------------------------*@
 
 @*Modal for details*@
-<div class="modal fade" id="detailsModal"> 
+<div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,14 +160,7 @@
                             <label id="lblPrice"></label>
                         </div>
                         <div class="mt-1">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label id="lblWarranty"></label>
-                                </div>
-                                <div class="col-md-10">
-                                    <label id="lblTypeWarranty"></label>
-                                </div>
-                            </div>
+                            <label id="lblWarranty"></label>
                         </div>
                         <div class="mt-1">
                             <label id="lblCapacity"></label>
@@ -184,6 +178,7 @@
 @section Scripts{
     <script>
         const txtId = document.getElementById('logId');
+
         const lblName = document.getElementById('lblName');
         const lblModel = document.getElementById('lblModel');
         const lblMarker = document.getElementById('lblMarker');
@@ -192,128 +187,80 @@
         const lblColor = document.getElementById('lblColor');
         const lblPrice = document.getElementById('lblPrice');
         const lblWarranty = document.getElementById('lblWarranty');
-        const lblTypeWarranty = document.getElementById('lblTypeWarranty');
         const lblInfo = document.getElementById('lblInfo');
         const lblCapacity = document.getElementById('lblCapacity');
 
-        const cmbFilter = document.getElementById('cmbFilter');
-        const itemContainer = document.getElementById('itemContainer');
+        const cmb = document.getElementById('cmbFilter');
 
         document.addEventListener('DOMContentLoaded', () => {
             filter();
             var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
             btnsDelete.forEach((button) => {
                 button.addEventListener('click', () => {
-                    var id = button.getAttribute('data-id');  
+                    var id = button.getAttribute('data-id');
                     txtId.value = id;
                 });
             });
         });
 
-        function showDetails(id){
+        function showDetails(id) {
             fetch(`/Item/GetItem?id=${id}`)
-            .then(response => {
-                if(response.ok){
-                    return response.json();
-                }
-                else{
-                    console.error(response);
-                }
-            })
-            .then(data => {
-                lblName.textContent = data.name;
-                lblMarker.textContent = data.itemModel.marker;
-                lblModel.textContent = data.itemModel.modelName;
-                lblSerie.textContent = data.serie;
-                lblDescription.textContent = data.description;
-                lblColor.textContent = data.color;
-                lblPrice.textContent = `${data.price} Bs.`;
-                lblWarranty.textContent = data.durationWarranty;
-                lblTypeWarranty.textContent = data.typeWarranty;
-                if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null){
-                    lblInfo.style.display = 'none';
-                    lblCapacity.style.display = 'none';
-                }
-                else{
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        console.error(response);
+                    }
+                })
+                .then(data => {
+                    lblName.textContent = data.name;
+                    lblMarker.textContent = data.itemModel.marker;
+                    lblModel.textContent = data.itemModel.modelName;
+                    lblSerie.textContent = data.serie;
+                    lblDescription.textContent = data.description;
+                    lblColor.textContent = data.color;
+                    lblPrice.textContent = `${data.price} Bs.`;
+                    lblWarranty.textContent = `${data.warranty} Años`;
                     lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
-                }
-                if(data.itemModel.id != 1){
-                    lblInfo.textContent = 'Capacidad: ';
-                }
-                else{
-                    lblInfo.textContent = 'Pantalla: ';
-                }
-            })
-            .catch(error => console.log(error))
+                    if (data.itemModel.id != 1) {
+                        lblInfo.textContent = 'Capacidad: ';
+                    }
+                    else {
+                        lblInfo.textContent = 'Pantalla: ';
+                    }
+                })
+                .catch(error => console.log(error))
         }
 
-        function confirmDelete(){
+        function confirmDelete() {
             const id = txtId.value;
             fetch(`/Item/Delete?id=${id}`)
-            .then(response => {
-                if(response.ok){
-                    document.getElementById('deleteModal').style.display = 'none';
-                    location.reload();
-                }
-                else{
-                    console.log('Internal server error');
-                }
-            })
-            .catch(error => console.error(error))
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
         }
 
-        function filter(){
-            cmbFilter.addEventListener('change', () => {
-                console.log(cmbFilter.value);
-                if (cmbFilter.value != '0') {
-                    fetch(`/Item/GetItemsByCategory?id=${cmbFilter.value}`)
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        else { console.log('Internal server error'); }
-                    })
-                    .then(data => {
-                        itemContainer.innerHTML = '';
-                        data.forEach(item => {
-                                const itemHtml = 
-                                `<div class="col">
-                                    <div class="card mb-3 border-success" style="max-width: 640px;">
-                                      <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
-                                      <div class="row g-0">
-                                        <div class="col-md-4">
-                                          <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
-                                        </div>
-                                        <div class="col-md-8">
-                                          <div class="row">
-                                            <div class="col">
-                                              <div class="card-body">
-                                                <p><label class="text-sm fw-bold">Marca:</label><label class="text-sm">${item.itemModel.marker}</label></p>
-                                                <p><label class="text-sm fw-bold">Precio(Bs.):</label><label class="text-sm">${item.price}</label></p>
-                                                <p><label class="text-sm fw-bold">Color:</label><label class="text-sm">${item.color}</label></p>
-                                                <p><label class="text-sm fw-bold">Serie:</label><label class="text-sm">${item.serie}</label></p>
-                                              </div>
-                                            </div>
-                                            <div class="col d-flex align-items-center justify-content-center">
-                                              <div class="d-flex flex-column align-items-end">
-                                                <button type="button" onclick="showDetails(${item.id})" data-id="${item.id}" data-toggle="modal" data-target="#detailsModal" class="btn btn-success w-100 mb-2">Ver detalles</button>
-                                                <a href="/Item/Edit/${item.id}" class="btn btn-success w-100 mb-2">Actualizar</a>
-                                                <button type="button" data-id="${item.id}" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger w-100">Eliminar</button>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            `;
-                            itemContainer.insertAdjacentHTML('beforeend', itemHtml);
-                        });
-                    })
-                    .catch(error => console.error(error))
-                }
-                else{
-                    location.reload();
+        function filter() {
+            cmb.addEventListener('change', () => {
+                console.log(cmb.value);
+                if (cmb.value != '0') {
+                    fetch(`/Item/GetItemsByCategory?id=${cmb.value}`)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            else { console.log('Internal server error'); }
+                        })
+                        .then(data => console.log(data))
+                        .catch(error => console.error(error))
                 }
             });
         }
