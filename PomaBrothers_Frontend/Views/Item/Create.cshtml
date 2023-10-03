@@ -87,9 +87,6 @@
         </div>
     </div>
 </form>
-
-<<<<<<< HEAD
-=======
 <div class="modal fade" id="newModel">
     <div class=" modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -111,6 +108,10 @@
                             <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity"/>
                             <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagePath">Imagen:</label>
+                        <input type="file" name="imagePath" id="imagePath" class="form-control">
                     </div>
                     <div class="form-group" id="capacityDiv">
                         <div class="row">
@@ -138,8 +139,6 @@
         </div>
     </div>
 </div>
-
->>>>>>> chris
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
