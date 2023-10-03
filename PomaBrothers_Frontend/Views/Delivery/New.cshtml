@@ -315,8 +315,7 @@
                 button.addEventListener('click', () => {
                     printItemsArray.splice(index, 1);
                     objDelivery.items.splice(index, 1);
-                    console.log(printItemsArray);
-                    console.log(objDelivery);
+                    objDelivery.purchasePrices.splice(index, 1);
                     const rowToDelete = button.parentElement.parentElement;
                     rowToDelete.remove();
                     if(printItemsArray.length === 0){
