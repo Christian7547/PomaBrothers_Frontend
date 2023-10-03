@@ -88,6 +88,58 @@
     </div>
 </form>
 
+<<<<<<< HEAD
+=======
+<div class="modal fade" id="newModel">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir modelo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtModel" class="col-form-label">Modelo:</label>
+                        <input type="text" class="form-control" id="txtModel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtMarker" class="col-form-label">Marca:</label>
+                        <input type="text" class="form-control" id="txtMarker">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity"/>
+                            <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="capacityDiv">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad"/>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control" id="cmbMeasurementUnit">
+                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                    <option value="Litros">Litros</option>
+                                    <option value="Kilogramos">Kilogramos</option>
+                                    <option value="Pulgadas">Pulgadas</option>
+                                    <option value="Watts">Watts</option>
+                                    <option value="Metros/hora">M3/h </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+>>>>>>> chris
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -10,12 +10,10 @@
         public string Color { get; set; }
         public string Warranty { get; set; }
         public int CategoryId { get; set; }
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
         public int ModelId { get; set; }
         public virtual Category Category { get; set; }
         public virtual ItemModel ItemModel { get; set; }
-        public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
-        public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }
