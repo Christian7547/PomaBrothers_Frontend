@@ -11,11 +11,10 @@
         public byte DurationWarranty { get; set; }
         public string TypeWarranty { get; set; }
         public int CategoryId { get; set; }
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
         public int ModelId { get; set; }
         public virtual Category Category { get; set; }
         public virtual ItemModel ItemModel { get; set; }
-        public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
         public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
 }

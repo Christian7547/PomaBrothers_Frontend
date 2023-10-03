@@ -1,0 +1,396 @@
+﻿@{
+    ViewData["Title"] = "Nueva entrega";
+}
+
+<h1>Nueva entrega</h1>
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="fw-bold">Proveedor:</label>
+            <select id="cmbSupplier" class="form-select">
+                <option value="" disabled selected>Seleccione el proveedor</option>
+                @foreach(var supplier in (List<Supplier>)ViewBag.Suppliers)
+                {
+                    <option value="@supplier.Id">@supplier.BussinesName</option>
+                }
+            </select>
+            <br />
+            <h4>Productos</h4>
+            <button class="btn btn-success"
+                    onclick=""
+                    data-id=""
+                    data-toggle="modal"
+                    data-target="#mdlAddItem">
+                Añadir Productos
+            </button>
+            <div class="table-responsive">
+                <table class="table table-borderless mt-3" id="tableItems">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Modelo</th>
+                            <th>Categoría</th>
+                            <th>Precio de compra (Bs.)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <label for="lblTotal" class="control-label fw-bold">Total:</label>
+                            </td>
+                            <td>
+                                <span id="lblTotal" class="fw-bold"></span>
+                                <label class="fw-bold">Bs.</label>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <button data-toggle="modal" class="btn btn-success" data-target="#mdlWarehouse">
+                Guardar en almacén
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlAddItem">
+    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Agregar producto</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <form>
+                            <div class="form-group">
+                                <label for="txtName" class="control-label">Nombre del producto:</label>
+                                <input type="text" id="txtName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="txtSerie" class="control-label">Número de serie:</label>
+                                <input type="text" id="txtSerie" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="txtDescription" class="control-label">Descripción:</label>
+                                <textarea rows="8" id="txtDescription" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Modelo:</label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="txtSearchModel" placeholder="Buscar Modelo..." />
+                                        <ul id="showModels"></ul>
+                                        <input id="txtModelId" hidden/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newModel">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtPurchasePrice" class="control-label">Precio de compra:</label>
+                                <input type="number" id="txtPurchasePrice" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="txtSalePrice" class="control-label">Precio de venta:</label>
+                                <input type="number" id="txtSalePrice" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Seleccione la categoría:</label>
+                                <select class="form-select" id="categorySelected">
+                                    @foreach (var category in (List<Category>)ViewBag.Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtColor" class="control-label">Color:</label>
+                                <input type="text" id="txtColor" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Garantía:</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input class="form-control" id="txtDurationWarranty" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select class="form-select" id="cmbTypeWarranty">
+                                            <option value="" disabled selected>Seleccione tipo de garantía</option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addItem()">Añadir</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newModel">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir modelo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtModel" class="col-form-label">Modelo:</label>
+                        <input type="text" class="form-control" id="txtModel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtMarker" class="col-form-label">Marca:</label>
+                        <input type="text" class="form-control" id="txtMarker">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity" />
+                            <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="capacityDiv">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad" />
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control" id="cmbMeasurementUnit">
+                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                    <option value="Litros">Litros</option>
+                                    <option value="Kilogramos">Kilogramos</option>
+                                    <option value="Pulgadas">Pulgadas</option>
+                                    <option value="Watts">Watts</option>
+                                    <option value="Metros/hora">M3/h </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnAdd" onclick="" data-dismiss="modal" class="btn btn-success" value="Añadir" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlWarehouse">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Seleccione el almacén</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select class="form-select" id="cmbWarehouse">
+                        <option value="" disabled selected>...</option>
+                        @foreach(var warehouse in (List<Warehouse>)ViewBag.Warehouses)
+                        {
+                            <option value="@warehouse.Id">@warehouse.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnSaveInWarehouse" onclick="sendData()" data-dismiss="modal" class="btn btn-success" value="Guardar" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const txtSearchModel = document.getElementById('txtSearchModel');
+        const showModels = document.getElementById('showModels');
+
+        const capacityDiv = document.getElementById('capacityDiv');
+        const cbxCapacity = document.getElementById('cbxCapacity');
+
+        const txtName = document.getElementById('txtName');
+        const txtSerie = document.getElementById('txtSerie');
+        const txtDescription = document.getElementById('txtDescription');
+        const txtModelId = document.getElementById('txtModelId');
+        const txtPurchasePrice = document.getElementById('txtPurchasePrice');
+        const txtSalePrice = document.getElementById('txtSalePrice');
+        const categorySelected = document.getElementById('categorySelected');
+        const txtColor = document.getElementById('txtColor');
+        const txtDurationWarranty = document.getElementById('txtDurationWarranty');
+        const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
+        
+        const cmbSupplier = document.getElementById('cmbSupplier');
+        const tableItems = document.getElementById('tableItems');
+        const lblTotal = document.getElementById('lblTotal');
+        const cmbWarehouse = document.getElementById('cmbWarehouse');
+
+        const objDelivery = {
+            supplierId: 0,
+            total: 0,
+            items: [],
+            purchasePrices: [],
+            warehouseId: 0
+        };
+
+        const printItemsArray = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            txtSearchModel.addEventListener('input', () => {
+                showModels.style.display = 'block';
+                searchModel(txtSearchModel.value);
+            })
+            capacityDiv.style.display = 'none';
+        });
+
+        cmbSupplier.addEventListener('change', () => {
+            objDelivery.supplierId = parseInt(cmbSupplier.value);
+        });
+
+        cmbWarehouse.addEventListener('change', () => {
+            objDelivery.warehouseId = parseInt(cmbWarehouse.value);
+        })
+
+        function addItem(){
+            let item = {
+                name: txtName.value,
+                serie: txtSerie.value,
+                description: txtDescription.value,
+                price: txtSalePrice.value,
+                color: txtColor.value,
+                durationWarranty: txtDurationWarranty.value,
+                typewarranty: cmbTypeWarranty.value,
+                categoryId: categorySelected.value,
+                modelId: txtModelId.value
+            };
+            objDelivery.total += parseFloat(txtPurchasePrice.value);
+            objDelivery.items.push(item);
+            objDelivery.purchasePrices.push(parseFloat(txtPurchasePrice.value));
+            lblTotal.textContent = objDelivery.total;
+            printItems();
+        }
+
+        function printItems(){
+            let item = {
+                name: txtName.value,
+                model: txtSearchModel.value,
+                category: categorySelected.options[categorySelected.selectedIndex].textContent,
+                price: txtPurchasePrice.value
+            }
+            printItemsArray.push(item);
+            const tbody = tableItems.querySelector('tbody');
+            tbody.innerHTML = '';
+            printItemsArray.forEach((item, index) => {
+                const html = `  <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.model}</td>
+                                    <td>${item.category}</td>
+                                    <td>${item.price}</td>
+                                    <td>
+                                        <button class="btn btn-danger btnRemoveRow">Eliminar</button>
+                                    </td>
+                                </tr>`;
+                tbody.insertAdjacentHTML('beforeend', html);
+            });
+
+            const removeButtons = document.querySelectorAll('.btnRemoveRow');
+            removeButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    printItemsArray.splice(index, 1);
+                    objDelivery.items.splice(index, 1);
+                    console.log(printItemsArray);
+                    console.log(objDelivery);
+                    const rowToDelete = button.parentElement.parentElement;
+                    rowToDelete.remove();
+                    if(printItemsArray.length === 0){
+                        objDelivery.total = 0;
+                        lblTotal.textContent = objDelivery.total;
+                    }
+                });
+            });
+        }
+
+        function sendData(){
+            fetch('/Delivery/New', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(objDelivery)
+            })
+            .then(res => {
+                if(res.redirected){
+                    window.location.href = res.url; 
+                    alert('Transacción exitosa');
+                }
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error(error))
+        }
+
+        function searchModel(findModel) {
+            fetch(`/Item/SearchModel?searchModel=${findModel}`)
+            .then(response => response.json())
+            .then(data => {
+                showModels.innerHTML = '';
+                data.forEach(model => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.style.cursor = 'pointer';
+                    li.textContent = model.modelName + ' - ' + model.marker;
+
+                    li.addEventListener('click', () => {
+                        showModels.style.display = 'none';
+                        txtSearchModel.value = li.textContent;
+                        txtModelId.value = model.id;
+                    });
+                    showModels.appendChild(li);
+                });
+            })
+            .catch(error => console.log(error))
+        }
+
+        //UI
+        txtDurationWarranty.addEventListener('input', () => {
+            if (txtDurationWarranty.value === '1') {
+                cmbTypeWarranty.options[1].text = 'Año';
+                cmbTypeWarranty.options[1].value = 'Año';
+
+                cmbTypeWarranty.options[2].text = 'Mes';
+                cmbTypeWarranty.options[2].value = 'Mes';
+            }
+            else {
+                cmbTypeWarranty.options[1].text = 'Años';
+                cmbTypeWarranty.options[1].value = 'Años';
+
+                cmbTypeWarranty.options[2].text = 'Meses';
+                cmbTypeWarranty.options[2].value = 'Meses';
+            }
+        });
+        cbxCapacity.addEventListener('change', () => {
+            if (cbxCapacity.checked) {
+                capacityDiv.style.display = 'block';
+            }
+            else {
+                capacityDiv.style.display = 'none';
+            }
+        });
+    </script>
+}
