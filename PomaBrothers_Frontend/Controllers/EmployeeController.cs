@@ -19,10 +19,10 @@ namespace PomaBrothers_Frontend.Controllers
         }
         public async Task<string> Storage(Stream file, string name)
         {
-            string email = "dori@gmail.com";
-            string clave = "dori123";
-            string ruta = "img-bdd.appspot.com";
-            string api_key = "AIzaSyBqFCfptJ28ZtsLKyr4l1BZAEMp9VDoMYc";
+            string email = "catier@gmail.com";
+            string clave = "123456";
+            string ruta = "pomabrothers-4c702.appspot.com";
+            string api_key = "AIzaSyA6PKJivkb3Ir8zsbL21HMwCsmRTJ-GscM";
 
             var auth = new FirebaseAuthProvider(new FirebaseConfig(api_key));
             var a = await auth.SignInWithEmailAndPasswordAsync(email, clave);
