@@ -6,7 +6,7 @@
         public string Name { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string? SecondLastName { get; set; }
-        public string IdEmployee { get; set; } = null!;
+        public string Ci { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string User { get; set; } = null!;
         public string Password { get; set; } = null!;

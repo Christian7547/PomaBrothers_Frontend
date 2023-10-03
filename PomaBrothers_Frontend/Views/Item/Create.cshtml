@@ -1,0 +1,95 @@
+﻿@model Item
+
+@{
+    ViewData["Title"] = "Añadir";
+}
+
+<h1>Añadir</h1>
+
+<h4>Producto</h4>
+<hr />
+
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemModel.ModelName" class="control-label"></label>
+                <input asp-for="ItemModel.ModelName" class="form-control" />
+                <span asp-validation-for="ItemModel.ModelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Serie" class="control-label"></label>
+                <input asp-for="Serie" class="form-control" />
+                <span asp-validation-for="Serie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" rows="8" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" type="number" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemModel.Marker" class="control-label"></label>
+                <input asp-for="ItemModel.Marker" class="form-control" />
+                <span asp-validation-for="ItemModel.Marker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Warranty" class="control-label"></label>
+                <input asp-for="Warranty" class="form-control" />
+                <span asp-validation-for="Warranty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" id="categorySelected">
+                    @foreach (var category in (List<Category>)ViewBag.Data)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemModel.CapacityOrSize" class="control-label"></label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input asp-for="ItemModel.CapacityOrSize" class="form-control" />
+                    </div>
+                    <div class="col-md-8">
+                        <select asp-for="ItemModel.MeasurementUnit" class="form-control">
+                            <option>Kilogramos</option>
+                            <option>Pulgadas</option>
+                            <option>Litros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-success w-25" />
+                <a asp-action="Index" class="btn btn-success w-25">Volver</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Empleados";
+}
+
+<h1>Empleados</h1>
+<div class="row">
+    <div class="col-md-9">
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="fw-bold form-label">Filtrar por:</label>
+            </div>
+            <div class="col">
+                <!-- Puedes agregar opciones de filtrado si es necesario -->
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var employee in ViewBag.Data)
+    {
+        <div class="col">
+            <div class="card mb-3 border-success" style="max-width: 640px;">
+                <div class="card-header bg-transparent border-light fw-bold">@employee.Name @employee.LastName</div>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://via.placeholder.com/150" alt="Employee Image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body">
+                                    <p>
+                                        <label class="text-sm fw-bold">Cédula:</label>
+                                        <label class="text-sm">@employee.Ci</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Teléfono:</label>
+                                        <label class="text-sm">@employee.Phone</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Usuario:</label>
+                                        <label class="text-sm">@employee.User</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Rol:</label>
+                                        <label class="text-sm">@employee.Role</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Fecha de Registro:</label>
+                                        <label class="text-sm">@employee.RegisterDate.ToString("dd/MM/yyyy")</label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-end">
+                                    <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <button type="button"
+                                            data-id="@employee.Id"
+                                            data-toggle="modal"
+                                            data-target="#deleteModal"
+                                            class="btn btn-danger w-100">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Modal for delete -->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar acción</h4>
+            </div>
+            <div class="modal-body">
+                <p>Desea eliminar el registro?</p>
+                <input id="employeeId" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" data-dismiss="modal" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const employeeId = document.getElementById('employeeId');
+
+        function confirmDelete() {
+            const id = employeeId.value;
+
+            // Enviar una solicitud DELETE a tu API
+            fetch(`/api/Employee/Delete?id={employeeId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Actualizar la página o realizar otras acciones después de la eliminación
+                        location.reload(); // Esto recargará la página después de la eliminación
+                    } else {
+                        // Manejar el caso de error, por ejemplo, mostrar un mensaje de error
+                        console.error('Error al eliminar el empleado');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar el empleado', error);
+                });
+        }
+    </script>
+
+}
