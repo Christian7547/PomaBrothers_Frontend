@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Entregas";
+}
+
+<h1>Entregas</h1>
+
+<hr />
+
+<table>
+    <thead>
+        <tr>
+
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            getInvoices();
+        });
+
+        function getInvoices(){
+            fetch('/Delivery/GetInvoicesWithDetails')
+            .then(res => {
+                if(res.ok){
+                    return res.json();
+                }
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error(error))
+        }
+    </script>
+}

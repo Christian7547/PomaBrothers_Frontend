@@ -3,31 +3,11 @@
 }
 
 <h1>Productos</h1>
-<div class="row">
-    <div class="col-md-9">
-    </div>
-    <div class="col-md-3">
-        <div class="row">
-            <div class="col-md-4">
-                <label class="fw-bold form-label">Filtrar por:</label>
-            </div>
-            <div class="col">
-                <select id="cmbFilter" class="form-control">
-                    <option value="0" selected>...</option>
-                    @foreach (Category category in (List<Category>)ViewBag.Category)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
 <hr />
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var item in ViewBag.Data)
     {
-        <div class="col" id="itemContainer">
+        <div class="col">
             <div class="card mb-3 border-success" style="max-width: 640px;">
                 <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
                 <div class="row g-0">
@@ -196,9 +176,6 @@
         const lblInfo = document.getElementById('lblInfo');
         const lblCapacity = document.getElementById('lblCapacity');
 
-        const cmbFilter = document.getElementById('cmbFilter');
-        const itemContainer = document.getElementById('itemContainer');
-
         document.addEventListener('DOMContentLoaded', () => {
             filter();
             var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
@@ -260,62 +237,6 @@
                 }
             })
             .catch(error => console.error(error))
-        }
-
-        function filter(){
-            cmbFilter.addEventListener('change', () => {
-                console.log(cmbFilter.value);
-                if (cmbFilter.value != '0') {
-                    fetch(`/Item/GetItemsByCategory?id=${cmbFilter.value}`)
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        else { console.log('Internal server error'); }
-                    })
-                    .then(data => {
-                        itemContainer.innerHTML = '';
-                        data.forEach(item => {
-                                const itemHtml = 
-                                `<div class="col">
-                                    <div class="card mb-3 border-success" style="max-width: 640px;">
-                                      <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
-                                      <div class="row g-0">
-                                        <div class="col-md-4">
-                                          <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
-                                        </div>
-                                        <div class="col-md-8">
-                                          <div class="row">
-                                            <div class="col">
-                                              <div class="card-body">
-                                                <p><label class="text-sm fw-bold">Marca:</label><label class="text-sm">${item.itemModel.marker}</label></p>
-                                                <p><label class="text-sm fw-bold">Precio(Bs.):</label><label class="text-sm">${item.price}</label></p>
-                                                <p><label class="text-sm fw-bold">Color:</label><label class="text-sm">${item.color}</label></p>
-                                                <p><label class="text-sm fw-bold">Serie:</label><label class="text-sm">${item.serie}</label></p>
-                                              </div>
-                                            </div>
-                                            <div class="col d-flex align-items-center justify-content-center">
-                                              <div class="d-flex flex-column align-items-end">
-                                                <button type="button" onclick="showDetails(${item.id})" data-id="${item.id}" data-toggle="modal" data-target="#detailsModal" class="btn btn-success w-100 mb-2">Ver detalles</button>
-                                                <a href="/Item/Edit/${item.id}" class="btn btn-success w-100 mb-2">Actualizar</a>
-                                                <button type="button" data-id="${item.id}" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger w-100">Eliminar</button>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            `;
-                            itemContainer.insertAdjacentHTML('beforeend', itemHtml);
-                        });
-                    })
-                    .catch(error => console.error(error))
-                }
-                else{
-                    location.reload();
-                }
-            });
         }
     </script>
 }
