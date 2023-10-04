@@ -11,7 +11,7 @@ namespace PomaBrothers_Frontend.Controllers
 
         public ItemController()
         {
-            httpClient.BaseAddress = new Uri("http://localhost:5164/");
+            httpClient.BaseAddress = new Uri("http://localhost:5164/"); //5164
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

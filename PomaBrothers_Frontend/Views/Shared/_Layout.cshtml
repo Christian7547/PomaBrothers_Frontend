@@ -1,66 +1,120 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PomaBrothers_Frontend</title>
+    @*    <title>@ViewData["Title"] - PomaBrothers_Frontend</title>
+    *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PomaBrothers_Frontend.styles.css" asp-append-version="true" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PomaBrothers_Frontend</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Productos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-controller="Item" asp-action="Index">Ver productos</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="nav-link text-dark" asp-controller="Delivery" asp-action="Index">Ver entregas</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="Delivery" asp-action="New">Nueva entrega</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Warehouse" asp-action="Index">Almacenes</a>
-                        </li>
-                    </ul>
-                </div>
+        <nav class="navbar navbar-expand-custom navbar-mainbg">
+            <a class="navbar-brand navbar-logo" asp-area="" asp-controller="Home" asp-action="Index">
+
+                <img src="~/images/logo.png" style="width: 40px; height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                @* <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+                </div>*@
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item ">
+                        <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('carrusel')">Inicio</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('cards')">Nuestros Productos</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('aboutme')">Acerca Nosotros</a>
+
+                    </li>
+                    <li class="nav-item ">
+                        <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('contactUs')">Contáctanos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item text-dark nav-link" asp-controller="Login" asp-action="Index">Iniciar Sesión</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="dropdown-item text-dark nav-link" asp-area="" asp-controller="Warehouse" asp-action="Index">Almacenes</a>
+                    </li>
+                    <li class="nav-item dropdown" href="javascript:void(0);">
+                        <a class="nav-link dropdown-item text-dark " id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
+                            Productos
+                        </a>
+                        <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Item" asp-action="Index">Ver productos</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Delivery" asp-action="Index">Ver entregas</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Delivery" asp-action="New">Nueva entrega</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown" href="javascript:void(0);">
+                        <a class="nav-link dropdown-item text-dark" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
+                            Proveedor
+                        </a>
+                        <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
+                            <li> <a class="dropdown-item text-dark" asp-controller="Supplier" asp-action="Index">Ver Proveedor</a></li>
+                            <li> <a class="dropdown-item text-dark" asp-controller="Supplier" asp-action="Create">Agregar Proveedor</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown" href="javascript:void(0);">
+                        <a class="nav-link dropdown-item text-dark" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
+                            Empleados
+                        </a>
+                        <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
+                            <li> <a class="dropdown-item text-dark" asp-controller="Employee" asp-action="Index">Ver Empleados</a></li>
+                            <li> <a class="dropdown-item text-dark" asp-controller="Employee" asp-action="Create">Agregar empleado</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+
+    <div class="">
+        <main role="main">
+
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - PomaBrothers_Frontend - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/menu.js" asp-append-version="true"></script>
+    <script>
+        function scrollToSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
