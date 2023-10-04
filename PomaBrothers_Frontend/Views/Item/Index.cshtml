@@ -3,26 +3,6 @@
 }
 
 <h1>Productos</h1>
-<div class="row">
-    <div class="col-md-9">
-    </div>
-    <div class="col-md-3">
-        <div class="row">
-            <div class="col-md-4">
-                <label class="fw-bold form-label">Filtrar por:</label>
-            </div>
-            <div class="col">
-                <select id="cmbFilter" class="form-control">
-                    <option value="0" selected>...</option>
-                    @foreach (Category category in (List<Category>)ViewBag.Category)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
 <hr />
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var item in ViewBag.Data)
@@ -159,7 +139,14 @@
                             <label id="lblPrice"></label>
                         </div>
                         <div class="mt-1">
-                            <label id="lblWarranty"></label>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label id="lblWarranty"></label>
+                                </div>
+                                <div class="col-md-10">
+                                    <label id="lblTypeWarranty"></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-1">
                             <label id="lblCapacity"></label>
@@ -177,7 +164,6 @@
 @section Scripts{
     <script>
         const txtId = document.getElementById('logId');
-
         const lblName = document.getElementById('lblName');
         const lblModel = document.getElementById('lblModel');
         const lblMarker = document.getElementById('lblMarker');
@@ -186,10 +172,9 @@
         const lblColor = document.getElementById('lblColor');
         const lblPrice = document.getElementById('lblPrice');
         const lblWarranty = document.getElementById('lblWarranty');
+        const lblTypeWarranty = document.getElementById('lblTypeWarranty');
         const lblInfo = document.getElementById('lblInfo');
         const lblCapacity = document.getElementById('lblCapacity');
-
-        const cmb = document.getElementById('cmbFilter');
 
         document.addEventListener('DOMContentLoaded', () => {
             filter();
@@ -220,8 +205,15 @@
                 lblDescription.textContent = data.description;
                 lblColor.textContent = data.color;
                 lblPrice.textContent = `${data.price} Bs.`;
-                lblWarranty.textContent = `${data.warranty} Años`;
-                lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                lblWarranty.textContent = data.durationWarranty;
+                lblTypeWarranty.textContent = data.typeWarranty;
+                if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null){
+                    lblInfo.style.display = 'none';
+                    lblCapacity.style.display = 'none';
+                }
+                else{
+                    lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                }
                 if(data.itemModel.id != 1){
                     lblInfo.textContent = 'Capacidad: ';
                 }
@@ -245,23 +237,6 @@
                 }
             })
             .catch(error => console.error(error))
-        }
-
-        function filter(){
-            cmb.addEventListener('change', () => {
-                console.log(cmb.value);
-                if (cmb.value != '0') {
-                    fetch(`/Item/GetItemsByCategory?id=${cmb.value}`)
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        else { console.log('Internal server error'); }
-                    })
-                    .then(data => console.log(data))
-                    .catch(error => console.error(error))
-                }
-            });
         }
     </script>
 }

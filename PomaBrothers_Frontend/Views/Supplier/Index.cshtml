@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Proveedor";
+}
+<h1>Proveedor</h1>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var item in ViewBag.Data)
+    {
+        <div class="col">
+            <div class="card mb-3 border-success" style="max-width: 640px;">
+                <div class="card-header bg-transparent border-light fw-bold">@item._BussinesName</div>
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body">
+                                    <p>
+                                        <label class="text-sm fw-bold">Teléfono:</label>
+                                        <label class="text-sm">@item._Phone</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Encargado:</label>
+                                        <label class="text-sm">@item._Manager</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">CI:</label>
+                                        <label class="text-sm">@item._Ci</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Dirección:</label>
+                                        <label class="text-sm">@item._Address</label>
+                                    </p>
+                                    
+                                </div>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-end">
+                                    <button type="button"
+                                            onclick="showDetails(@item._SupID)"
+                                            data-id="@item._SupID"
+                                            data-toggle="modal"
+                                            data-target="#detailsModal"
+                                            class="btn btn-success w-100 mb-2">
+                                        Ver detalles
+                                    </button>
+                                    <a asp-action="Edit" asp-route-id="@item._SupID" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <button type="button"
+                                            data-id="@item._SupID"
+                                            data-toggle="modal"
+                                            data-target="#deleteModal"
+                                            class="btn btn-danger w-100">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*Modal for delete*@
+<div class="modal fade" id="deleteModal">
+    @* "fade" is for adding animation*@
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar acción</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Desea eliminar el registro?</p>
+                <input id="IdS" type="hidden" />
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*---------------------------*@
+
+@*Modal for details*@
+<div class="modal fade" id="detailsModal">
+    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblBussinesName"></h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mt-1">
+                            <label for="lblphone" class="fw-bold">Teléfono:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lblmanager" class="fw-bold">Encargado:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lblci" class="fw-bold">CI:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lbladdress" class="fw-bold">Dirección:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-1">
+                            <label id="lblPhone"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblManager"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblCi"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblAddress"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const txtId = document.getElementById('IdS');
+        const lblBussinesName = document.getElementById('lblBussinesName');
+        const lblPhone = document.getElementById('lblPhone');
+        const lblManager = document.getElementById('lblManager');
+        const lblCi = document.getElementById('lblCi');
+        const lblAddress = document.getElementById('lblAddress');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+            btnsDelete.forEach((button) => {
+                button.addEventListener('click', () => {
+                    var id = button.getAttribute('data-id');
+                    txtId.value = id;
+                });
+            });
+        });
+
+        function showDetails(id) {
+            fetch(`/Supplier/GetSupplier?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        console.error(response);
+                    }
+                })
+                .then(data => {
+                    lblBussinesName.textContent = data[0].bussinesName;
+                    lblPhone.textContent = data[0].phone;
+                    lblManager.textContent = data[0].manager;
+                    lblCi.textContent = data[0].ci;
+                    lblAddress.textContent = data[0].address;
+                })
+                .catch(error => console.log(error))
+        }
+
+        function confirmDelete() {
+            const id = txtId.value;
+            fetch(`/Supplier/Delete?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
+        }
+    </script>
+}

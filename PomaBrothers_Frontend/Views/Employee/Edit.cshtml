@@ -9,7 +9,7 @@
 <h4>Datos del Empleado</h4>
 <hr />
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -61,6 +61,18 @@
                 <label asp-for="RegisterDate" class="control-label"></label>
                 <input asp-for="RegisterDate" type="datetime-local" class="form-control" />
                 <span asp-validation-for="RegisterDate" class="text-danger"></span>
+            </div>
+            <div class="form-group collapse">
+                <label asp-for="UrlImage" class="control-label"></label>
+                <input asp-for="UrlImage" class="form-control" />
+                <span asp-validation-for="UrlImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Employee Image">
+            </div>
+            <div class="form-group">
+                <label id="image" class="control-label">Seleccione su Audio</label>
+                <input name="image" type="file" accept=".jpg" class="form-control-file"/>
             </div>
             <!-- Puedes agregar más campos según sea necesario -->
             <br />
