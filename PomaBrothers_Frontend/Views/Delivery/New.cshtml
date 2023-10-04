@@ -186,7 +186,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" id="btnAdd" onclick="" data-dismiss="modal" class="btn btn-success" value="Añadir" />
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -273,57 +273,60 @@
                 name: txtName.value,
                 serie: txtSerie.value,
                 description: txtDescription.value,
-                price: txtSalePrice.value,
+                price: parseFloat(txtSalePrice.value),
                 color: txtColor.value,
                 durationWarranty: txtDurationWarranty.value,
                 typewarranty: cmbTypeWarranty.value,
                 categoryId: categorySelected.value,
                 modelId: txtModelId.value
             };
-            objDelivery.total += parseFloat(txtPurchasePrice.value);
             objDelivery.items.push(item);
             objDelivery.purchasePrices.push(parseFloat(txtPurchasePrice.value));
+            objDelivery.total += parseFloat(txtPurchasePrice.value);
+            AddItemsInTable();
             lblTotal.textContent = objDelivery.total;
-            printItems();
         }
 
-        function printItems(){
+        function AddItemsInTable(){
             let item = {
                 name: txtName.value,
                 model: txtSearchModel.value,
                 category: categorySelected.options[categorySelected.selectedIndex].textContent,
-                price: txtPurchasePrice.value
+                price: parseFloat(txtPurchasePrice.value)
             }
             printItemsArray.push(item);
-            const tbody = tableItems.querySelector('tbody');
-            tbody.innerHTML = '';
-            printItemsArray.forEach((item, index) => {
-                const html = `  <tr>
-                                    <td>${item.name}</td>
-                                    <td>${item.model}</td>
-                                    <td>${item.category}</td>
-                                    <td>${item.price}</td>
-                                    <td>
-                                        <button class="btn btn-danger btnRemoveRow">Eliminar</button>
-                                    </td>
-                                </tr>`;
-                tbody.insertAdjacentHTML('beforeend', html);
-            });
+            printItems();
+        }
 
-            const removeButtons = document.querySelectorAll('.btnRemoveRow');
-            removeButtons.forEach((button, index) => {
-                button.addEventListener('click', () => {
-                    printItemsArray.splice(index, 1);
-                    objDelivery.items.splice(index, 1);
-                    objDelivery.purchasePrices.splice(index, 1);
-                    const rowToDelete = button.parentElement.parentElement;
-                    rowToDelete.remove();
-                    if(printItemsArray.length === 0){
-                        objDelivery.total = 0;
-                        lblTotal.textContent = objDelivery.total;
-                    }
-                });
-            });
+        function printItems(){
+            const tbody = tableItems.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            for (let i = 0; i < printItemsArray.length; i++) {
+                var newRow = tbody.insertRow();
+                newRow.insertCell(0).textContent = printItemsArray[i].name;
+                newRow.insertCell(1).textContent = printItemsArray[i].model;
+                newRow.insertCell(2).textContent = printItemsArray[i].category;
+                newRow.insertCell(3).textContent = printItemsArray[i].price;
+
+                var removeButton = document.createElement("button");
+                removeButton.classList.add("btn", "btn-danger");
+                removeButton.textContent = "Eliminar";
+                removeButton.onclick = () => {
+                    deleteItemOfTable(i);
+                };
+                newRow.insertCell(4).appendChild(removeButton);
+            }
+        }
+
+        function deleteItemOfTable(index){
+            if(index >= 0 && index < printItemsArray.length){
+                objDelivery.total -= printItemsArray[index].price;
+                lblTotal.textContent = objDelivery.total;
+                printItemsArray.splice(index, 1);
+                objDelivery.items.splice(index, 1);
+                objDelivery.purchasePrices.splice(index, 1);
+                printItems();
+            }
         }
 
         function sendData(){
@@ -364,6 +367,32 @@
                 });
             })
             .catch(error => console.log(error))
+        }
+
+        function addModel() {
+            const modal = document.getElementById('newModel');
+            let model = {
+                modelName: txtModel.value,
+                marker: txtMarker.value,
+                ...(txtCapacityOrSize.value && { capacityOrSize: txtCapacityOrSize.value }),
+                ...(cmbMeasurementUnit.value && { measurementUnit: cmbMeasurementUnit.value })
+            };
+
+            fetch('/ItemModel/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(model)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Modelo guardado correctamente');
+                } else {
+                    console.log('Error al guardar');
+                }
+            })
+            .catch(error => console.error(error))
         }
 
         //UI

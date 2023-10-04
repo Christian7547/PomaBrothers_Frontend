@@ -48,27 +48,6 @@ namespace PomaBrothers_Frontend.Controllers
             return null!;
         }
 
-        public async Task<ActionResult> Create()
-        {
-            ViewBag.Data = await GetCategoriesAsync();
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(Item item)
-        {
-            try
-            {
-                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Item/New", item);
-                request.EnsureSuccessStatusCode();
-                return RedirectToAction("Index", "Item", request.Headers.Location);
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
         public async Task<ActionResult> Edit(int id)
         {
             Item item = await GetItemAsync(id);
