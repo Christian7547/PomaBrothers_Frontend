@@ -54,7 +54,7 @@ namespace PomaBrothers_Frontend.Controllers
                 HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
                 if (request.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index", "Item");
+                    return RedirectToAction("Index", "Delivery");
                 }
                 return View();
             }
