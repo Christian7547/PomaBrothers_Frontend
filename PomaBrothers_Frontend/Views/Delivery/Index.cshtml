@@ -6,33 +6,150 @@
 
 <hr />
 
-<table>
-    <thead>
-        <tr>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-bordered" id="tableInvoices">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Total (Bs.)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-        </tr>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table>
+<div class="modal fade" id="detailsModal">
+    <div class=" modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
+            </div>
+            <div class="modal-body">
+                <h5 class="fw-bold">Productos:</h5>
+                <table class="table table-borderless" id="tableItems">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Modelo</th>
+                            <th>Serie</th>
+                            <th>Precio de compra (Bs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                <label class="control-label fw-bold">Total:</label>
+                            </td>
+                            <td>
+                                <span id="lblTotal" class="fw-bold"></span>
+                                <label class="fw-bold">Bs.</label>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <hr />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mt-1">
+                            <label for="lblBussinesName" class="fw-bold fs-6">Proveedor:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lblPhone" class="fw-bold fs-6">Teléfono:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-1">
+                            <label id="lblBussinesName" class="fs-6"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblPhone" class="fs-6"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script>
+        const tableInvoices = document.getElementById('tableInvoices');
+
+        const tableItems = document.getElementById('tableItems');
+        const lblTotal = document.getElementById('lblTotal');
+        const lblDateInvoice = document.getElementById('lblDateInvoice');
+        const lblBussinesName = document.getElementById('lblBussinesName');
+        const lblPhone = document.getElementById('lblPhone');
 
         document.addEventListener('DOMContentLoaded', () => {
             getInvoices();
         });
 
-        function getInvoices(){
+        function getInvoices() {
             fetch('/Delivery/GetInvoicesWithDetails')
             .then(res => {
-                if(res.ok){
+                if (res.ok) {
                     return res.json();
                 }
             })
-            .then(data => console.log(data))
-            .catch(error => console.error(error))
+            .then(data => {
+                showInvoices(data);
+            })
+            .catch(error => console.error(error));
+        }
+
+        function showInvoices(invoices){
+            const tbody = tableInvoices.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            for (let i = 0; i < invoices.length; i++) {
+                var row = tbody.insertRow();
+                row.insertCell(0).textContent = invoices[i].registerDate;
+                row.insertCell(1).textContent = invoices[i].supplier.bussinesName;
+                row.insertCell(2).textContent = invoices[i].total;
+
+                var btnDetails = document.createElement('button');
+                btnDetails.classList.add('btn', 'btn-success');
+                btnDetails.textContent = 'Ver Detalles';
+                btnDetails.setAttribute('data-target', '#detailsModal');
+                btnDetails.setAttribute('data-toggle', 'modal');
+                btnDetails.onclick = () => {
+                    showDetailsOfInvoice(invoices[i]);
+                    showItems(invoices[i].deliveryDetails);
+                }
+                row.insertCell(3).appendChild(btnDetails);
+            }
+        }
+
+        function showDetailsOfInvoice(invoice){
+            lblTotal.textContent = invoice.total;
+            lblDateInvoice.textContent = `Recibo del ${invoice.registerDate}`;
+            lblBussinesName.textContent = invoice.supplier.bussinesName;
+            lblPhone.textContent = invoice.supplier.phone;
+        }
+
+        function showItems(items) {
+            const tbody = tableItems.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            items.forEach(detail => {
+                var row = tbody.insertRow();
+                row.insertCell(0).textContent = detail.item.name;
+                row.insertCell(1).textContent = detail.item.itemModel.modelName;
+                row.insertCell(2).textContent = detail.item.serie;
+                row.insertCell(3).textContent = detail.purchasePrice;
+            });
         }
     </script>
 }

@@ -9,6 +9,5 @@
         public string Address { get; set; } = null!;
         public string Ci { get; set; } = null!;
         public DateTime RegisterDate { get; set; }
-        public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
     }
 }

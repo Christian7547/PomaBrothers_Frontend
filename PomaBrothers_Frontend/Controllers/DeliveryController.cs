@@ -32,7 +32,7 @@ namespace PomaBrothers_Frontend.Controllers
             if (request.IsSuccessStatusCode)
             {
                 var json = request.Content.ReadAsStringAsync().Result;
-                var getItem = JsonConvert.DeserializeObject<List<object>>(json);
+                var getItem = JsonConvert.DeserializeObject<List<Invoice>>(json);
                 return Ok(getItem);
             }
             return null!;
