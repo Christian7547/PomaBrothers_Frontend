@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
 using PomaBrothers_Frontend.Models;
 using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http;
@@ -9,6 +10,8 @@ namespace PomaBrothers_Frontend.Controllers
 {
     public class DeliveryController : Controller
     {
+        //private readonly IWebHostEnvironment _hostingEnvironment;
+        //private readonly HttpClient httpClient = new();
         private HttpClient httpClient = new();
 
         public DeliveryController()
@@ -46,23 +49,24 @@ namespace PomaBrothers_Frontend.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> New([FromBody]DeliveryDTO objDelivery)
-        {
-            try
-            {
-                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
-                if (request.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index", "Item");
-                }
-                return View();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> New([FromBody] DeliveryDTO objDelivery)
+        //{
+        //    try
+        //    {
+        //        HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
+        //        if (request.IsSuccessStatusCode)
+        //        {
+        //            return RedirectToAction("Index", "Item");
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
         #region Get categories & suppliers
         public async Task<List<Category>> GetCategoriesAsync()

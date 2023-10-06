@@ -162,65 +162,70 @@
             .catch(error => console.error(error))
         }
 
-        function printItems(id){
+        function printItems(id) {
+            const printItemsDiv = document.getElementById('printItemsDiv'); // Reemplaza 'printItemsDiv' con el ID del elemento donde deseas mostrar los elementos
             printItemsDiv.innerHTML = '';
+
             fetch(`/Warehouse/ShowItemsAvailable/${id}`)
-            .then(res => {
-                if(res.ok){
-                    return res.json();
-                }
-                return null;
-            })
-            .then(data => {
-                if (data != null) {
-                    const containerCenter = document.createElement('div');
-                    containerCenter.classList.add('container');
-                    for (let i = 0; i < data.length; i += 2) {
-                        const row = document.createElement('div');
-                        row.classList.add('row', 'mb-3', 'justify-content-center');
-                        for (let j = i; j < i + 2 && j < data.length; j++) {
-                            const item = data[j];
-                            const html = `<div class="col-md-6">
-                                            <div class="card mb-3 border-success" style="max-width: 640px;">
-                                                <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="card-body">
-                                                                    <p>
-                                                                        <label class="text-sm fw-bold">Color:</label>
-                                                                        <label class="text-sm">${item.color}</label>
-                                                                    </p>
-                                                                    <p>
-                                                                        <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                                                        <label class="text-sm">${item.price}</label>
-                                                                    </p>
-                                                                    <p>
-                                                                        <label class="text-sm fw-bold">N° de serie:</label>
-                                                                        <label class="text-sm">${item.serie}</label>
-                                                                    </p>
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    return null;
+                })
+                .then(data => {
+                    if (data != null) {
+                        const containerCenter = document.createElement('div');
+                        containerCenter.classList.add('container');
+                        for (let i = 0; i < data.length; i += 2) {
+                            const row = document.createElement('div');
+                            row.classList.add('row', 'mb-3', 'justify-content-center');
+                            for (let j = i; j < i + 2 && j < data.length; j++) {
+                                const item = data[j];
+                                const html = `<div class="col-md-6">
+                                                <div class="card mb-3 border-success" style="max-width: 640px;">
+                                                    <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
+                                                    <div class="row g-0">
+
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="${item.UrlImage}" alt="Imagen del artículo">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="card-body">
+                                                                        <p>
+                                                                            <label class="text-sm fw-bold">Color:</label>
+                                                                            <label class="text-sm">${item.color}</label>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                                            <label class="text-sm">${item.price}</label>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label class="text-sm fw-bold">N° de serie:</label>
+                                                                            <label class="text-sm">${item.serie}</label>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>`;
-                            const temp = document.createElement('div');
-                            temp.innerHTML = html;
-                            row.appendChild(temp.firstChild);
+                                            </div>`;
+                                const temp = document.createElement('div');
+                                temp.innerHTML = html;
+                                row.appendChild(temp.firstChild);
+                            }
+                            containerCenter.appendChild(row);
                         }
-                        containerCenter.appendChild(row);
+                        printItemsDiv.appendChild(containerCenter);
                     }
-                    printItemsDiv.appendChild(containerCenter);
-                }
-            })
-            .catch(error => console.error(error))
+                })
+                .catch(error => console.error(error))
         }
+
+        3
 
         function confirmDelete() {
             const id = txtId.value;
