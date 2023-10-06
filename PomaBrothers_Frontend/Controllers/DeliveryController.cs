@@ -47,26 +47,6 @@ namespace PomaBrothers_Frontend.Controllers
             return View();
         }
 
-<<<<<<< HEAD
-
-        //[HttpPost]
-        //public async Task<IActionResult> New([FromBody] DeliveryDTO objDelivery)
-        //{
-        //    try
-        //    {
-        //        HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
-        //        if (request.IsSuccessStatusCode)
-        //        {
-        //            return RedirectToAction("Index", "Item");
-        //        }
-        //        return View();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
-=======
         [HttpPost]
         public async Task<IActionResult> New([FromBody]DeliveryDTO objDelivery)
         {
@@ -84,7 +64,6 @@ namespace PomaBrothers_Frontend.Controllers
                 throw new Exception(ex.Message);
             }
         }
->>>>>>> DEV
 
         #region Get categories & suppliers
         public async Task<List<Category>> GetCategoriesAsync()
