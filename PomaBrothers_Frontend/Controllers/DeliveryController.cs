@@ -26,8 +26,6 @@ namespace PomaBrothers_Frontend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetInvoicesWithDetails()
         {
-            var invoideDetails = new List<object>();
-
             HttpResponseMessage request = await httpClient.GetAsync("Delivery/GetMany");
             if (request.IsSuccessStatusCode)
             {
