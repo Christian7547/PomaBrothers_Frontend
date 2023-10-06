@@ -11,6 +11,7 @@
         public byte DurationWarranty { get; set; }
         public string TypeWarranty { get; set; }
         public int CategoryId { get; set; }
+        public byte Status { get; set; }
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         public int ModelId { get; set; }
         public string UrlImage { get; set; }

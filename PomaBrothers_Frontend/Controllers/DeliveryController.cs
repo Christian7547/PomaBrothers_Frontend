@@ -29,13 +29,11 @@ namespace PomaBrothers_Frontend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetInvoicesWithDetails()
         {
-            var invoideDetails = new List<object>();
-
             HttpResponseMessage request = await httpClient.GetAsync("Delivery/GetMany");
             if (request.IsSuccessStatusCode)
             {
                 var json = request.Content.ReadAsStringAsync().Result;
-                var getItem = JsonConvert.DeserializeObject<List<object>>(json);
+                var getItem = JsonConvert.DeserializeObject<List<Invoice>>(json);
                 return Ok(getItem);
             }
             return null!;
@@ -49,6 +47,7 @@ namespace PomaBrothers_Frontend.Controllers
             return View();
         }
 
+<<<<<<< HEAD
 
         //[HttpPost]
         //public async Task<IActionResult> New([FromBody] DeliveryDTO objDelivery)
@@ -67,6 +66,25 @@ namespace PomaBrothers_Frontend.Controllers
         //        throw new Exception(ex.Message);
         //    }
         //}
+=======
+        [HttpPost]
+        public async Task<IActionResult> New([FromBody]DeliveryDTO objDelivery)
+        {
+            try
+            {
+                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
+                if (request.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Delivery");
+                }
+                return View();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+>>>>>>> DEV
 
         #region Get categories & suppliers
         public async Task<List<Category>> GetCategoriesAsync()

@@ -61,6 +61,7 @@ namespace PomaBrothers_Frontend.Controllers
         {
             try
             {
+                item.Status = 1;
                 HttpResponseMessage request = await httpClient.PutAsJsonAsync("Item/Edit", item);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Item");
