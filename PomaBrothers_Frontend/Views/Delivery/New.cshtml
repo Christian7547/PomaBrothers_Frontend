@@ -12,9 +12,12 @@
             <label class="fw-bold">Proveedor:</label>
             <select id="cmbSupplier" class="form-select">
                 <option value="" disabled selected>Seleccione el proveedor</option>
-                @foreach(var supplier in (List<Supplier>)ViewBag.Suppliers)
+                @if (ViewBag.Suppliers != null)
                 {
-                    <option value="@supplier.Id">@supplier.BussinesName</option>
+                    foreach (var supplier in (List<Supplier>)ViewBag.Suppliers)
+                    {
+                        <option value="@supplier.Id">@supplier.BussinesName</option>
+                    }
                 }
             </select>
             <br />
@@ -88,7 +91,7 @@
                                     <div class="col-md-10">
                                         <input class="form-control" id="txtSearchModel" placeholder="Buscar Modelo..." />
                                         <ul id="showModels"></ul>
-                                        <input id="txtModelId" hidden/>
+                                        <input id="txtModelId" hidden />
                                     </div>
                                     <div class="col-md-2">
                                         <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newModel">+</button>
@@ -106,9 +109,12 @@
                             <div class="form-group">
                                 <label class="control-label">Seleccione la categoría:</label>
                                 <select class="form-select" id="categorySelected">
-                                    @foreach (var category in (List<Category>)ViewBag.Categories)
+                                    @if (ViewBag.Categories != null)
                                     {
-                                        <option value="@category.Id">@category.Name</option>
+                                        @foreach (var category in (List<Category>)ViewBag.Categories)
+                                        {
+                                            <option value="@category.Id">@category.Name</option>
+                                        }
                                     }
                                 </select>
                             </div>
@@ -203,9 +209,12 @@
                 <div class="form-group">
                     <select class="form-select" id="cmbWarehouse">
                         <option value="" disabled selected>...</option>
-                        @foreach(var warehouse in (List<Warehouse>)ViewBag.Warehouses)
+                        @if (ViewBag.Warehouses != null)
                         {
-                            <option value="@warehouse.Id">@warehouse.Name</option>
+                            @foreach (var warehouse in (List<Warehouse>)ViewBag.Warehouses)
+                            {
+                                <option value="@warehouse.Id">@warehouse.Name</option>
+                            }
                         }
                     </select>
                 </div>
@@ -236,7 +245,7 @@
         const txtColor = document.getElementById('txtColor');
         const txtDurationWarranty = document.getElementById('txtDurationWarranty');
         const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
-        
+
         const cmbSupplier = document.getElementById('cmbSupplier');
         const tableItems = document.getElementById('tableItems');
         const lblTotal = document.getElementById('lblTotal');
@@ -268,7 +277,7 @@
             objDelivery.warehouseId = parseInt(cmbWarehouse.value);
         })
 
-        function addItem(){
+        function addItem() {
             let item = {
                 name: txtName.value,
                 serie: txtSerie.value,
@@ -288,7 +297,7 @@
             lblTotal.textContent = objDelivery.total;
         }
 
-        function AddItemsInTable(){
+        function AddItemsInTable() {
             let item = {
                 name: txtName.value,
                 model: txtSearchModel.value,
@@ -299,7 +308,7 @@
             printItems();
         }
 
-        function printItems(){
+        function printItems() {
             const tbody = tableItems.getElementsByTagName('tbody')[0];
             tbody.innerHTML = '';
             for (let i = 0; i < printItemsArray.length; i++) {
@@ -319,8 +328,8 @@
             }
         }
 
-        function deleteItemOfTable(index){
-            if(index >= 0 && index < printItemsArray.length){
+        function deleteItemOfTable(index) {
+            if (index >= 0 && index < printItemsArray.length) {
                 objDelivery.total -= printItemsArray[index].price;
                 lblTotal.textContent = objDelivery.total;
                 printItemsArray.splice(index, 1);
@@ -330,7 +339,7 @@
             }
         }
 
-        function sendData(){
+        function sendData() {
             fetch('/Delivery/New', {
                 method: 'POST',
                 headers: {
@@ -338,36 +347,36 @@
                 },
                 body: JSON.stringify(objDelivery)
             })
-            .then(res => {
-                if(res.redirected){
-                    window.location.href = res.url; 
-                    alert('Transacción exitosa');
-                }
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error(error))
+                .then(res => {
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                        alert('Transacción exitosa');
+                    }
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error(error))
         }
 
         function searchModel(findModel) {
             fetch(`/Item/SearchModel?searchModel=${findModel}`)
-            .then(response => response.json())
-            .then(data => {
-                showModels.innerHTML = '';
-                data.forEach(model => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.style.cursor = 'pointer';
-                    li.textContent = model.modelName + ' - ' + model.marker;
+                .then(response => response.json())
+                .then(data => {
+                    showModels.innerHTML = '';
+                    data.forEach(model => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
+                        li.style.cursor = 'pointer';
+                        li.textContent = model.modelName + ' - ' + model.marker;
 
-                    li.addEventListener('click', () => {
-                        showModels.style.display = 'none';
-                        txtSearchModel.value = li.textContent;
-                        txtModelId.value = model.id;
+                        li.addEventListener('click', () => {
+                            showModels.style.display = 'none';
+                            txtSearchModel.value = li.textContent;
+                            txtModelId.value = model.id;
+                        });
+                        showModels.appendChild(li);
                     });
-                    showModels.appendChild(li);
-                });
-            })
-            .catch(error => console.log(error))
+                })
+                .catch(error => console.log(error))
         }
 
         function addModel() {
@@ -386,14 +395,14 @@
                 },
                 body: JSON.stringify(model)
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Modelo guardado correctamente');
-                } else {
-                    console.log('Error al guardar');
-                }
-            })
-            .catch(error => console.error(error))
+                .then(response => {
+                    if (response.ok) {
+                        alert('Modelo guardado correctamente');
+                    } else {
+                        console.log('Error al guardar');
+                    }
+                })
+                .catch(error => console.error(error))
         }
 
         //UI
