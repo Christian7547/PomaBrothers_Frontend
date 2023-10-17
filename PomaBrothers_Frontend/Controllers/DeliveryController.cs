@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Firebase.Auth;
+using Firebase.Storage;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
 using PomaBrothers_Frontend.Models;
 using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http;
@@ -10,8 +12,6 @@ namespace PomaBrothers_Frontend.Controllers
 {
     public class DeliveryController : Controller
     {
-        //private readonly IWebHostEnvironment _hostingEnvironment;
-        //private readonly HttpClient httpClient = new();
         private HttpClient httpClient = new();
 
         public DeliveryController()
@@ -38,7 +38,6 @@ namespace PomaBrothers_Frontend.Controllers
             }
             return null!;
         }
-
         public async Task<IActionResult> New()
         {
             ViewBag.Categories = await GetCategoriesAsync();
@@ -48,21 +47,78 @@ namespace PomaBrothers_Frontend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> New([FromBody]DeliveryDTO objDelivery)
+        public IActionResult MiAccion(string nombre, string edad)
         {
-            try
+            // Procesar el objeto JSON recibido desde la solicitud AJAX
+            //string nombre = datos["nombre"].ToString();
+            //int edad = datos["edad"].Value<int>();
+
+            // Realizar alguna lógica
+
+            return Json(new { mensajse = "Datos recibidos y procesados correctamente." });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> New([FromBody] JObject json)
+        {
+            /*try
+            {*/
+
+            StreamReader reader = new StreamReader(Request.Body);
+
+            string requestBody = await reader.ReadToEndAsync();
+            Console.WriteLine(json);
+            DeliveryDTO objDelivery = DeliveryDTO.FromJson(json);
+            HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
+            if (request.IsSuccessStatusCode)
             {
-                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
-                if (request.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index", "Delivery");
-                }
-                return View();
+                return RedirectToAction("Index", "Delivery");
             }
-            catch(Exception ex)
+            return View();
+            /*}
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
+            }*/
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> Create(Item item, IFormFile image)
+        //{
+        //    try
+        //    {
+        //        Stream img = image.OpenReadStream();
+        //        string url = await StorageItem(img, image.FileName);
+        //        item.UrlImage = url;
+        //        HttpResponseMessage request = await httpClient.PostAsJsonAsync("Item/New", item);
+        //        request.EnsureSuccessStatusCode();
+        //        return RedirectToAction("Index", "Item");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+
+        public async Task<string> StorageItem(Stream file, string name)
+        {
+            string email = "catier@gmail.com";
+            string clave = "123456";
+            string ruta = "pomabrothers-4c702.appspot.com";
+            string api_key = "AIzaSyA6PKJivkb3Ir8zsbL21HMwCsmRTJ-GscM";
+
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(api_key));
+            var a = await auth.SignInWithEmailAndPasswordAsync(email, clave);
+            var cancel = new CancellationTokenSource();
+            var task = new FirebaseStorage(
+                ruta,
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                    ThrowOnCancel = true
+                }).Child("Item").Child(name).PutAsync(file, cancel.Token);
+            var downloadURL = await task;
+            return downloadURL;
         }
 
         #region Get categories & suppliers
@@ -76,6 +132,8 @@ namespace PomaBrothers_Frontend.Controllers
             }
             return null!;
         }
+
+
 
         public async Task<List<Supplier>> GetSuppliersAsync()
         {
