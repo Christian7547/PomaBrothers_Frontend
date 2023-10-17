@@ -11,7 +11,7 @@ namespace PomaBrothers_Frontend.Controllers
 
         public ItemController()
         {
-            httpClient.BaseAddress = new Uri("http://localhost:5164/"); //5164
+            httpClient.BaseAddress = new Uri("http://localhost:5164/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -20,7 +20,6 @@ namespace PomaBrothers_Frontend.Controllers
         {
             var getItems = await GetItemsAsync();
             var getModels = await GetModelsAsync();
-            var getCategories = await GetCategoriesAsync();
             var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
                 (i, m) => new
                 {
@@ -33,7 +32,6 @@ namespace PomaBrothers_Frontend.Controllers
                     ModelID = m.Id
                 }).ToList();
             ViewBag.Data = query;
-            ViewBag.Category = getCategories;
             return View();
         }
 
@@ -137,23 +135,6 @@ namespace PomaBrothers_Frontend.Controllers
                 return JsonConvert.DeserializeObject<List<Category>>(serializeList);
             }
             return null!;
-        }
-
-        public async Task<List<Item>> GetItemsByCategory([FromQuery]int id)
-        {
-            List<Item> items = new();
-            HttpResponseMessage request = await httpClient.GetAsync($"Item/FilterByCategory/{id}");
-            request.EnsureSuccessStatusCode();
-            var serializeList = request.Content.ReadAsStringAsync().Result;
-            var filterItems = JsonConvert.DeserializeObject<List<Item>>(serializeList);
-            var getModels = await GetModelsAsync();
-            foreach (Item item in filterItems)
-            {
-                var model = getModels.Find(x => x.Id == item.ModelId);
-                item.ItemModel = model!;
-                items.Add(item);
-            }
-            return items;
         }
 
         public async Task<ActionResult> SearchModel(string searchModel)
