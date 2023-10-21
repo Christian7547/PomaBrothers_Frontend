@@ -45,43 +45,60 @@ namespace PomaBrothers_Frontend.Controllers
             ViewBag.Warehouses = await GetWarehousesAsync();
             return View();
         }
-
         [HttpPost]
-        public IActionResult MiAccion(string nombre, string edad)
+        public async Task<IActionResult> New([FromBody] DeliveryDTO objDelivery)
         {
-            // Procesar el objeto JSON recibido desde la solicitud AJAX
-            //string nombre = datos["nombre"].ToString();
-            //int edad = datos["edad"].Value<int>();
-
-            // Realizar alguna lógica
-
-            return Json(new { mensajse = "Datos recibidos y procesados correctamente." });
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> New([FromBody] JObject json)
-        {
-            /*try
-            {*/
-
-            StreamReader reader = new StreamReader(Request.Body);
-
-            string requestBody = await reader.ReadToEndAsync();
-            Console.WriteLine(json);
-            DeliveryDTO objDelivery = DeliveryDTO.FromJson(json);
-            HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
-            if (request.IsSuccessStatusCode)
+            try
             {
-                return RedirectToAction("Index", "Delivery");
+                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
+                if (request.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Delivery");
+                }
+                return View();
             }
-            return View();
-            /*}
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }*/
+            }
         }
+
+        //[HttpPost]
+        //public IActionResult MiAccion(string nombre, string edad)
+        //{
+        //    // Procesar el objeto JSON recibido desde la solicitud AJAX
+        //    //string nombre = datos["nombre"].ToString();
+        //    //int edad = datos["edad"].Value<int>();
+
+        //    // Realizar alguna lógica
+
+        //    return Json(new { mensajse = "Datos recibidos y procesados correctamente." });
+        //}
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> New([FromBody] JObject json)
+        //{
+        //    /*try
+        //    {*/
+
+        //    StreamReader reader = new StreamReader(Request.Body);
+
+        //    string requestBody = await reader.ReadToEndAsync();
+        //    Console.WriteLine(json);
+        //    DeliveryDTO objDelivery = DeliveryDTO.FromJsom(json);
+        //    HttpResponseMessage request = await httpClient.PostAsJsonAsync("Delivery/New", objDelivery);
+        //    if (request.IsSuccessStatusCode)
+        //    {
+        //        return RedirectToAction("Index", "Delivery");
+        //    }
+        //    return View();
+        //    /*}
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }*/
+        //}
         //[HttpPost]
         //public async Task<IActionResult> Create(Item item, IFormFile image)
         //{

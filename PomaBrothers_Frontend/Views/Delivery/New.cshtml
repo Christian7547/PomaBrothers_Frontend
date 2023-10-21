@@ -20,16 +20,6 @@
                     }
                 }
             </select>
-
-
-
-            @*<select id="cmbSupplier" class="form-select">
-            <option value="" disabled selected>Seleccione el proveedor</option>
-            @foreach (var supplier in (List<Supplier>)ViewBag.Suppliers)
-            {
-            <option value="@supplier.Id">@supplier.BussinesName</option>
-            }
-            </select>*@
             <br />
             <h4>Productos</h4>
             <button class="btn btn-success"
@@ -133,13 +123,6 @@
                                 <input type="text" id="txtColor" class="form-control" />
                             </div>
 
-
-                            <div class="mb-3">
-                                <label for="imagenItem" class="control-label">Seleccione una imagen</label>
-                                <input name="image" id="imagenItem" type="file" accept=".jpg, .jpeg" class="form-control-file" required />
-                                <img src="" id="previa" width="400">
-                            </div>
-
                             <div class="form-group">
                                 <label class="control-label">Garantía:</label>
                                 <div class="row">
@@ -163,7 +146,6 @@
                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addItem()">Añadir</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -246,35 +228,7 @@
 </div>
 
 @section Scripts{
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-
-        const inputFile = document.querySelector('#imagenItem');
-        const image = document.querySelector('#previa');
-
-        var base64ImageSelected = "";
-
-        async function encodeFileAsBase64URL(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.addEventListener('loadend', () => {
-                    resolve(reader.result);
-                });
-                reader.readAsDataURL(file);
-            });
-        };
-
-        // Eventos
-        inputFile.addEventListener('input', async (event) => {
-            // Convierto la primera imagen del input en una ruta Base64
-            console.log("se ejecuta el evento");
-            const base64URL = await encodeFileAsBase64URL(inputFile.files[0]);
-            base64ImageSelected = base64URL;
-            console.log(base64URL);
-            // Anyado la ruta Base64 a la imagen
-            image.setAttribute('src', base64URL);
-        });
-
         const txtSearchModel = document.getElementById('txtSearchModel');
         const showModels = document.getElementById('showModels');
 
@@ -289,12 +243,8 @@
         const txtSalePrice = document.getElementById('txtSalePrice');
         const categorySelected = document.getElementById('categorySelected');
         const txtColor = document.getElementById('txtColor');
-
-        const imagenItem = document.getElementById('imagenItem');
-
         const txtDurationWarranty = document.getElementById('txtDurationWarranty');
         const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
-
 
         const cmbSupplier = document.getElementById('cmbSupplier');
         const tableItems = document.getElementById('tableItems');
@@ -307,9 +257,8 @@
             items: [],
             purchasePrices: [],
             warehouseId: 0
-
         };
-        //const files = [];
+
         const printItemsArray = [];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -326,76 +275,8 @@
 
         cmbWarehouse.addEventListener('change', () => {
             objDelivery.warehouseId = parseInt(cmbWarehouse.value);
-        });
+        })
 
-        // Escucha el evento 'change' en el elemento de entrada de archivo
-        //imagenItem.addEventListener('change', (event) => {
-        //    const file = e.target.files[0];
-
-        //    if (file) {
-        //        const reader = new FileReader();
-
-        //        reader.onload = function (e) {
-        //            const base64String = e.target.result;
-        //            // La variable 'base64String' contiene la imagen en formato Base64
-        //            console.log(base64String);
-        //        };
-
-        //        // Lee el archivo como una cadena Base64
-        //        reader.readAsDataURL(file);
-        //    }
-        //});
-
-        //imagenItem.addEventListener('change', (event) => {
-
-        //    var img = event.target.files;
-        //    console.log("m");
-        //    for (var i = 0; i < img.length; i++) {
-        //        var archivo = img[i];
-
-        //            const reader = new FileReader();
-
-        //            reader.onload = function (e) {
-        //                const base64String = e.target.result;
-        //                // La variable 'base64String' contiene la imagen en formato Base64
-        //                console.log(base64String);
-        //            };
-
-        //            // Lee el archivo como una cadena Base64
-        //            reader.readAsDataURL(file);
-
-        //        // Verificamos si el archivo es una imagen (puedes ajustar esto según tus necesidades)
-        //        //if (archivo.type.startsWith('image/')) {
-        //        //    // Creamos un objeto Image para representar la imagen
-        //        //    var imagen = new Image();
-        //        //    imagen.src = URL.createObjectURL(archivo);
-        //        //    //// Agregamos la imagen al array
-        //        //    objDelivery.files.push(imagen);
-
-        //        //    // Selecciona el elemento de entrada de archivo (input type="file")
-        //        //    const inputElement = document.getElementById('fileInput');
-
-        //        //    // Escucha el evento 'change' en el elemento de entrada de archivo
-        //        //    inputElement.addEventListener('change', (e) => {
-        //        //        const file = e.target.files[0];
-
-        //        //        if (file) {
-        //        //            const reader = new FileReader();
-        // ed
-        //        //            reader.onload = function (e) {
-        //        //                const base64String = e.target.result;
-        //        //                // La variable 'base64String' contiene la imagen en formato Base64
-        //        //                console.log(base64String);
-        //        //            };
-
-        //        //            // Lee el archivo como una cadena Base64
-        //        //            reader.readAsDataURL(file);
-        //        //        }
-        //        //    });
-
-        //        //}
-        //    }
-        //})
         function addItem() {
             let item = {
                 name: txtName.value,
@@ -404,15 +285,11 @@
                 price: parseFloat(txtSalePrice.value),
                 color: txtColor.value,
                 durationWarranty: txtDurationWarranty.value,
-                typeWarranty: cmbTypeWarranty.value,
+                typewarranty: cmbTypeWarranty.value,
                 categoryId: categorySelected.value,
                 status: 1,
-                modelId: txtModelId.value,
-                urlImage: "hola"
+                modelId: txtModelId.value
             };
-            base64ImageSelected = "";
-
-
             objDelivery.items.push(item);
             objDelivery.purchasePrices.push(parseFloat(txtPurchasePrice.value));
             objDelivery.total += parseFloat(txtPurchasePrice.value);
@@ -463,34 +340,12 @@
         }
 
         function sendData() {
-            console.log("salida...........");
-            console.log(objDelivery);
-            console.log(JSON.stringify(objDelivery))
-            var nombre = "Ejemplo";
-            var edad = 25;
-
-            var dataToSend = {
-                nombre: nombre,
-                edad: edad
-            };
-            $.ajax({
-                type: "POST",
-                url: "/Delivery/MiAccion",
-                data: JSON.stringify(dataToSend),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    // Manejar la respuesta del controlador
-                }
-            });
-
-            /*fetch('/Delivery/New', {
+            fetch('/Delivery/New', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(objDelivery)
-
             })
                 .then(res => {
                     if (res.redirected) {
@@ -499,8 +354,7 @@
                     }
                 })
                 .then(data => console.log(data))
-                .catch(error => console.error(error))*/
-
+                .catch(error => console.error(error))
         }
 
         function searchModel(findModel) {
