@@ -1,0 +1,172 @@
+﻿<h1>Ventas</h1>
+<hr />
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-bordered" id="tableSales">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Total (Bs.)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailsModal">
+    <div class=" modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="lblDateSale"></h5>
+            </div>
+            <div class="modal-body">
+                <h5 class="fw-bold">Productos:</h5>
+                <table class="table table-borderless" id="tableItems">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Garantía</th>
+                            <th>Serie</th>
+                            <th>Precio (Bs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                <label class="control-label fw-bold">Total:</label>
+                            </td>
+                            <td>
+                                <span id="lblTotal" class="fw-bold"></span>
+                                <label class="fw-bold">Bs.</label>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <hr />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mt-1">
+                            <label for="lblClientName" class="fw-bold fs-6">Cliente:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lblCi" class="fw-bold fs-6">Carnet de identidad:</label>
+                        </div>
+                        <div class="mt-1">
+                            <label for="lblEmail" class="fw-bold fs-6">Correo electrónico:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-1">
+                            <label id="lblClientName" class="fs-6"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblCi" fs-6"></label>
+                        </div>
+                        <div class="mt-1">
+                            <label id="lblEmail" class="fs-6"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        const tableSales = document.getElementById('tableSales');
+
+        const tableItems = document.getElementById('tableItems');
+        const lblTotal = document.getElementById('lblTotal');
+        const lblDateSale = document.getElementById('lblDateSale');
+        const lblClientName = document.getElementById('lblClientName');
+        const lblEmail = document.getElementById('lblEmail');
+        const lblCi = document.getElementById('lblCi');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            getSales();
+        })
+
+        function getSales() {
+            fetch('/Sale/GetSales')
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+            .then(data => {
+                showSales(data);    
+            })
+            .catch(error => console.error(error));
+        }
+
+        function showSales(data){
+            const tbody = tableSales.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            for (let i = 0; i < data.length; i++) {
+                var row = tbody.insertRow();
+                row.insertCell(0).textContent = data[i].registerDate;
+                let secondLastName;
+                if (data[i].customer.secondLastName === null){
+                    secondLastName = '';
+                }
+                else{
+                    secondLastName = data[i].customer.secondLastName;
+                }
+                row.insertCell(1).textContent = data[i].customer.name + ' ' + data[i].customer.lastName + ' ' + secondLastName;
+                row.insertCell(2).textContent = data[i].total;
+                var btnDetails = document.createElement('button');
+                btnDetails.classList.add('btn', 'btn-success');
+                btnDetails.textContent = 'Ver Detalles';
+                btnDetails.setAttribute('data-target', '#detailsModal');
+                btnDetails.setAttribute('data-toggle', 'modal');
+                btnDetails.onclick = () => {
+                    showDetailsOfSale(data[i])
+                    showItems(data[i].saleDetails);
+                }
+                row.insertCell(3).appendChild(btnDetails);
+            }
+        }
+
+        function showDetailsOfSale(sale){
+            lblTotal.textContent = sale.total;
+            lblDateSale.textContent = `Venta de ${sale.registerDate}`;
+            let secondLastName;
+            if (sale.customer.secondLastName === null) {
+                secondLastName = '';
+            }
+            else {
+                secondLastName = sale.customer.secondLastName;
+            }
+            lblClientName.textContent = sale.customer.name + ' ' + sale.customer.lastName + ' ' + secondLastName;
+            lblEmail.textContent = sale.customer.email;
+            lblCi.textContent = sale.customer.ci;
+        }
+
+        function showItems(items) {
+            const tbody = tableItems.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            items.forEach(detail => {
+                var row = tbody.insertRow();
+                row.insertCell(0).textContent = detail.item.name;
+                row.insertCell(1).textContent = detail.item.durationWarranty + ' ' + detail.item.typeWarranty;
+                row.insertCell(2).textContent = detail.item.serie;
+                row.insertCell(3).textContent = detail.item.price;
+            });
+        }
+    </script>
+}

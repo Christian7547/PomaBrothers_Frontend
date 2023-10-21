@@ -6,7 +6,7 @@
         public int IdSale { get; set; }
         public int IdItem { get; set; }
         public decimal Subtotal { get; set; }
-        public virtual Item IdItemNavigation { get; set; } = null!;
-        public virtual Sale IdSaleNavigation { get; set; } = null!;
+        public virtual Item Item { get; set; } = null!;
+        public virtual Sale Sale { get; set; } = null!;
     }
 }

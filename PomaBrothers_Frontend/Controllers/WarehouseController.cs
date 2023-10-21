@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
 using System.Net.Http.Headers;
-using System.Text.Json;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -46,7 +45,7 @@ namespace PomaBrothers_Frontend.Controllers
             HttpResponseMessage request = await httpClient.GetAsync($"Warehouse/GetContentWarehouse/{id}");
             request.EnsureSuccessStatusCode();
             var serialize = request.Content.ReadAsStringAsync().Result;
-            var models = JsonConvert.DeserializeObject<List<ItemModel>>(serialize);
+            var models = JsonConvert.DeserializeObject<List<Section>>(serialize);
             return Json(models);
         }
 
@@ -57,15 +56,6 @@ namespace PomaBrothers_Frontend.Controllers
             var serialize = request.Content.ReadAsStringAsync().Result;
             var items = JsonConvert.DeserializeObject<List<Item>>(serialize);
             return Json(items);
-        }
-
-        public async Task<IActionResult> GetQuantityModels([FromRoute]int id)
-        {
-            HttpResponseMessage request = await httpClient.GetAsync($"Section/GetQuantityModel/{id}");
-            request.EnsureSuccessStatusCode();
-            var serialize = request.Content.ReadAsStringAsync().Result;
-            var quantity = JsonConvert.DeserializeObject<int>(serialize);
-            return Json(quantity);
         }
         #endregion
     }

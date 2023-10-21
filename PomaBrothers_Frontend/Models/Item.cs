@@ -17,6 +17,5 @@
         public string UrlImage { get; set; }
         public virtual Category Category { get; set; }
         public virtual ItemModel ItemModel { get; set; }
-        public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
 }

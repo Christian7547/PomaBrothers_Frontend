@@ -85,7 +85,6 @@
         const bodyContainerModal = document.getElementById('bodyContainerModal');
 
         var printItemsDiv;
-        var itemsQuantity;
         
 
         function getModelsAsync(id) {
@@ -97,39 +96,42 @@
                 return null;
             })
             .then(data => {
-                let getQuantity = undefined;
-                data.forEach(model => {
-                    printModels(model);
-                    // if(getQuantity != model){
-                    //     getQuantity = model;
-                    //     printQuantity(getQuantity.id);
-                    // }
+                data.forEach(section => {
+                    printModels(section);
                 });
             })
             .catch(error => console.error(error))
         }
         
-        function printModels(model){
+        function printModels(section){
+            let capacity;
+            if (section.itemModel.capacityOrSize != null && section.itemModel.measurementUnit != null){
+                capacity = section.itemModel.capacityOrSize + ' ' + section.itemModel.measurementUnit;
+            }
+            else
+            {
+                capacity = 'Sin capacidad';
+            }
             const html = `<div class="row">
                                <div class="col-md-5 p-3">
                                   <p>
                                     <label for="lblName" class="fw-bold">Modelo:</label>
-                                    <label id="lblName">${model.modelName}</label>
+                                    <label id="lblName">${section.itemModel.modelName}</label>
                                   </p>
                                   <p>
                                     <label for="lblMarker" class="fw-bold">Marca:</label>
-                                    <label id="lblMarker">${model.marker}</label>
+                                        <label id="lblMarker">${section.itemModel.marker}</label>
                                   </p>
                                   <p>
-                                    <label>${model.capacityOrSize + ' ' + model.measurementUnit}</label>
+                                        <label>${capacity}</label>
                                   </p>
                                   <p>
                                     <label for="lblQuantity" class="fw-bold">Cantidad:</label>
-                                    <label id="lblQuantity"></label>
+                                    <label id="lblQuantity">${section.modelQuantity}</label>
                                   </p>
                                </div>
                                <div class="col-md-4">
-                                  <button id="btnShowModels" onclick="printItems(${model.id})"
+                                  <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
                                             class="btn btn-success h-50 fw-bold mt-5"
                                             type="button">
                                      Ver Productos
@@ -141,25 +143,6 @@
                           <div id="printItemsDiv"></div>`;
             bodyContainerModal.insertAdjacentHTML('beforeend', html);
             printItemsDiv = document.getElementById('printItemsDiv');
-            itemsQuantity = document.getElementById('lblQuantity');
-        }
-
-        function printQuantity(modelId){
-            fetch(`/Warehouse/GetQuantityModels/${modelId}`)
-            .then(res => {
-                if(res.ok){
-                    return res.json();
-                }
-            })
-            .then(data => {
-                if (data != 0) {
-                    itemsQuantity.textContent = data;
-                }
-                else{
-                    itemsQuantity.textContent = 'Sin stock';
-                }
-            })
-            .catch(error => console.error(error))
         }
 
         function printItems(id){
@@ -225,16 +208,16 @@
         function confirmDelete() {
             const id = txtId.value;
             fetch(`/Warehouse/Delete?id=${id}`)
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('deleteModal').style.display = 'none';
-                        location.reload();
-                    }
-                    else {
-                        console.log('Internal server error');
-                    }
-                })
-                .catch(error => console.error(error))
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('deleteModal').style.display = 'none';
+                    location.reload();
+                }
+                else {
+                    console.log('Internal server error');
+                }
+            })
+            .catch(error => console.error(error))
         }
 
 
