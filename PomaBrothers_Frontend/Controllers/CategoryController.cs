@@ -33,15 +33,20 @@ namespace PomaBrothers_Frontend.Controllers
         public async Task<IActionResult> ItemsByCategories([FromRoute]int id)
         {
             var items = await GetItemsCategoryAsync(id);
-            return View(items);
+            if(items != null)
+                return View(items);
+            return View();
         }
 
         public async Task<List<Item>> GetItemsCategoryAsync(int id)
         {
             HttpResponseMessage request = await httpClient.GetAsync($"Category/FilterByCategory/{id}");
-            request.EnsureSuccessStatusCode();
-            string json = request.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<List<Item>>(json);
+            if (request.IsSuccessStatusCode)
+            {
+                string json = request.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<Item>>(json);
+            }
+            return null!;
         }
     }
 }

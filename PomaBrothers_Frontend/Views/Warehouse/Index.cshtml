@@ -60,18 +60,35 @@
     </div>
 </div>
 
-@*Modal for Items*@
+@*Modal for Models*@
 <div class="modal fade" id="showItemsModal">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Productos disponibles</h4>
+                <h4 class="modal-title">Modelos disponibles</h4>
                 <button type="button" class="btn-close" id="btnCloseModal" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="bodyContainerModal">
+            <div class="modal-body" id="bodyContainerModal"> 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnClearModal" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal for Items*@
+<div class="modal fade" id="showItems">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Productos</h4>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="printItemsDiv">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -133,14 +150,15 @@
                                <div class="col-md-4">
                                   <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
                                             class="btn btn-success h-50 fw-bold mt-5"
-                                            type="button">
+                                            type="button"
+                                            data-toggle="modal"
+                                            data-target="#showItems">
                                      Ver Productos
                                   </button>
                                </div>
                           </div>
                           
-                          <hr/>
-                          <div id="printItemsDiv"></div>`;
+                          <hr/>`;
             bodyContainerModal.insertAdjacentHTML('beforeend', html);
             printItemsDiv = document.getElementById('printItemsDiv');
         }

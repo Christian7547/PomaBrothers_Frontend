@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
+using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http.Headers;
 
 namespace PomaBrothers_Frontend.Controllers
@@ -142,6 +143,14 @@ namespace PomaBrothers_Frontend.Controllers
             HttpResponseMessage request = await httpClient.GetAsync($"ItemModel/SearchModel/{searchModel}");
             var serializeList = request.Content.ReadAsStringAsync().Result;
             List<ItemModel> list = JsonConvert.DeserializeObject<List<ItemModel>>(serializeList);
+            return Json(list);
+        }
+
+        public async Task<ActionResult> SearchProduct(string searchProduct)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"Item/SearchProduct/{searchProduct}");
+            var serializeList = request.Content.ReadAsStringAsync().Result;
+            List<ProductSearchDTO> list = JsonConvert.DeserializeObject<List<ProductSearchDTO>>(serializeList);
             return Json(list);
         }
         #endregion
