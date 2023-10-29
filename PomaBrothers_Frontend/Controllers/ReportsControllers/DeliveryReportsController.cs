@@ -1,12 +1,9 @@
-﻿        using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
 using PomaBrothers_Frontend.Reports.Implementation.DeliveryReports;
 using QuestPDF.Fluent;
-using QuestPDF.Infrastructure;
-using System.Diagnostics;
 using PomaBrothers_Frontend.Models.DTOModels;
 
 namespace PomaBrothers_Frontend.Controllers.ReportsControllers
@@ -27,7 +24,6 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
 
         public async Task<ActionResult> GeneratedReportByDateRange(DateTime startDate, DateTime finishDate)
         {
-            QuestPDF.Settings.License = LicenseType.Community;
             var itemsByDateRange = await GetOrdersByDateRangeReport(startDate, finishDate);
             var total = itemsByDateRange.Sum(purchasePrice => purchasePrice.PurchasePrice);
             if (itemsByDateRange != null)
@@ -64,7 +60,6 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
 
         public async Task<ActionResult> GeneratedReportSupplierByProduct(int productId)
         {
-            QuestPDF.Settings.License = LicenseType.Community;
             var productSupplierDTO = await GetItemWithSupplierReport(productId);
             if(productSupplierDTO != null)
             {
