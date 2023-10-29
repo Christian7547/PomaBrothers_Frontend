@@ -27,6 +27,7 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
 
         public async Task<ActionResult> GeneratedReportByDateRange(DateTime startDate, DateTime finishDate)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
             var itemsByDateRange = await GetOrdersByDateRangeReport(startDate, finishDate);
             var total = itemsByDateRange.Sum(purchasePrice => purchasePrice.PurchasePrice);
             if (itemsByDateRange != null)
@@ -63,6 +64,7 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
 
         public async Task<ActionResult> GeneratedReportSupplierByProduct(int productId)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
             var productSupplierDTO = await GetItemWithSupplierReport(productId);
             if(productSupplierDTO != null)
             {

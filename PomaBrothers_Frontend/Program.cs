@@ -1,5 +1,3 @@
-using QuestPDF.Infrastructure;
-
 namespace PomaBrothers_Frontend
 {
     public class Program
@@ -7,7 +5,7 @@ namespace PomaBrothers_Frontend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            QuestPDF.Settings.License = LicenseType.Community;
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
