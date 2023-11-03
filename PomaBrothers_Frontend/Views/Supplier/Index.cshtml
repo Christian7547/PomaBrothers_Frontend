@@ -1,58 +1,57 @@
 ﻿@{
     ViewData["Title"] = "Proveedor";
 }
-<h1>Proveedor</h1>
+<link rel="stylesheet" href="~/css/Forms.css">
+<br />
+<h1 style="text-align:center">Lista Proveedor</h1>
+<br />
 
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var item in ViewBag.Data)
     {
         <div class="col">
-            <div class="card mb-3 border-success" style="max-width: 640px;">
-                <div class="card-header bg-transparent border-light fw-bold">@item._BussinesName</div>
-                <div class="row g-0">
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-body">
-                                    <p>
-                                        <label class="text-sm fw-bold">Teléfono:</label>
-                                        <label class="text-sm">@item._Phone</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Encargado:</label>
-                                        <label class="text-sm">@item._Manager</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">CI:</label>
-                                        <label class="text-sm">@item._Ci</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Dirección:</label>
-                                        <label class="text-sm">@item._Address</label>
-                                    </p>
-                                    
-                                </div>
-                            </div>
-                            <div class="col d-flex align-items-center justify-content-center">
-                                <div class="d-flex flex-column align-items-end">
-                                    <button type="button"
-                                            onclick="showDetails(@item._SupID)"
-                                            data-id="@item._SupID"
-                                            data-toggle="modal"
-                                            data-target="#detailsModal"
-                                            class="btn btn-success w-100 mb-2">
-                                        Ver detalles
-                                    </button>
-                                    <a asp-action="Edit" asp-route-id="@item._SupID" class="btn btn-success w-100 mb-2">Actualizar</a>
-                                    <button type="button"
-                                            data-id="@item._SupID"
-                                            data-toggle="modal"
-                                            data-target="#deleteModal"
-                                            class="btn btn-danger w-100">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
+            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-transparent border-light fw-bold textitos">@item._BussinesName</div>
+                <br>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <p>
+                                <label class="text-sm fw-bold">Teléfono:</label>
+                                <label class="text-sm">@item._Phone</label>
+                            </p>
+                            <p>
+                                <label class="text-sm fw-bold">Encargado:</label>
+                                <label class="text-sm">@item._Manager</label>
+                            </p>
+                            <p>
+                                <label class="text-sm fw-bold">CI:</label>
+                                <label class="text-sm">@item._Ci</label>
+                            </p>
+                            <p>
+                                <label class="text-sm fw-bold">Dirección:</label>
+                                <label class="text-sm">@item._Address</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="align-items-end">
+                            <button type="button"
+                                    onclick="showDetails(@item._SupID)"
+                                    data-id="@item._SupID"
+                                    data-toggle="modal"
+                                    data-target="#detailsModal"
+                                    class="btncardD w-100 mb-2">
+                                Ver detalles
+                            </button>
+                            <a asp-action="Edit" asp-route-id="@item._SupID" class="w-100 mb-2 btncardA">Actualizar</a>
+                            <button type="button"
+                                    data-id="@item._SupID"
+                                    data-toggle="modal"
+                                    data-target="#deleteModal"
+                                    class="btncardE w-100 mb-2">
+                                Eliminar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -60,25 +59,37 @@
         </div>
     }
 </div>
+
+
+
+
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content deleteModal2" style="text-align:center">
 
             <div class="modal-header">
-                <h4 class="modal-title">Confirmar acción</h4>
+                <h3 class="">Confirmar acción</h3>
             </div>
 
             <div class="modal-body">
                 <p>Desea eliminar el registro?</p>
                 <input id="IdS" type="hidden" />
             </div>
-
-            <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-md-1"></div>
             </div>
+            <br />
+            <br />
         </div>
     </div>
 </div>
@@ -87,7 +98,7 @@
 @*Modal for details*@
 <div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content detailsModal2">
             <div class="modal-header">
                 <h5 class="modal-title" id="lblBussinesName"></h5>
             </div>
@@ -107,7 +118,7 @@
                             <label for="lbladdress" class="fw-bold">Dirección:</label>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="mt-1">
                             <label id="lblPhone"></label>
                         </div>
@@ -124,7 +135,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btncardE w-50" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

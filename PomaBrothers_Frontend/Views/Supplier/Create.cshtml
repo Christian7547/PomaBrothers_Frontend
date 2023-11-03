@@ -1,4 +1,90 @@
 ﻿@model Supplier
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Agrega tus enlaces a los archivos CSS y Bootstrap aquí -->
+    <link rel="stylesheet" href="~/css/Forms.css">
+    
+</head>
+<body>
+    <div class="container">
+        <br />
+        <h1 class="text-center">Añadir Proveedor</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="">
+                    <div class="card-body cardBPC">
+                        <h4 class="card-title">Proveedor</h4>
+                        <hr />
+                        <form asp-action="Create">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="BussinesName" class="control-label"></label>
+                                        <input asp-for="BussinesName" class="form-control inputf" />
+                                        <span asp-validation-for="BussinesName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Ci" class="control-label"></label>
+                                        <input asp-for="Ci" type="number" class="form-control inputf" />
+                                        <span asp-validation-for="Ci" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Phone" class="control-label"></label>
+                                        <input asp-for="Phone" type="number" class="form-control inputf" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label asp-for="Manager" class="control-label"></label>
+                                        <input asp-for="Manager" class="form-control inputf" />
+                                        <span asp-validation-for="Manager" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Address" class="control-label"></label>
+                                        <textarea asp-for="Address" class="form-control inputf" rows="4"></textarea>
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="submit" value="Crear" class="buttonG" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <a asp-action="Index" class="buttonV">Volver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</html>
+
+
+@*@model Supplier
 
 @{
     ViewData["Title"] = "Añadir";
@@ -52,3 +138,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+*@

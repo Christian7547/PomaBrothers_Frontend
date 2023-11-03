@@ -1,81 +1,96 @@
 ﻿@{
 
 }
-
-<h1>Almacenes</h1>
+<link rel="stylesheet" href="~/css/Forms.css">
+<h1 style="text-align:center">Almacenes</h1>
 <hr />
-<table class="table">
-    <thead>
-        <tr>
-            <th>Almacen</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var warehouse in (List<Warehouse>)ViewBag.Warehouses)
-        {
-            <tr>
-                <td>@warehouse.Name</td>
-                <td>
-                    <button type="button"
-                            onclick="getModelsAsync(@warehouse.Id)"
-                            data-id="@warehouse.Id"
-                            data-toggle="modal"
-                            data-target="#showItemsModal"
-                            class="btn btn-success">
-                        Inspeccionar
-                    </button>
-                    <button type="button"
-                            data-id="@warehouse.Id"
-                            data-toggle="modal"
-                            data-target="#deleteModal"
-                            class="btn btn-danger">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-6">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-bordered table-responsive-xl ttablita">
+                <thead>
+                    <tr>
+                        <th>Almacen</th>
+                        <th class="centered-column">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var warehouse in (List<Warehouse>)ViewBag.Warehouses)
+                    {
+                        <tr>
+                            <td>@warehouse.Name</td>
+                            <td style="text-align:center">
+                                <button type="button"
+                                        onclick="getModelsAsync(@warehouse.Id)"
+                                        data-id="@warehouse.Id"
+                                        data-toggle="modal"
+                                        data-target="#showItemsModal"
+                                        class="btn bntIns">
+                                    Inspeccionar
+                                </button>
+                                <button type="button"
+                                        data-id="@warehouse.Id"
+                                        data-toggle="modal"
+                                        data-target="#deleteModal"
+                                        class="btn btnExitModelDV">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-@*Modal for delete*@
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="deleteModal">
+    @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content deleteModal2" style="text-align:center">
 
             <div class="modal-header">
-                <h4 class="modal-title">Confirmar acción</h4>
+                <h3 class="">Confirmar acción</h3>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el almacén y todo lo que contiene?</p>
+                <p>Desea eliminar el registro?</p>
                 <input id="logId" type="hidden" />
             </div>
-
-            <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-md-1"></div>
             </div>
+            <br />
+            <br />
         </div>
     </div>
 </div>
 
 @*Modal for Items*@
 <div class="modal fade" id="showItemsModal">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="cardBP modal-dialog modal-dialog-centered modal-fullscreen-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Productos disponibles</h4>
-                <button type="button" class="btn-close" id="btnCloseModal" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title" style="text-align:center">Productos disponibles</h4>
             </div>
             <div class="modal-body" id="bodyContainerModal">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnClearModal" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btncardE" id="btnClearModal" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @section Scripts{
     <script>
@@ -171,7 +186,7 @@
                                                     <div class="row g-0">
 
                                                         <div class="col-md-4">
-                                                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="${item.UrlImage}" alt="Imagen del artículo">
+                                                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Imagen del artículo">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="row">

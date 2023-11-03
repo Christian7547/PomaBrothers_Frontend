@@ -3,139 +3,189 @@
 @{
     ViewData["Title"] = "Actualizar";
 }
-
-<h1>Actualizar</h1>
-<h4>Producto</h4>
-<hr />
-<form asp-action="Edit">
-    <div class="row">
-        <div class="col-md-4">
-            <input asp-for="Id" type="hidden"/>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Serie" class="control-label"></label>
-                <input asp-for="Serie" class="form-control" />
-                <span asp-validation-for="Serie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" rows="8" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Modelo:</label>
-                <div class="row">
-                    <div class="col-md-10">
-                        <input class="form-control" id="txtSearchModel" placeholder="Buscar..." />
-                        <ul id="showModels"></ul>
-                        <input asp-for="ModelId" id="txtModelId" hidden />
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#editModel">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" type="number" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DurationWarranty" class="control-label"></label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <input asp-for="DurationWarranty" class="form-control" id="txtDurationWarranty" />
-                    </div>
-                    <div class="col-md-8">
-                        <select asp-for="TypeWarranty" class="form-control" id="cmbTypeWarranty">
-                            <option value="" selected disabled>@ViewBag.Type</option>
-                            <option value=""></option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" id="categorySelected">
-                    @foreach (var category in (List<Category>)ViewBag.Data)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-success w-25" />
-                <a asp-action="Index" class="btn btn-success w-25">Volver</a>
-            </div>
-        </div>
-    </div>
-</form>
-
-<div class="modal fade" id="editModel">
-    <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Añadir modelo</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="txtModel" class="col-form-label">Modelo:</label>
-                        <input type="text" class="form-control" id="txtModel">
-                    </div>
-                    <div class="mb-3">
-                        <label for="txtMarker" class="col-form-label">Marca:</label>
-                        <input type="text" class="form-control" id="txtMarker">
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity" />
-                            <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="capacityDiv">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad" />
+<link rel="stylesheet" href="~/css/Forms.css">
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="container">
+        <br />
+        <h1 class="text-center">Actualizar Producto</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="">
+                    <div class="card-body cardBPC">
+                        <h4 class="card-title">Producto</h4>
+                        <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="Id" type="hidden" />
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control inputf"/>
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
-                            <div class="col-md-8">
-                                <select class="form-control" id="cmbMeasurementUnit">
-                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
-                                    <option value="Litros">Litros</option>
-                                    <option value="Kilogramos">Kilogramos</option>
-                                    <option value="Pulgadas">Pulgadas</option>
-                                    <option value="Watts">Watts</option>
-                                    <option value="Metros/hora">M3/h </option>
+                            <div class="form-group">
+                                <label asp-for="Serie" class="control-label"></label>
+                                <input asp-for="Serie" class="form-control inputf"/>
+                                <span asp-validation-for="Serie" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                    <textarea asp-for="Description" rows="8" class="form-control inputf"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Modelo:</label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                            <input class="form-control inputf" id="txtSearchModel" placeholder="Buscar..." />
+                                        <ul id="showModels"></ul>
+                                        <input asp-for="ModelId" id="txtModelId" hidden />
+                                    </div>
+                                    <div class="col-md-2">
+                                            <button class="supModel fw-bold" type="button" data-toggle="modal" data-target="#editModel">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label"></label>
+                                    <input asp-for="Price" type="number" class="form-control inputf" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Color" class="control-label"></label>
+                                    <input asp-for="Color" class="form-control inputf" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                                <div class="form-group collapse">
+                                    <label asp-for="UrlImage" class="control-label"></label>
+                                    <input asp-for="UrlImage" class="form-control inputf" />
+                                    <span asp-validation-for="UrlImage" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Producto Image">
+                                </div>
+                                <div class="form-group">
+                                    <label id="image" class="control-label">Seleccione una imagen</label>
+                                    <input id="image" name="image" type="file" accept=".jpg"  class="form-control-file" />
+                                </div>
+                            <div class="form-group">
+                                <label asp-for="DurationWarranty" class="control-label"></label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                            <input asp-for="DurationWarranty" class="form-control inputf" id="txtDurationWarranty" />
+                                    </div>
+                                    <div class="col-md-8">
+                                            <select asp-for="TypeWarranty" class="form-control inputf" id="cmbTypeWarranty">
+                                            <option value="" selected disabled>@ViewBag.Type</option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CategoryId" class="control-label"></label>
+                                    <select asp-for="CategoryId" class="form-control inputf" id="categorySelected">
+                                    @foreach (var category in (List<Category>)ViewBag.Data)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
                                 </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
                             </div>
+                            <br />
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="submit" value="Actualizar" class="buttonA " />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a asp-action="Index" class="buttonV ">Volver</a>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="modal fade" id="editModel">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content editModel">
+                <div class="modal-header">
+                    <h4 class="modal-title">Añadir modelo</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="txtModel" class="col-form-label">Modelo:</label>
+                            <input type="text" class="form-control inputf" id="txtModel">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtMarker" class="col-form-label">Marca:</label>
+                            <input type="text" class="form-control inputf" id="txtMarker">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input inputf" role="switch" id="cbxCapacity" />
+                                <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="capacityDiv">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input class="form-control inputf" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control inputf" id="cmbMeasurementUnit">
+                                        <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                        <option value="Litros">Litros</option>
+                                        <option value="Kilogramos">Kilogramos</option>
+                                        <option value="Pulgadas">Pulgadas</option>
+                                        <option value="Watts">Watts</option>
+                                        <option value="Metros/hora">M3/h </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btncardD " value="Añadir" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btncardE" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
+</form>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -153,7 +203,8 @@
         const txtMarker = document.getElementById('txtMarker');
         const txtCapacityOrSize = document.getElementById('txtCapacityOrSize');
         const cmbMeasurementUnit = document.getElementById('cmbMeasurementUnit');
-        const capacityDiv = document.getElementById('capacityDiv');
+        const capacityDiv = document.getElementById('capacityDiv'); UrlImage
+
 
         document.addEventListener('DOMContentLoaded', () => {
             loadModel(txtModelId.value);

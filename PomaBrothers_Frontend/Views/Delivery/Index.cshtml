@@ -1,15 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Entregas";
 }
-
-<h1>Entregas</h1>
+<link rel="stylesheet" href="~/css/Forms.css">
+<h1 style="text-align:center">Entregas</h1>
 
 <hr />
 
-<div class="container mt-5">
+<div class="container mt-8">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <table class="table table-bordered" id="tableInvoices">
+        <div class="col-md-10">
+            <table class="table table-bordered table-responsive-xl ttablita" id="tableInvoices">
                 <thead>
                     <tr>
                         <th>Fecha</th>
@@ -26,15 +26,15 @@
 </div>
 
 <div class="modal fade" id="detailsModal">
-    <div class=" modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class=" modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content detailsModalVenta">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
             </div>
             <div class="modal-body">
                 <h5 class="fw-bold">Productos:</h5>
-                <table class="table table-borderless" id="tableItems">
-                    <thead>
+                <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
+                    <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
                             <th>Modelo</th>
@@ -76,8 +76,8 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            <div class="modal-footer" >
+                <button type="button" class="btn btnExitModelDV w-80" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
                 row.insertCell(2).textContent = invoices[i].total;
 
                 var btnDetails = document.createElement('button');
-                btnDetails.classList.add('btn', 'btn-success');
+                btnDetails.classList.add('btn', 'btntableV');
                 btnDetails.textContent = 'Ver Detalles';
                 btnDetails.setAttribute('data-target', '#detailsModal');
                 btnDetails.setAttribute('data-toggle', 'modal');

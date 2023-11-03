@@ -11,7 +11,7 @@
         public string User { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string Role { get; set; } = null!;
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
         public string? UrlImage { get; set; }
         public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
     }

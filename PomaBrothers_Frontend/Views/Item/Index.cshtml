@@ -1,18 +1,21 @@
 ﻿@{
     ViewData["Title"] = "Productos";
 }
-
-<h1>Productos</h1>
+<link rel="stylesheet" href="~/css/Forms.css">
+<br />
+<h1 style="text-align:center">Lista Productos</h1>
 <hr />
+
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var item in ViewBag.Data)
     {
         <div class="col">
-            <div class="card mb-3 border-success" style="max-width: 640px;">
+            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
                 <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
-                <div class="row g-0">
+                <div class="row">
                     <div class="col-md-4">
-                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
+                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3"
+                             src="@item._UrlImage"/>
                     </div>
                     <div class="col-md-8"> 
                         <div class="row">
@@ -43,15 +46,15 @@
                                         data-id="@item.ItemID"
                                         data-toggle="modal"
                                         data-target="#detailsModal"
-                                        class="btn btn-success w-100 mb-2">
+                                            class="btncardD w-100 mb-2">
                                         Ver detalles
                                     </button>
-                                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btncardA w-100 mb-2 ">Actualizar</a>
                                     <button type="button"
                                             data-id="@item.ItemID"
                                             data-toggle="modal"
                                             data-target="#deleteModal"
-                                            class="btn btn-danger w-100">
+                                            class="btncardE w-100 mb-2">
                                         Eliminar
                                     </button>
                                 </div>
@@ -64,37 +67,48 @@
     }
 </div>
 @*Modal for delete*@
-<div class="modal fade" id="deleteModal"> @* "fade" is for adding animation*@
+<div class="modal fade" id="deleteModal">
+    @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content deleteModal2" style="text-align:center">
 
             <div class="modal-header">
-                <h4 class="modal-title">Confirmar acción</h4>
+                <h3 class="">Confirmar acción</h3>
             </div>
 
             <div class="modal-body">
                 <p>Desea eliminar el registro?</p>
-                <input id="logId" type="hidden"/>
+                <input id="logId" type="hidden" />
             </div>
-
-            <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar"/>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-md-1"></div>
             </div>
+            <br />
+            <br />
         </div>
     </div>
 </div>
 @*---------------------------*@
 
+
 @*Modal for details*@
 <div class="modal fade" id="detailsModal"> 
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content detailsModal2">
             <div class="modal-header">
-                <h5 class="modal-title" id="lblName"></h5>
+                <h4 class="modal-title" id="lblName"></h4>
             </div>
             <div class="modal-body">
-                <img class="img-fluid mb-2 w-100 h-100 p-1" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Figure" />
+                
+                <img id="imagenItem"  class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Figure" />
                 <p>
                     <label id="lblDescription"></label>
                 </p>
@@ -155,7 +169,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btncardE w-50" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -175,6 +189,9 @@
         const lblTypeWarranty = document.getElementById('lblTypeWarranty');
         const lblInfo = document.getElementById('lblInfo');
         const lblCapacity = document.getElementById('lblCapacity');
+
+        const imagenItem = document.getElementById('imagenItem');
+
 
         document.addEventListener('DOMContentLoaded', () => {
             var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
@@ -197,6 +214,7 @@
                 }
             })
             .then(data => {
+                    
                 lblName.textContent = data.name;
                 lblMarker.textContent = data.itemModel.marker;
                 lblModel.textContent = data.itemModel.modelName;
@@ -206,6 +224,7 @@
                 lblPrice.textContent = `${data.price} Bs.`;
                 lblWarranty.textContent = data.durationWarranty;
                 lblTypeWarranty.textContent = data.typeWarranty;
+
                 if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null){
                     lblInfo.style.display = 'none';
                     lblCapacity.style.display = 'none';
@@ -219,6 +238,7 @@
                 else{
                     lblInfo.textContent = 'Pantalla: ';
                 }
+                    imagenItem.src = `${data.urlImage}`;
             })
             .catch(error => console.log(error))
         }

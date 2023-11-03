@@ -2,15 +2,16 @@
     ViewData["Title"] = "Nueva entrega";
 }
 
-<h1>Nueva entrega</h1>
+<h1 style="text-align:center">Nueva entrega</h1>
 
 <hr />
-
+<link rel="stylesheet" href="~/css/Forms.css">
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 mx-auto cardBPC">
+            <br />
             <label class="fw-bold">Proveedor:</label>
-            <select id="cmbSupplier" class="form-select">
+            <select id="cmbSupplier" class="custom-select">
                 <option value="" disabled selected>Seleccione el proveedor</option>
                 @if (ViewBag.Suppliers != null)
                 {
@@ -20,17 +21,24 @@
                     }
                 }
             </select>
+
             <br />
-            <h4>Productos</h4>
-            <button class="btn btn-success"
+            <h3>Productos:</h3>
+            <br />
+            <div style="text-align:center">
+                <button class="btn btncardD"
                     onclick=""
                     data-id=""
                     data-toggle="modal"
                     data-target="#mdlAddItem">
                 Añadir Productos
             </button>
+            </div>
+            
+            <br />
+            <br />
             <div class="table-responsive">
-                <table class="table table-borderless mt-3" id="tableItems">
+                <table class="table ttablita mt-3" id="tableItems">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -56,18 +64,24 @@
                     </tfoot>
                 </table>
             </div>
-            <button data-toggle="modal" class="btn btn-success" data-target="#mdlWarehouse">
-                Guardar en almacén
-            </button>
+            <br />
+            <br />
+            <div style="text-align:center">
+                <button data-toggle="modal" class="btn btncardD" data-target="#mdlWarehouse">
+                    Guardar en almacén
+                </button>
+            </div>
+            
+            <br />
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="mdlAddItem">
-    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content Model2">
             <div class="modal-header">
-                <h5>Agregar producto</h5>
+                <h4>Agregar producto</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -122,7 +136,11 @@
                                 <label for="txtColor" class="control-label">Color:</label>
                                 <input type="text" id="txtColor" class="form-control" />
                             </div>
-
+                            <div class="mb-3">
+                                <label for="imagenItem" class="control-label">Seleccione una imagen</label>
+                                <input name="image" id="imagenItem" type="file" accept=".jpg" class="form-control-file" required />
+                                <img src="" id="previa" width="400">
+                            </div>
                             <div class="form-group">
                                 <label class="control-label">Garantía:</label>
                                 <div class="row">
@@ -143,8 +161,8 @@
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addItem()">Añadir</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn bntIns" data-dismiss="modal" onclick="addItem()">Añadir</button>
+                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -152,7 +170,7 @@
 
 <div class="modal fade" id="newModel">
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content detailsModal2">
             <div class="modal-header">
                 <h4 class="modal-title">Añadir modelo</h4>
             </div>
@@ -192,8 +210,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn btn-success" value="Añadir" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn bntIns" value="Añadir" />
+                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -201,7 +219,7 @@
 
 <div class="modal fade" id="mdlWarehouse">
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content detailsModal2">
             <div class="modal-header">
                 <h4 class="modal-title">Seleccione el almacén</h4>
             </div>
@@ -220,15 +238,39 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" id="btnSaveInWarehouse" onclick="sendData()" data-dismiss="modal" class="btn btn-success" value="Guardar" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <input type="submit" id="btnSaveInWarehouse" onclick="sendData()" data-dismiss="modal" class="btn bntIns" value="Guardar" />
+                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts{
+
     <script>
+
+        const inputFile = document.querySelector('#imagenItem');
+        const image = document.querySelector('#previa');
+
+        var base64ImageSelected = "";
+        async function encodeFileAsBase64URL(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.addEventListener('loadend', () => {
+                    resolve(reader.result);
+                });
+                reader.readAsDataURL(file);
+            });
+        };
+
+         inputFile.addEventListener('input', async (event) => {
+            console.log("se ejecuta el evento");
+            const base64URL = await encodeFileAsBase64URL(inputFile.files[0]);
+            base64ImageSelected = base64URL;
+            console.log(base64URL);
+            image.setAttribute('src', base64URL);
+          });
+
         const txtSearchModel = document.getElementById('txtSearchModel');
         const showModels = document.getElementById('showModels');
 
@@ -245,6 +287,7 @@
         const txtColor = document.getElementById('txtColor');
         const txtDurationWarranty = document.getElementById('txtDurationWarranty');
         const cmbTypeWarranty = document.getElementById('cmbTypeWarranty');
+        const imagenItem = document.getElementById('imagenItem');
 
         const cmbSupplier = document.getElementById('cmbSupplier');
         const tableItems = document.getElementById('tableItems');
@@ -277,6 +320,7 @@
             objDelivery.warehouseId = parseInt(cmbWarehouse.value);
         })
 
+
         function addItem() {
             let item = {
                 name: txtName.value,
@@ -286,9 +330,11 @@
                 color: txtColor.value,
                 durationWarranty: txtDurationWarranty.value,
                 typewarranty: cmbTypeWarranty.value,
+                urlImage: base64ImageSelected,
                 categoryId: categorySelected.value,
                 status: 1,
                 modelId: txtModelId.value
+
             };
             objDelivery.items.push(item);
             objDelivery.purchasePrices.push(parseFloat(txtPurchasePrice.value));
@@ -319,7 +365,7 @@
                 newRow.insertCell(3).textContent = printItemsArray[i].price;
 
                 var removeButton = document.createElement("button");
-                removeButton.classList.add("btn", "btn-danger");
+                removeButton.classList.add("btn", "btnExitModelDV");
                 removeButton.textContent = "Eliminar";
                 removeButton.onclick = () => {
                     deleteItemOfTable(i);
@@ -340,6 +386,12 @@
         }
 
         function sendData() {
+            console.log(objDelivery);
+
+            objDelivery.items.forEach(item => {
+                item.urlImage = item.urlImage.toString();
+            });
+
             fetch('/Delivery/New', {
                 method: 'POST',
                 headers: {
@@ -432,3 +484,5 @@
         });
     </script>
 }
+
+

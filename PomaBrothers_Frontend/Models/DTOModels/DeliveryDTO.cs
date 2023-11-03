@@ -13,7 +13,7 @@ namespace PomaBrothers_Frontend.Models.DTOModels
 
         //public static DeliveryDTO FromJson(JObject jsonObject)
         //{
-           
+
 
         //    return new DeliveryDTO
         //    {

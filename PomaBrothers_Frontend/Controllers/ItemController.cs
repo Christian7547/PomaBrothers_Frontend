@@ -28,6 +28,7 @@ namespace PomaBrothers_Frontend.Controllers
                     _Color = i.Color,
                     _Serie = i.Serie,
                     _Marker = m.Marker,
+                    _UrlImage = i.UrlImage,
                     ItemID = i.Id,
                     ModelID = m.Id
                 }).ToList();
@@ -48,23 +49,37 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
+            
             Item item = await GetItemAsync(id);
             ViewBag.Type = item.TypeWarranty;
             ViewBag.Data = await GetCategoriesAsync();
             return View(item);
         }
-
         [HttpPost]
-        public async Task<IActionResult> Edit(Item item)
+        public async Task<IActionResult> Edit(Item item, IFormFile? image)
         {
             try
             {
                 item.Status = 1;
+                if (image != null)
+                {
+                    using (var stream = image.OpenReadStream())
+                    using (var ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        byte[] imageBytes = ms.ToArray();
+
+                        string base64Image = "data:image;base64,"+Convert.ToBase64String(imageBytes);
+
+
+                        item.UrlImage = base64Image;
+                    }
+                }
                 HttpResponseMessage request = await httpClient.PutAsJsonAsync("Item/Edit", item);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Item");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

@@ -8,6 +8,6 @@
         public string Manager { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string Ci { get; set; } = null!;
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
     }
 }

@@ -1,0 +1,338 @@
+.buttonV {
+    display: block;
+    background-color: #dddeca;
+    color: black;
+    padding: 12px;
+    font-size: 20px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    width: 350px;
+    text-decoration: none;
+    margin: auto;
+    text-align: center;
+}
+.buttonV:hover{
+    color: white;
+    background-color: #c2c8c2;
+}
+.btntableV{
+    display: block;
+    background-color: #dddeca;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    margin: auto;
+}
+.btntableV:hover{
+    color: white;
+    background-color: #c2c8c2;
+}
+
+.buttonG {
+    
+    background-color: #64c288;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    text-decoration: none;
+    margin: auto;
+}
+.buttonG:hover{
+    color: white;
+    background-color: #779974;
+}
+.buttonA {
+    
+    background-color: #f6f36a;
+    color: black;
+    padding: 12px;
+    font-size: 20px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    width: 350px;
+    text-decoration: none;
+    text-align: center;
+    margin: auto;}
+.buttonA:hover{
+    color: white;
+    background-color: #9c8c26;
+}
+.cardBPC {
+    
+    background-color: #E6EAE6(237, 240, 240); 
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #5DDF64;
+}
+.cardBP {
+    
+    background-color: #E6EAE6(237, 240, 240); 
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #5DDF64;
+}
+.cardBP:hover{
+    color: black;
+    background-color: #396e4d;
+}
+
+hr{
+    background-color: #000000;
+    border: 2px solid black;
+
+}
+body{
+    background-color: #ffffffd8;
+}
+.bodlog{
+    background-color: #937171d8;
+}
+.textitos{
+    font-size: 20px;
+
+}
+
+.btncardA{
+    display: block;
+    background-color: #f6f36a;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+.btncardA:hover{
+    color: white;
+    background-color: #9c8c26;
+}
+.btncardD{
+    background-color: #9ee3a4;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    
+}
+.btncardD:hover{
+    color: white;
+    background-color: #d5d2bc;
+}
+.btncardE{
+    background-color: #EB3E3E;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+
+}
+.btncardE:hover{
+    color: white;
+    background-color: #82301d;
+}
+.detailsModal2{
+    background-color: #f1fff1b1(237, 240, 240); /* Corrección en el color de fondo */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 3px solid;
+    border-color: #5DDF64;
+}
+.detailsModal2:hover{
+    color: black;
+    background-color: #67ac81;
+}
+.deleteModal2{
+    background-color: #175d17b1(237, 240, 240); /* Corrección en el color de fondo */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 3px solid;
+    border-color: #0eb564;
+}
+.inputf{
+    border: 2px solid;
+    border-color: #104d30;
+}
+.inputf:hover{
+    color: black;
+    background-color: #67ac81;
+}
+.supModel{
+    background-color: #35c071;
+    color: black;
+    padding: 12px;
+    font-size: 10px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+.supModel:hover{
+    color: black;
+    background-color: #9cada3;
+}
+.Model2{
+    background-color: #35c071;
+    color: black;
+    padding: 12px;
+    font-size: 16px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.Model2:hover{
+    color: black;
+    background-color: #9cada3;
+}
+.editModel{
+    background-color: #f1fff1b1(237, 240, 240); /* Corrección en el color de fondo */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 3px solid;
+    border-color: #5DDF64;
+}
+
+
+
+
+
+
+/* Estilo para la tabla */
+.ttablita {
+    background-color: #175d17b1;
+    color: black; /* Color de texto blanco para mejor contraste */
+    border: rgb(174, 177, 174);
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
+    
+
+}
+/* Estilo para las filas pares e impares */
+.ttablita tbody tr:nth-child(odd) {
+    background-color: #f1fff1b1;
+    
+}
+.ttablita tbody tr:nth-child(odd):hover {
+    background-color: #779974;
+    
+}
+
+
+.ttablita tbody tr:nth-child(even) {
+    background-color: #f1fff1b1;
+}
+.ttablita tbody tr:nth-child(even):hover {
+    background-color: #779974;
+}
+/* Estilo para encabezados */
+.ttablita thead {
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+}
+.ttablita tbody td.text-center .btn {
+    margin-right: 5px; /* Ajusta el margen entre los botones según tu preferencia */
+}
+
+  /*Modal ventas*/
+.detailsModalVenta{
+    background-color: #d2e6d9; /* Corrección en el color de fondo */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 3px solid;
+    border-color: #5DDF64;
+}
+.detailsModalVenta:hover{
+    color: black;
+    background-color: #91bea0;
+}
+.btnExitModelDV{
+    background-color: #EB3E3E;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    
+}
+.btnExitModelDV:hover{
+    color: white;
+    background-color: #82301d;
+}
+.bntIns{
+    background-color: #dddeca;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.bntIns:hover{
+    color: white;
+    background-color: #c2c8c2;
+}
+.centered-column {
+    text-align: center; /* Centra horizontalmente el contenido */
+}
+
+.modal-dialog.modal-fullscreen-md {
+    max-width: 70%;
+}
+
+
+
+/* Apply custom styles to the select element */
+.custom-select {
+    background-color: #175d17b1; /* Background color */
+    border: 1px solid #ccc; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Spacing inside the select */
+    width: 100%; /* Full width */
+    font-size: 16px; /* Text size */
+    color: #333; /* Text color */
+}
+
+/* Style for option elements within the select */
+.custom-select option {
+    background-color: #779974; /* Background color for options */
+    color: #000000; /* Text color for options */
+}
+
+/* Hover effect for select */
+.custom-select:hover {
+    border-color: #eae7e7;
+    color: #396e4d; /* Change border color on hover */
+}
+
+/* Focus style for select */
+.custom-select:focus {
+    border-color: #779974;  /* Add a subtle box shadow */
+}

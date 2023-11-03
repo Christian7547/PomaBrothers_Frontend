@@ -1,36 +1,41 @@
-﻿<h1>Ventas</h1>
+﻿<link rel="stylesheet" href="~/css/Forms.css">
+
+
+<h1 style="text-align:center">Ventas</h1>
 <hr />
 
-
-<div class="container mt-5">
+<div class="container mt-8">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <table class="table table-bordered" id="tableSales">
-                <thead>
+        <div class="col-md-10">
+            <!-- Aumenta el ancho de la columna -->
+            <table class="table table-bordered table-responsive-xl ttablita" id="tableSales">
+                <thead class="thead-dark">
                     <tr>
                         <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Total (Bs.)</th>
-                        <th></th>
+                        <th>Detalles</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Aquí se agregan las filas de datos de ventas -->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
+
 <div class="modal fade" id="detailsModal">
-    <div class=" modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content detailsModalVenta">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="lblDateSale"></h5>
+                <h5 class="modal-title fw-bold" id="lblDateSale">Detalles de la Venta</h5>
             </div>
             <div class="modal-body">
                 <h5 class="fw-bold">Productos:</h5>
-                <table class="table table-borderless" id="tableItems">
-                    <thead>
+                <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
+                    <thead class="thead-dark">
                         <tr>
                             <th>Nombre</th>
                             <th>Garantía</th>
@@ -38,7 +43,10 @@
                             <th>Precio (Bs.)</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+
+                        <!-- Aquí se agregan las filas de detalles de productos -->
+                    </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="2"></td>
@@ -55,35 +63,36 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="mt-1">
+                        <div class="mt-2">
                             <label for="lblClientName" class="fw-bold fs-6">Cliente:</label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-2">
                             <label for="lblCi" class="fw-bold fs-6">Carnet de identidad:</label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-2">
                             <label for="lblEmail" class="fw-bold fs-6">Correo electrónico:</label>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="mt-1">
+                    <div class="col-md-9">
+                        <div class="mt-2">
                             <label id="lblClientName" class="fs-6"></label>
                         </div>
-                        <div class="mt-1">
-                            <label id="lblCi" fs-6"></label>
+                        <div class="mt-2">
+                            <label id="lblCi" class="fs-6"></label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-2">
                             <label id="lblEmail" class="fs-6"></label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            <div class="modal-footer"  >
+                <button type="button" class="btn btnExitModelDV w-80" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 @section Scripts{
@@ -130,7 +139,8 @@
                 row.insertCell(1).textContent = data[i].customer.name + ' ' + data[i].customer.lastName + ' ' + secondLastName;
                 row.insertCell(2).textContent = data[i].total;
                 var btnDetails = document.createElement('button');
-                btnDetails.classList.add('btn', 'btn-success');
+                btnDetails.classList.add('btn', 'btntableV');
+                
                 btnDetails.textContent = 'Ver Detalles';
                 btnDetails.setAttribute('data-target', '#detailsModal');
                 btnDetails.setAttribute('data-toggle', 'modal');

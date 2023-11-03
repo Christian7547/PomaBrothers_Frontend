@@ -2,7 +2,7 @@
     justify-content: center;
     align-items: center;
     text-align: center; /* Alinea el texto horizontalmente en el centro */
-    height: 10vh; /* Esto asegura que la sección sea al menos del tamaño de la ventana */
+    /* Esto asegura que la sección sea al menos del tamaño de la ventana */
 }
 
 .social-icon i {

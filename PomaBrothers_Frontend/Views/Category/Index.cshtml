@@ -1,22 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Categorías";
 }
-
-<h1>Categorías</h1>
+<link rel="stylesheet" href="~/css/Forms.css">
+<br />
+<h1 style="text-align:center">Categorías</h1>
 
 <hr />
 
 <div class="container mt-5">
-    <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center mx-auto">
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center mx-auto">
         @foreach (var category in (List<Category>)ViewBag.GetCategories)
         {
             <div class="col">
-                <div class="card border-success">
-                    <div class="card-body">
+                <div class="cardBP">
+                    <div class="card-body" style="text-align:center">
                         <h2 class="card-title">@category.Name</h2>
                         <a asp-action="ItemsByCategories" 
-                            asp-route-id="@category.Id" 
-                            class="btn btn-success">
+                            asp-route-id="@category.Id"
+                           class="buttonV">
                             Ver productos
                         </a>
                     </div>
