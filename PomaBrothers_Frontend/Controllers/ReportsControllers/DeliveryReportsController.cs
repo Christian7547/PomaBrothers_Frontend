@@ -19,36 +19,37 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _host = host;
-
         }
 
         public async Task<ActionResult> GeneratedReportByDateRange(DateTime startDate, DateTime finishDate)
         {
             var itemsByDateRange = await GetOrdersByDateRangeReport(startDate, finishDate);
-            var total = itemsByDateRange.Sum(purchasePrice => purchasePrice.PurchasePrice);
             if (itemsByDateRange != null)
             {
+                var total = itemsByDateRange.Sum(purchasePrice => purchasePrice.PurchasePrice);
                 try
                 {
                     var memoryStream = new MemoryStream();
                     OrdersByDateRangeReport report = new(startDate, finishDate, total, itemsByDateRange, _host);
-                    report.TitleReport = "reporte de pedidos";
+                    report.TitleReport = "reporte\npedidos";
                     report.CreateDocument().GeneratePdf(memoryStream);
                     memoryStream.Position = 0;
-                    return File(memoryStream, "application/pdf", $"ReportePedidos_{startDate:yyyyMMdd}-{finishDate:yyyyMMdd}.pdf");
+                    return File(memoryStream.ToArray(), "application/pdf");
                 }
                 catch
                 {
                     throw;
                 }
             }
-            return NotFound("No hay pedidos realizados en ese rango de fechas");
+            return NotFound("There are no orders placed in that date range");
         }
 
 
         public async Task<List<DeliveryDetail>> GetOrdersByDateRangeReport(DateTime startDate, DateTime finishDate)
         {
-            string url = $"DeliveryReports/GetOrdersByDateRangeReport?startDate={startDate}&endDate={finishDate}";
+            string formattedStartDate = Uri.EscapeDataString(startDate.ToString("MM/dd/yyyy"));
+            string formattedFinishDate = Uri.EscapeDataString(finishDate.ToString("MM/dd/yyyy"));
+            string url = $"DeliveryReports/GetOrdersByDateRangeReport?startDate={formattedStartDate}&endDate={formattedFinishDate}";
             HttpResponseMessage request = await _httpClient.GetAsync(url);
             if (request.IsSuccessStatusCode)
             {
@@ -65,12 +66,12 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
             {
                 var memoryStream = new MemoryStream();
                 ProductBySupplierReport report = new(productSupplierDTO, _host);
-                report.TitleReport = "reporte de pedidos";
+                report.TitleReport = "reporte\npedidos";
                 report.CreateDocument().GeneratePdf(memoryStream);
                 memoryStream.Position = 0;
-                return File(memoryStream, "application/pdf", $"ReportePedido_{DateTime.Now.ToShortDateString()}.pdf");
+                return File(memoryStream.ToArray(), "application/pdf");
             }
-            return NotFound("El producto no existe");
+            return NotFound();
         }
 
         public async Task<ProductSupplierDTO> GetItemWithSupplierReport(int productId)

@@ -46,8 +46,8 @@ namespace PomaBrothers_Frontend.Reports.Implementation
                 row.RelativeItem().Column(column =>
                 {
                     column.Item().Text("HERMANOS POMA").ExtraBold().FontSize(15f);
-                    column.Item().PaddingTop(2f).Text("NIT: 12345468794").FontSize(12f).ExtraBold();
-                    column.Item().PaddingTop(2f).Text("TELÉFONO: 49498848").FontSize(12f).ExtraBold();
+                    column.Item().PaddingTop(2f).Text("NIT: 8849736015").FontSize(12f).ExtraBold();
+                    column.Item().PaddingTop(2f).Text("TELÉFONO: 4309844").FontSize(12f).ExtraBold();
 
                 });
                 row.RelativeItem().Column(column =>

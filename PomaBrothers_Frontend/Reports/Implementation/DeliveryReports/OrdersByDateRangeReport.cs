@@ -35,7 +35,7 @@ namespace PomaBrothers_Frontend.Reports.Implementation.DeliveryReports
                     .FontSize(12f);
                 column.Item().PaddingTop(7f).Element(AddDataToDocument);
                 column.Item().AlignRight().PaddingTop(4f)
-                    .Text($"Inversión: {Total}$")
+                    .Text($"Inversión: {Total} Bs.")
                     .FontSize(12f)
                     .Bold();
             });
@@ -74,7 +74,7 @@ namespace PomaBrothers_Frontend.Reports.Implementation.DeliveryReports
                     table.Cell().Element(CellStyle).Text(item.Item.Serie);
                     table.Cell().Element(CellStyle).Text(item.Item.ItemModel.ModelName);
                     table.Cell().Element(CellStyle).Text(item.Item.ItemModel.Marker);
-                    table.Cell().Element(CellStyle).Text(item.PurchasePrice.ToString());
+                    table.Cell().Element(CellStyle).Text($"{item.PurchasePrice} Bs.");
                     static IContainer CellStyle(IContainer container)
                     {
                         return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5).AlignRight();

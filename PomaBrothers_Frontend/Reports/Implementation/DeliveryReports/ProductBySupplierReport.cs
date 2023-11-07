@@ -72,7 +72,7 @@ namespace PomaBrothers_Frontend.Reports.Implementation.DeliveryReports
                 table.Cell().ColumnSpan(3).Element(CellStyleData).Text(_productSupplierDTO.Serie);
 
                 table.Cell().Element(CellStyleData).Text("Precio de compra:").Bold();
-                table.Cell().ColumnSpan(3).Element(CellStyleData).Text(_productSupplierDTO.PurchasePrice.ToString());
+                table.Cell().ColumnSpan(3).Element(CellStyleData).Text($"{_productSupplierDTO.PurchasePrice} Bs.");
 
                 table.Cell().Element(CellStyleData).Text("Adquirido el ").Bold();
                 table.Cell().ColumnSpan(3).Element(CellStyleData).Text(_productSupplierDTO.RegisterDateItem.ToShortDateString());
