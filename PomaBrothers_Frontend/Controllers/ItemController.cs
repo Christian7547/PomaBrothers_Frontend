@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Firebase.Auth;
+using Firebase.Storage;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
 using System.Net.Http.Headers;
@@ -15,6 +17,27 @@ namespace PomaBrothers_Frontend.Controllers
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
+        public async Task<string> StorageItem(Stream file, string name)
+        {
+            string email = "catier@gmail.com";
+            string clave = "123456";
+            string ruta = "pomabrothers-4c702.appspot.com";
+            string api_key = "AIzaSyA6PKJivkb3Ir8zsbL21HMwCsmRTJ-GscM";
+
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(api_key));
+            var a = await auth.SignInWithEmailAndPasswordAsync(email, clave);
+            var cancel = new CancellationTokenSource();
+            var task = new FirebaseStorage(
+                ruta,
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                    ThrowOnCancel = true
+                }).Child("Item").Child(name).PutAsync(file, cancel.Token);
+            var downloadURL = await task;
+            return downloadURL;
+        }
+
 
         public async Task<ActionResult> Index()
         {
@@ -63,18 +86,11 @@ namespace PomaBrothers_Frontend.Controllers
                 item.Status = 1;
                 if (image != null)
                 {
-                    using (var stream = image.OpenReadStream())
-                    using (var ms = new MemoryStream())
-                    {
-                        stream.CopyTo(ms);
-                        byte[] imageBytes = ms.ToArray();
-
-                        string base64Image = "data:image;base64,"+Convert.ToBase64String(imageBytes);
-
-
-                        item.UrlImage = base64Image;
-                    }
+                    Stream img = image.OpenReadStream();
+                    string url = await StorageItem(img, image.FileName);
+                    item.UrlImage = url;
                 }
+
                 HttpResponseMessage request = await httpClient.PutAsJsonAsync("Item/Edit", item);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Item");

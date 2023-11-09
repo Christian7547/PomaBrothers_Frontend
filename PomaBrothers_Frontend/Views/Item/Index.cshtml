@@ -5,66 +5,70 @@
 <br />
 <h1 style="text-align:center">Lista Productos</h1>
 <hr />
-
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var item in ViewBag.Data)
-    {
-        <div class="col">
-            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
-                <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3"
-                             src="@item._UrlImage"/>
-                    </div>
-                    <div class="col-md-8"> 
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-body">
-                                    <p>
-                                        <label class="text-sm fw-bold">Marca:</label>
-                                        <label class="text-sm">@item._Marker</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                        <label class="text-sm">@item._Price</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Color:</label>
-                                        <label class="text-sm">@item._Color</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Serie:</label>
-                                        <label class="text-sm">@item._Serie</label>
-                                    </p>
+<div class="container mt-5">
+    <div class ="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var item in ViewBag.Data)
+        {
+            <div class="col">
+                <div class="cardBP border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header textitos" style="text-align:center">@item._Name</div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" alt="Producto Image"
+                                 src="@item._UrlImage" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-body">
+                                        <p>
+                                            <label class="text-sm fw-bold">Marca:</label>
+                                            <label class="text-sm">@item._Marker</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                            <label class="text-sm">@item._Price</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Color:</label>
+                                            <label class="text-sm">@item._Color</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Serie:</label>
+                                            <label class="text-sm">@item._Serie</label>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col d-flex align-items-center justify-content-center">
-                                <div class="d-flex flex-column align-items-end">
-                                    <button type="button" 
-                                        onclick="showDetails(@item.ItemID)"
-                                        data-id="@item.ItemID"
-                                        data-toggle="modal"
-                                        data-target="#detailsModal"
-                                            class="btncardD w-100 mb-2">
-                                        Ver detalles
-                                    </button>
-                                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btncardA w-100 mb-2 ">Actualizar</a>
-                                    <button type="button"
-                                            data-id="@item.ItemID"
-                                            data-toggle="modal"
-                                            data-target="#deleteModal"
-                                            class="btncardE w-100 mb-2">
-                                        Eliminar
-                                    </button>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <button type="button"
+                                                onclick="showDetails(@item.ItemID)"
+                                                data-id="@item.ItemID"
+                                                data-toggle="modal"
+                                                data-target="#detailsModal"
+                                                class="btncardD w-100 mb-2">
+                                            Ver detalles
+                                        </button>
+                                        <a asp-action="Edit" asp-route-id="@item.ItemID" class="btncardA w-100 mb-2 ">Actualizar</a>
+                                        <button type="button"
+                                                data-id="@item.ItemID"
+                                                data-toggle="modal"
+                                                data-target="#deleteModal"
+                                                class="btncardE w-100 mb-2">
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+   
 </div>
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">

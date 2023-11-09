@@ -1,3 +1,4 @@
+
 .buttonV {
     display: block;
     background-color: #dddeca;
@@ -7,7 +8,7 @@
     box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
     border: none;
     border-radius: 10px;
-    width: 350px;
+    width: auto;
     text-decoration: none;
     margin: auto;
     text-align: center;
@@ -15,7 +16,8 @@
 .buttonV:hover{
     color: white;
     background-color: #c2c8c2;
-}
+} 
+
 .btntableV{
     display: block;
     background-color: #dddeca;
@@ -95,7 +97,9 @@ hr{
 
 }
 body{
-    background-color: #ffffffd8;
+    background: linear-gradient(to bottom, hwb(120 82% 17% / 0.571), rgba(52, 227, 99, 0.495));
+    /* Ajusta los valores de rgba para cambiar el color y la opacidad */
+    background-attachment: fixed;
 }
 .bodlog{
     background-color: #937171d8;

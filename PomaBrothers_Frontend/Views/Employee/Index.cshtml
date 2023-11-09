@@ -5,61 +5,66 @@
 <h1 style="text-align:center">Empleados</h1>
 
 <hr />
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var employee in ViewBag.Data)
-    {
-        <div class="col">
-            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
-                <div class="card-header bg-transparent border-light fw-bold textitos">@employee.Name @employee.LastName</div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-body">
-                                    <p>
-                                        <label class="text-sm fw-bold">Cédula:</label>
-                                        <label class="text-sm">@employee.Ci</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Teléfono:</label>
-                                        <label class="text-sm">@employee.Phone</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Usuario:</label>
-                                        <label class="text-sm">@employee.User</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Rol:</label>
-                                        <label class="text-sm">@employee.Role</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Fecha de Registro:</label>
-                                        <label class="text-sm">@employee.RegisterDate.ToString("dd/MM/yyyy")</label>
-                                    </p>
+<div class ="container mt-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var employee in ViewBag.Data)
+        {
+            <div class="col">
+                <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header textitos" style="text-align:center">@employee.Name @employee.LastName</div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-body">
+                                        <p>
+                                            <label class="text-sm fw-bold">Cédula:</label>
+                                            <label class="text-sm">@employee.Ci</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Teléfono:</label>
+                                            <label class="text-sm">@employee.Phone</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Usuario:</label>
+                                            <label class="text-sm">@employee.User</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Rol:</label>
+                                            <label class="text-sm">@employee.Role</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Fecha de Registro:</label>
+                                            <label class="text-sm">@employee.RegisterDate.ToString("dd/MM/yyyy")</label>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col d-flex align-items-center justify-content-center">
-                                <div class="d-flex flex-column align-items-end">
-                                    <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 mb-2 btncardA">Actualizar</a>
-                                    <button type="button"
-                                            data-id="@employee.Id"
-                                            data-toggle="modal"
-                                            data-target="#deleteModal"
-                                            class="btncardE w-100 mb-2">
-                                        Eliminar
-                                    </button>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 mb-2 btncardA">Actualizar</a>
+                                        <button type="button"
+                                                data-id="@employee.Id"
+                                                data-toggle="modal"
+                                                data-target="#deleteModal"
+                                                class="btncardE w-100 mb-2">
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
 
 <!-- Modal for delete -->
 <div class="modal fade" id="deleteModal">

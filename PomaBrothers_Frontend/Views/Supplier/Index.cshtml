@@ -6,59 +6,63 @@
 <h1 style="text-align:center">Lista Proveedor</h1>
 <br />
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var item in ViewBag.Data)
-    {
-        <div class="col">
-            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
-                <div class="card-header bg-transparent border-light fw-bold textitos">@item._BussinesName</div>
-                <br>
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="card-body">
-                            <p>
-                                <label class="text-sm fw-bold">Teléfono:</label>
-                                <label class="text-sm">@item._Phone</label>
-                            </p>
-                            <p>
-                                <label class="text-sm fw-bold">Encargado:</label>
-                                <label class="text-sm">@item._Manager</label>
-                            </p>
-                            <p>
-                                <label class="text-sm fw-bold">CI:</label>
-                                <label class="text-sm">@item._Ci</label>
-                            </p>
-                            <p>
-                                <label class="text-sm fw-bold">Dirección:</label>
-                                <label class="text-sm">@item._Address</label>
-                            </p>
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var item in ViewBag.Data)
+        {
+            <div class="col">
+                <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header textitos" style="text-align:center">@item._BussinesName</div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <p>
+                                    <label class="text-sm fw-bold">Teléfono:</label>
+                                    <label class="text-sm">@item._Phone</label>
+                                </p>
+                                <p>
+                                    <label class="text-sm fw-bold">Encargado:</label>
+                                    <label class="text-sm">@item._Manager</label>
+                                </p>
+                                <p>
+                                    <label class="text-sm fw-bold">CI:</label>
+                                    <label class="text-sm">@item._Ci</label>
+                                </p>
+                                <p>
+                                    <label class="text-sm fw-bold">Dirección:</label>
+                                    <label class="text-sm">@item._Address</label>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="align-items-end">
-                            <button type="button"
-                                    onclick="showDetails(@item._SupID)"
-                                    data-id="@item._SupID"
-                                    data-toggle="modal"
-                                    data-target="#detailsModal"
-                                    class="btncardD w-100 mb-2">
-                                Ver detalles
-                            </button>
-                            <a asp-action="Edit" asp-route-id="@item._SupID" class="w-100 mb-2 btncardA">Actualizar</a>
-                            <button type="button"
-                                    data-id="@item._SupID"
-                                    data-toggle="modal"
-                                    data-target="#deleteModal"
-                                    class="btncardE w-100 mb-2">
-                                Eliminar
-                            </button>
+                        <div class="col-md-4">
+                            <div class="align-items-end">
+                                <button type="button"
+                                        onclick="showDetails(@item._SupID)"
+                                        data-id="@item._SupID"
+                                        data-toggle="modal"
+                                        data-target="#detailsModal"
+                                        class="btncardD w-100 mb-2">
+                                    Ver detalles
+                                </button>
+                                <a asp-action="Edit" asp-route-id="@item._SupID" class="w-100 mb-2 btncardA">Actualizar</a>
+                                <button type="button"
+                                        data-id="@item._SupID"
+                                        data-toggle="modal"
+                                        data-target="#deleteModal"
+                                        class="btncardE w-100 mb-2">
+                                    Eliminar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
 
 
 

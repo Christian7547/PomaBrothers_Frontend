@@ -27,14 +27,14 @@
             <br />
             <div style="text-align:center">
                 <button class="btn btncardD"
-                    onclick=""
-                    data-id=""
-                    data-toggle="modal"
-                    data-target="#mdlAddItem">
-                Añadir Productos
-            </button>
+                        onclick=""
+                        data-id=""
+                        data-toggle="modal"
+                        data-target="#mdlAddItem">
+                    Añadir Productos
+                </button>
             </div>
-            
+
             <br />
             <br />
             <div class="table-responsive">
@@ -71,7 +71,7 @@
                     Guardar en almacén
                 </button>
             </div>
-            
+
             <br />
         </div>
     </div>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="imagenItem" class="control-label">Seleccione una imagen</label>
-                                <input name="image" id="imagenItem" type="file" accept=".jpg" class="form-control-file" required />
+                                <input name="image" id="imagenItem" type="file" class="form-control-file" required />
                                 <img src="" id="previa" width="400">
                             </div>
                             <div class="form-group">
@@ -263,13 +263,13 @@
             });
         };
 
-         inputFile.addEventListener('input', async (event) => {
+        inputFile.addEventListener('input', async (event) => {
             console.log("se ejecuta el evento");
             const base64URL = await encodeFileAsBase64URL(inputFile.files[0]);
             base64ImageSelected = base64URL;
             console.log(base64URL);
             image.setAttribute('src', base64URL);
-          });
+        });
 
         const txtSearchModel = document.getElementById('txtSearchModel');
         const showModels = document.getElementById('showModels');
