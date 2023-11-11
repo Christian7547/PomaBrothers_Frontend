@@ -5,91 +5,99 @@
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
-<h1 style="text-align:center">Productos</h1>
+<h1 style="text-align:center">Lista Productos</h1>
 <hr />
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col">
-            <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
-                <div class="card-header bg-transparent border-light fw-bold">@item.Name</div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-body">
-                                    <p>
-                                        <label class="text-sm fw-bold">Marca:</label>
-                                        <label class="text-sm">@item.ItemModel.Marker</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                        <label class="text-sm">@item.Price</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Color:</label>
-                                        <label class="text-sm">@item.Color</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Serie:</label>
-                                        <label class="text-sm">@item.Serie</label>
-                                    </p>
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-xl-2 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header fw-bold textitos text-center">@item.Name</div><hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Producto Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-body" style="padding-left: 10px;">
+                                        <p>
+                                            <label class="text-sm fw-bold">Marca:</label>
+                                            <label class="text-sm">@item.ItemModel.Marker</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                            <label class="text-sm">@item.Price</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Color:</label>
+                                            <label class="text-sm">@item.Color</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Serie:</label>
+                                            <label class="text-sm">@item.Serie</label>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col d-flex align-items-center justify-content-center">
-                                <div class="d-flex flex-column align-items-end">
-                                    <button type="button"
-                                            onclick="showDetails(@item.Id)"
-                                            data-id="@item.Id"
-                                            data-toggle="modal"
-                                            data-target="#detailsModal"
-                                            class="btncardD w-100 mb-2">
-                                        Ver detalles
-                                    </button>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 mb-2">Actualizar</a>
-                                    <button type="button"
-                                            data-id="@item.Id"
-                                            data-toggle="modal"
-                                            data-target="#deleteModal"
-                                            class="btncardE w-100 mb-2">
-                                        Eliminar
-                                    </button>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <button type="button"
+                                                onclick="showDetails(@item.Id)"
+                                                data-id="@item.Id"
+                                                data-toggle="modal"
+                                                data-target="#detailsModal"
+                                                class="btncardD w-100 h-100 mb-2">
+                                            Detalle
+                                        </button>
+
+                                        <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 h-100 mb-2">
+                                            Actualizar
+                                        </a>
+
+                                        <button type="button"
+                                                data-id="@item.Id"
+                                                data-toggle="modal"
+                                                data-target="#deleteModal"
+                                                class="btncardE w-100 h-100 mb-5">
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content deleteModal2" style="text-align:center">
+        <div class="modal-content ModalDelete" style="text-align:center">
 
-            <div class="modal-header">
-                <h3 class="">Confirmar acción</h3>
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Confirmar acción</h5>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el registro?</p>
+                <h4>Desea eliminar el registro?</h4>
                 <input id="logId" type="hidden" />
             </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div>
+                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm w-100 h-100" value="Confirmar" />
+                        <br />
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                <div class="col-md-6">
+                    <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
                 </div>
-                <div class="col-md-1"></div>
             </div>
             <br />
             <br />
@@ -99,75 +107,56 @@
 @*---------------------------*@
 
 @*Modal for details*@
-<div class="modal fade" id="detailsModal">
+<div class="modal fade" id="detailsModal"> 
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content detailsModal2">
-            <div class="modal-header">
-                <h4 class="modal-title" id="lblName"></h4>
+        <div class="modal-content DetalleModel">
+            <div class="modal-header text-center">
+                <h5 class="ttextitos mx-auto" id="lblName"></h5>
             </div>
             <div class="modal-body">
-                <img id="imagenItem" class="img-fluid mb-2 w-100 h-100 p-1" alt="Figure" />
+                
+                <img id="imagenItem"  class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Imagen Producto" />
                 <p>
                     <label id="lblDescription"></label>
                 </p>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="mt-1">
-                            <label for="lblModel" class="fw-bold">Modelo:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblMarker" class="fw-bold">Marca:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblSerie" class="fw-bold">Serie:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblColor" class="fw-bold">Color:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblPrice" class="fw-bold">Precio:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblWarranty" class="fw-bold">Garantía:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblCapacity" id="lblInfo" class="fw-bold"></label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mt-1">
+                            <label for="lblModel" class="fw-bold">Modelo: </label>
                             <label id="lblModel"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblMarker" class="fw-bold">Marca: </label>
                             <label id="lblMarker"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblSerie" class="fw-bold">Serie: </label>
                             <label id="lblSerie"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblColor" class="fw-bold">Color: </label>
                             <label id="lblColor"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblPrice" class="fw-bold">Precio: </label>
                             <label id="lblPrice"></label>
                         </div>
                         <div class="mt-1">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label id="lblWarranty"></label>
-                                </div>
-                                <div class="col-md-10">
-                                    <label id="lblTypeWarranty"></label>
-                                </div>
-                            </div>
+                            <label for="lblWarranty" class="fw-bold">Garantía:</label>
+                            <label id="lblWarranty"></label>
+                            <label id="lblTypeWarranty"></label>
+                            
                         </div>
                         <div class="mt-1">
+                            <label for="lblCapacity" id="lblInfo" class="fw-bold"></label>
                             <label id="lblCapacity"></label>
                         </div>
                     </div>
+                   
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btncardE w-50" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btnmodalCancel w-50 h-100" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

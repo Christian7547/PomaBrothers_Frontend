@@ -4,81 +4,88 @@
     ViewData["Title"] = "Actualizar";
 }
 <link rel="stylesheet" href="~/css/Forms.css">
+<br />
+<h1 class="text-center">Actualizar Producto</h1>
+<hr />
 <form asp-action="Edit" enctype="multipart/form-data">
     <div class="container">
-        <br />
-        <h1 class="text-center">Actualizar Producto</h1>
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="">
-                    <div class="card-body cardBPC">
-                        <h4 class="card-title">Producto</h4>
-                        <hr />
+            <div class="col-xl-10">
+                <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                    <h3 class="card-title text-center fw-bold">Producto</h3>
+                    <hr />
                     <div class="row">
                         <div class="col-md-6">
                             <input asp-for="Id" type="hidden" />
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control inputf"/>
+                                <label asp-for="Name" class="control-label fw-bold"></label>
+                                <input asp-for="Name" class="form-control inputf" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Serie" class="control-label"></label>
-                                <input asp-for="Serie" class="form-control inputf"/>
+                                <label asp-for="Serie" class="control-label fw-bold"></label>
+                                <input asp-for="Serie" class="form-control inputf" />
                                 <span asp-validation-for="Serie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Description" class="control-label"></label>
-                                    <textarea asp-for="Description" rows="8" class="form-control inputf"></textarea>
+                                <label asp-for="Description" class="control-label fw-bold"></label>
+                                <textarea asp-for="Description" rows="8" class="form-control inputf"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">Modelo:</label>
+                                <label class="control-label fw-bold">Modelo:</label>
                                 <div class="row">
                                     <div class="col-md-10">
-                                            <input class="form-control inputf" id="txtSearchModel" placeholder="Buscar..." />
+                                        <input class="form-control inputf" id="txtSearchModel" placeholder="Buscar..." />
                                         <ul id="showModels"></ul>
                                         <input asp-for="ModelId" id="txtModelId" hidden />
                                     </div>
                                     <div class="col-md-2">
-                                            <button class="supModel fw-bold" type="button" data-toggle="modal" data-target="#editModel">+</button>
+                                        <button class="supModel fw-bold" type="button" data-toggle="modal" data-target="#editModel">+</button>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label fw-bold"></label>
+                                <input asp-for="Price" type="number" class="form-control inputf" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Color" class="control-label fw-bold"></label>
+                                <input asp-for="Color" class="form-control inputf" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                            <div class="form-group collapse">
+                                <label asp-for="UrlImage" class="control-label fw-bold"></label>
+                                <input asp-for="UrlImage" class="form-control inputf" />
+                                <span asp-validation-for="UrlImage" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="col-md-6">
+                            
                             <div class="form-group">
-                                <label asp-for="Price" class="control-label"></label>
-                                    <input asp-for="Price" type="number" class="form-control inputf" />
-                                <span asp-validation-for="Price" class="text-danger"></span>
+                                <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Producto Image">
                             </div>
                             <div class="form-group">
-                                <label asp-for="Color" class="control-label"></label>
-                                    <input asp-for="Color" class="form-control inputf" />
-                                <span asp-validation-for="Color" class="text-danger"></span>
+                                <br />
+                                <label for="imagenItem" class="form-label fw-bold">Seleccionar imagen:</label>
+                                <input name="image" id="imagenItem" type="file" class="form-control-file inputf"/>
+
+
                             </div>
-                                <div class="form-group collapse">
-                                    <label asp-for="UrlImage" class="control-label"></label>
-                                    <input asp-for="UrlImage" class="form-control inputf" />
-                                    <span asp-validation-for="UrlImage" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Producto Image">
-                                </div>
-                                <div class="form-group">
-                                    <label id="image" class="control-label">Seleccione una imagen</label>
-                                    <input name="image" type="file" accept=".jpg" class="form-control-file" />
-                                </div>
                             <div class="form-group">
-                                <label asp-for="DurationWarranty" class="control-label"></label>
+                                <label asp-for="DurationWarranty" class="control-label fw-bold"></label>
                                 <div class="row">
                                     <div class="col-md-4">
-                                            <input asp-for="DurationWarranty" class="form-control inputf" id="txtDurationWarranty" />
+                                        <input asp-for="DurationWarranty" class="form-control inputf" id="txtDurationWarranty" />
+                                        <br />
                                     </div>
+                                    
                                     <div class="col-md-8">
-                                            <select asp-for="TypeWarranty" class="form-control inputf" id="cmbTypeWarranty">
+                                       
+                                        <select asp-for="TypeWarranty" class="form-control custom-select inputf" id="cmbTypeWarranty">
                                             <option value="" selected disabled>@ViewBag.Type</option>
                                             <option value=""></option>
                                             <option value=""></option>
@@ -87,8 +94,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="CategoryId" class="control-label"></label>
-                                    <select asp-for="CategoryId" class="form-control inputf" id="categorySelected">
+                                <label asp-for="CategoryId" class="control-label fw-bold"></label>
+                                <select asp-for="CategoryId" class="form-control custom-select inputf" id="categorySelected">
                                     @foreach (var category in (List<Category>)ViewBag.Data)
                                     {
                                         <option value="@category.Id">@category.Name</option>
@@ -99,24 +106,24 @@
                             <br />
                         </div>
                     </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="submit" value="Actualizar" class="buttonA " />
-                                </div>
+                    <br />
+                    <br />
+                    <div class="row" >
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="submit" value="Actualizar" class="buttonA" />
                             </div>
                             <br />
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <a asp-action="Index" class="buttonV ">Volver</a>
-                                </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a asp-action="Index" class="buttonV">Volver</a>
                             </div>
                         </div>
-                        <br />
-                        <br />
                     </div>
+                    <br />
+                    <br />
                 </div>
             </div>
         </div>
@@ -124,33 +131,35 @@
 
     <div class="modal fade" id="editModel">
         <div class=" modal-dialog modal-dialog-centered">
-            <div class="modal-content editModel">
-                <div class="modal-header">
-                    <h4 class="modal-title">Añadir modelo</h4>
+            <div class="modal-content AñadirModeloModel">
+                <div class="modal-header text-center">
+                    <h5 class="textitos mx-auto">Añadir modelo</h5>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding-left: 10px; padding-right:10px">
                     <form>
                         <div class="mb-3">
-                            <label for="txtModel" class="col-form-label">Modelo:</label>
+                            <label for="txtModel" class="col-form-label fw-bold">Modelo:</label>
                             <input type="text" class="form-control inputf" id="txtModel">
                         </div>
                         <div class="mb-3">
-                            <label for="txtMarker" class="col-form-label">Marca:</label>
+                            <label for="txtMarker" class="col-form-label fw-bold">Marca:</label>
                             <input type="text" class="form-control inputf" id="txtMarker">
                         </div>
                         <div class="mb-3">
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input inputf" role="switch" id="cbxCapacity" />
-                                <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                                <label for="cbxCapacity" class="form-check-label fw-bold">Añadir capacidad o tamaño</label>
                             </div>
                         </div>
                         <div class="form-group" id="capacityDiv">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <input class="form-control inputf" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                    <input class="form-control inputf fw-bold" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                    <br />
                                 </div>
                                 <div class="col-md-8">
-                                    <select class="form-control inputf" id="cmbMeasurementUnit">
+                                    
+                                    <select class="form-control custom-select" id="cmbMeasurementUnit">
                                         <option value="" disabled selected>Seleccione la unidad de medida</option>
                                         <option value="Litros">Litros</option>
                                         <option value="Kilogramos">Kilogramos</option>
@@ -163,24 +172,20 @@
                         </div>
                     </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-4">
+                <div class="row" style="padding-left: 10px; padding-right:10px">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btncardD " value="Añadir" />
+                            <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btnmodalConfirm w-100 h-100" value="Añadir" />
+                        </div>
+                        <br />
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
-                    <br />
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <button type="button" class="btncardE" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                    <div class="col-md-1"></div>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     </div>
@@ -268,35 +273,35 @@
                 .catch(error => console.error(error))
         }
 
-        function searchModel(model){
+        function searchModel(model) {
             fetch(`/Item/SearchModel?searchModel=${model}`)
-            .then(response => response.json())
-            .then(data => {
-                showModels.innerHTML = '';
-                data.forEach(model => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.style.cursor = 'pointer';
-                    li.textContent = model.modelName + ' - ' + model.marker;
+                .then(response => response.json())
+                .then(data => {
+                    showModels.innerHTML = '';
+                    data.forEach(model => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
+                        li.style.cursor = 'pointer';
+                        li.textContent = model.modelName + ' - ' + model.marker;
 
-                    li.addEventListener('click', () => {
-                        showModels.style.display = 'none';
-                        txtSearchModel.value = li.textContent;
-                        txtModelId.value = model.id;
+                        li.addEventListener('click', () => {
+                            showModels.style.display = 'none';
+                            txtSearchModel.value = li.textContent;
+                            txtModelId.value = model.id;
+                        });
+                        showModels.appendChild(li);
                     });
-                    showModels.appendChild(li);
-                });
-            })
-            .catch(error => console.log(error))
+                })
+                .catch(error => console.log(error))
         }
 
-        function loadModel(id){
+        function loadModel(id) {
             fetch(`/Item/GetModel?id=${id}`)
-            .then(response => response.json())
-            .then(data => {
-                txtSearchModel.value = data.modelName + ' - ' + data.marker;
-            })
-            .catch(error => console.error(error))
+                .then(response => response.json())
+                .then(data => {
+                    txtSearchModel.value = data.modelName + ' - ' + data.marker;
+                })
+                .catch(error => console.error(error))
         }
     </script>
 }

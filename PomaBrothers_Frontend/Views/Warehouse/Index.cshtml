@@ -20,19 +20,20 @@
                         <tr>
                             <td>@warehouse.Name</td>
                             <td style="text-align:center">
+                                
                                 <button type="button"
                                         onclick="getModelsAsync(@warehouse.Id)"
                                         data-id="@warehouse.Id"
                                         data-toggle="modal"
                                         data-target="#showItemsModal"
-                                        class="btn bntIns">
+                                        class="btnmodalConfirm w-90">
                                     Inspeccionar
                                 </button>
                                 <button type="button"
                                         data-id="@warehouse.Id"
                                         data-toggle="modal"
                                         data-target="#deleteModal"
-                                        class="btn btnExitModelDV">
+                                        class="btnmodalCancel w-90">
                                     Eliminar
                                 </button>
                             </td>
@@ -47,26 +48,26 @@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content deleteModal2" style="text-align:center">
+        <div class="modal-content ModalDelete" style="text-align:center">
 
-            <div class="modal-header">
-                <h3 class="">Confirmar acción</h3>
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Confirmar acción</h5>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el registro?</p>
+                <h4>Desea eliminar el registro?</h4>
                 <input id="logId" type="hidden" />
             </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div>
+                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm" value="Confirmar" />
+                        <br />
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                <div class="col-md-6">
+                    <button type="button" class="btnmodalCancel" data-dismiss="modal">Cancelar</button>
                 </div>
-                <div class="col-md-1"></div>
             </div>
             <br />
             <br />
@@ -76,15 +77,16 @@
 
 @*Modal for Items*@
 <div class="modal fade" id="showItemsModal">
-    <div class="cardBP modal-dialog modal-dialog-centered modal-fullscreen-md">
+    <div class="cardVerT modal-dialog modal-dialog-centered modal-fullscreen-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" style="text-align:center">Productos disponibles</h4>
+                <hr />
             </div>
-            <div class="modal-body" id="bodyContainerModal">
+            <div class="modal-body" style="padding-left: 10px;" id="bodyContainerModal">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btncardE" id="btnClearModal" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btnmodalCancel" id="btnClearModal" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -181,14 +183,15 @@
                             for (let j = i; j < i + 2 && j < data.length; j++) {
                                 const item = data[j];
                                 const html = `<div class="col-md-6">
-                                                <div class="card mb-3 border-success" style="max-width: 640px;">
-                                                    <div class="card-header bg-transparent border-light fw-bold">${item.name}</div>
+                                                <div class="cardVerT mb-3 border-success" style="max-width: 640px;">
+                                                    <div class="card-header border-light fw-bold text-center">${item.name}</div>
+                                                    <hr>
                                                     <div class="row g-0">
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                                                     <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="${item.urlImage}" alt="Imagen del artículo">
                                                         </div>
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-9">
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="card-body">
@@ -223,7 +226,7 @@
                 .catch(error => console.error(error))
         }
 
-        3
+        
 
         function confirmDelete() {
             const id = txtId.value;

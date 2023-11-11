@@ -13,10 +13,12 @@
         @foreach (var category in (List<Category>)ViewBag.GetCategories)
         {
             <div class="col">
-                <div class="card cardBP">
-                    <div class="card-body">
-                        <h4 class="card-title">@category.Name</h4>
-                        <a asp-action="ItemsByCategories" asp-route-id="@category.Id" class="btn buttonV">
+                <div class="cardVerT mb-3 border-success mx-auto">
+                    <div class="card-body" style="padding-left: 10px; padding-right:10px">
+                        <br>
+                        <div class="card-header fw-bold textitos text-center">@category.Name</div>
+                        <hr />
+                        <a asp-action="ItemsByCategories" asp-route-id="@category.Id" class="buttonV w-100 h-100 mb-3">
                             Ver productos
                         </a>
                     </div>

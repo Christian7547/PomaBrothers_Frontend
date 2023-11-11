@@ -2,17 +2,17 @@
     ViewData["Title"] = "Empleados";
 }
 <link rel="stylesheet" href="~/css/Forms.css">
-<h1 style="text-align:center">Empleados</h1>
-
+<br />
+<h1 style="text-align:center">Lista Empleados</h1>
 <hr />
-<div class ="container mt-5">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-xl-2 g-4">
         @foreach (var employee in ViewBag.Data)
         {
             <div class="col">
-                <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
+                <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
                     <br>
-                    <div class="card-header textitos" style="text-align:center">@employee.Name @employee.LastName</div>
+                    <div class="card-header fw-bold textitos text-center">@employee.Name @employee.LastName</div>
                     <hr />
                     <div class="row">
                         <div class="col-md-4">
@@ -21,7 +21,7 @@
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card-body">
+                                    <div class="card-body" style="padding-left: 10px;">
                                         <p>
                                             <label class="text-sm fw-bold">Cédula:</label>
                                             <label class="text-sm">@employee.Ci</label>
@@ -46,12 +46,12 @@
                                 </div>
                                 <div class="col d-flex align-items-center justify-content-center">
                                     <div class="d-flex flex-column align-items-end">
-                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 mb-2 btncardA">Actualizar</a>
+                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btncardA w-100 h-100 mb-2">Actualizar</a>
                                         <button type="button"
                                                 data-id="@employee.Id"
                                                 data-toggle="modal"
                                                 data-target="#deleteModal"
-                                                class="btncardE w-100 mb-2">
+                                                class="btncardE w-100 h-100 mb-3">
                                             Eliminar
                                         </button>
                                     </div>
@@ -70,33 +70,32 @@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content deleteModal2" style="text-align:center">
+        <div class="modal-content ModalDelete" style="text-align:center">
 
-            <div class="modal-header">
-                <h3 class="">Confirmar acción</h3>
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Confirmar acción</h5>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el registro?</p>
+                <h4>Desea eliminar el registro?</h4>
                 <input id="employeeId" type="hidden" />
             </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div>
+                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm w-100 h-100" value="Confirmar" />
+                        <br />
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                <div class="col-md-6">
+                    <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
                 </div>
-                <div class="col-md-1"></div>
             </div>
             <br />
             <br />
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script>
         const employeeId = document.getElementById('employeeId');

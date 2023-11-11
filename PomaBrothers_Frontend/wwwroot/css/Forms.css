@@ -1,22 +1,62 @@
-
+/*boton Volver - Actualizarsi - Guardar*/
 .buttonV {
     display: block;
-    background-color: #dddeca;
+    background-color: #b4b5b0;
     color: black;
     padding: 12px;
     font-size: 20px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
     border: none;
     border-radius: 10px;
-    width: auto;
+    width: 90%;
     text-decoration: none;
     margin: auto;
     text-align: center;
 }
 .buttonV:hover{
     color: white;
-    background-color: #c2c8c2;
+    background-color: #3c543c;
 } 
+
+
+.buttonA {
+    display: block;
+    background-color: #f6f36a;
+    color: black;
+    padding: 12px;
+    font-size: 20px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); 
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    text-decoration: none;
+    margin: auto;
+    text-align: center;
+}
+.buttonA:hover{
+    color: white;
+    background-color: #9c8c26;
+}
+.buttonG {
+    display: block;
+    background-color: #64c288;
+    color: black;
+    padding: 12px;
+    font-size: 20px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    text-decoration: none;
+    margin: auto;
+    text-align: center;
+}
+.buttonG:hover{
+    color: white;
+    background-color: #779974;
+}
+/*fin*/
+
 
 .btntableV{
     display: block;
@@ -24,7 +64,7 @@
     color: black;
     padding: 12px;
     font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); 
     border: none;
     border-radius: 10px;
     text-decoration: none;
@@ -36,60 +76,8 @@
     background-color: #c2c8c2;
 }
 
-.buttonG {
-    
-    background-color: #64c288;
-    color: black;
-    padding: 12px;
-    font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
-    border: none;
-    border-radius: 10px;
-    width: 300px;
-    text-decoration: none;
-    margin: auto;
-}
-.buttonG:hover{
-    color: white;
-    background-color: #779974;
-}
-.buttonA {
-    
-    background-color: #f6f36a;
-    color: black;
-    padding: 12px;
-    font-size: 20px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
-    border: none;
-    border-radius: 10px;
-    width: 350px;
-    text-decoration: none;
-    text-align: center;
-    margin: auto;}
-.buttonA:hover{
-    color: white;
-    background-color: #9c8c26;
-}
-.cardBPC {
-    
-    background-color: #E6EAE6(237, 240, 240); 
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    border: 1px solid;
-    border-color: #5DDF64;
-}
-.cardBP {
-    
-    background-color: #E6EAE6(237, 240, 240); 
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    border: 1px solid;
-    border-color: #5DDF64;
-}
-.cardBP:hover{
-    color: black;
-    background-color: #396e4d;
-}
+
+
 
 hr{
     background-color: #000000;
@@ -98,7 +86,6 @@ hr{
 }
 body{
     background: linear-gradient(to bottom, hwb(120 82% 17% / 0.571), rgba(52, 227, 99, 0.495));
-    /* Ajusta los valores de rgba para cambiar el color y la opacidad */
     background-attachment: fixed;
 }
 .bodlog{
@@ -106,75 +93,228 @@ body{
 }
 .textitos{
     font-size: 20px;
-
+    font-weight: bold;
 }
 
-.btncardA{
+/*card Ver Productos - Empleados - Proveedores*/
+.cardVerT{
+    
+    background-color: #E6EAE6(237, 240, 240); 
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #5DDF64;
+}
+.cardVerT:hover{
+    color: black;
+    background-color: #396e4d;
+}
+/*fin*/
+
+
+
+/*botones modal Cancelar y Aceptar o Cerrar*/
+.btnmodalCancel {
+    background-color: #EB3E3E;
+    color: rgb(0, 0, 0);
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center; 
+}
+.btnmodalCancel:hover {
+    background-color: #82301d;
+    color: rgb(255, 255, 255);
+}
+
+
+.btnmodalConfirm {
+    background-color: #396e4d;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+.btnmodalConfirm:hover {
+    background-color: #396e4d8a;
+    color: white;
+}
+/*fin*/
+
+/*card Actualizar*/
+.cardActualizar {
+    
+    box-shadow: 10px 10px 10px rgba(26, 145, 62, 0.5);
+    border-radius: 15px;
+    border: 3px solid;
+    border-color: #3dc973;
+}
+/*fin*/
+
+
+/*botones dentro de card   Actualizar - Eliminar - Ver Detalles*/
+.btncardA {
     display: block;
+    overflow: hidden;
+    position: relative;
     background-color: #f6f36a;
     color: black;
     padding: 12px;
     font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
     border: none;
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
+    transition: height 0.3s ease-in-out; 
 }
-.btncardA:hover{
-    color: white;
+.btncardA::after {
+    content: "Actualizar";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    font-size: 18px;
     background-color: #9c8c26;
+    color: rgb(255, 255, 255);
+    padding: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out, height 0.3s ease-in-out; 
 }
-.btncardD{
+.btncardA:hover {
+    height: auto; 
+    
+}
+.btncardA:hover::after {
+    opacity: 1;
+    height: 100%; 
+    width: 100%;
+}
+
+
+.btncardD {
+    position: relative;
+    overflow: hidden;
     background-color: #9ee3a4;
     color: black;
     padding: 12px;
     font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
     border: none;
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
+    transition: height 0.3s ease-in-out;
+}
+.btncardD::after {
+    content: "Detalle";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    font-size: 18px;
+    background-color:rgb(99, 142, 86);
+    color: rgb(255, 255, 255);
+    padding: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out, height 0.3s ease-in-out;
+}
+.btncardD:hover {
+    height: auto;
     
 }
-.btncardD:hover{
-    color: white;
-    background-color: #d5d2bc;
+.btncardD:hover::after {
+    opacity: 1;
+    height: 100%; 
+    width: 100%;
 }
-.btncardE{
+
+
+.btncardE {
+    position: relative;
+    overflow: hidden;
     background-color: #EB3E3E;
-    color: black;
+    color: rgb(0, 0, 0);
     padding: 12px;
     font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    width: 100%;
+    height: 0%;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    text-align: center;
-
+    text-align: center; 
+    transition: height 0.3s ease-in-out;
 }
-.btncardE:hover{
-    color: white;
+.btncardE::after {
+    content: "Eliminar";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    font-size: 18px;
     background-color: #82301d;
+    color: rgb(255, 255, 255);
+    padding: 12px;
+    opacity: 0;
+    pointer-events: none; 
+    transition: opacity 0.1s ease-in-out, height 0.3s ease-in-out;
+    
 }
-.detailsModal2{
-    background-color: #f1fff1b1(237, 240, 240); /* Corrección en el color de fondo */
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
+.btncardE:hover {
+    height: auto; 
+    
+}
+.btncardE:hover::after {
+    opacity: 1;
+    height: 100%; 
+    width: 100%;
+}
+/*fin*/
+
+/*modal eliminar*/
+.ModalDelete{
+    background-color: #b1b6b1f2; 
+    box-shadow: 10px 10px 10px rgba(212, 74, 74, 0.208);
+    border-radius: 20px;
     border: 3px solid;
-    border-color: #5DDF64;
+    border-color: #9a9595;
 }
-.detailsModal2:hover{
+.ModalDelete:hover{
     color: black;
-    background-color: #67ac81;
+    background-color: #7e9f8b;
 }
-.deleteModal2{
-    background-color: #175d17b1(237, 240, 240); /* Corrección en el color de fondo */
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+/*fin*/
+
+
+/*modal detalles*/
+.DetalleModel{
+    background-color: #b1b6b1f2(237, 240, 240); 
+    box-shadow: 10px 10px 10px rgba(50, 113, 71, 0.805);
     border-radius: 15px;
     border: 3px solid;
-    border-color: #0eb564;
+    border-color: #ffffff;
 }
+.DetalleModel:hover{
+    color: black;
+    background-color: #7e9f8b;
+}
+/*fin*/
+
+
+/* tex box */
 .inputf{
     border: 2px solid;
     border-color: #104d30;
@@ -183,12 +323,15 @@ body{
     color: black;
     background-color: #67ac81;
 }
+/*fin*/
+
+
 .supModel{
     background-color: #35c071;
     color: black;
     padding: 12px;
     font-size: 10px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); 
     border: none;
     border-radius: 10px;
     text-decoration: none;
@@ -203,7 +346,7 @@ body{
     color: black;
     padding: 12px;
     font-size: 16px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); 
     border: none;
     border-radius: 10px;
     text-decoration: none;
@@ -212,13 +355,21 @@ body{
     color: black;
     background-color: #9cada3;
 }
-.editModel{
-    background-color: #f1fff1b1(237, 240, 240); /* Corrección en el color de fondo */
+/*Model Añadir Modelos*/
+.AñadirModeloModel{
+    background-color: #f1fff1b1(237, 240, 240);
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     border: 3px solid;
     border-color: #5DDF64;
 }
+.AñadirModeloModel:hover{
+    color: black;
+    background-color: #7e9f8b;
+}
+
+/*fin*/
+
 
 
 
@@ -228,13 +379,12 @@ body{
 /* Estilo para la tabla */
 .ttablita {
     background-color: #175d17b1;
-    color: black; /* Color de texto blanco para mejor contraste */
+    color: black; 
     border: rgb(174, 177, 174);
     box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
     
 
 }
-/* Estilo para las filas pares e impares */
 .ttablita tbody tr:nth-child(odd) {
     background-color: #f1fff1b1;
     
@@ -243,8 +393,6 @@ body{
     background-color: #779974;
     
 }
-
-
 .ttablita tbody tr:nth-child(even) {
     background-color: #f1fff1b1;
 }
@@ -258,85 +406,52 @@ body{
     font-size: 18px;
 }
 .ttablita tbody td.text-center .btn {
-    margin-right: 5px; /* Ajusta el margen entre los botones según tu preferencia */
-}
-
-  /*Modal ventas*/
-.detailsModalVenta{
-    background-color: #d2e6d9; /* Corrección en el color de fondo */
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    border: 3px solid;
-    border-color: #5DDF64;
-}
-.detailsModalVenta:hover{
-    color: black;
-    background-color: #91bea0;
-}
-.btnExitModelDV{
-    background-color: #EB3E3E;
-    color: black;
-    padding: 12px;
-    font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    text-align: center;
-    
-}
-.btnExitModelDV:hover{
-    color: white;
-    background-color: #82301d;
-}
-.bntIns{
-    background-color: #dddeca;
-    color: black;
-    padding: 12px;
-    font-size: 18px;
-    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5); /* Aquí se aplica la sombra */
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-}
-.bntIns:hover{
-    color: white;
-    background-color: #c2c8c2;
+    margin-right: 5px; 
 }
 .centered-column {
-    text-align: center; /* Centra horizontalmente el contenido */
+    text-align: center; 
 }
 
 .modal-dialog.modal-fullscreen-md {
     max-width: 70%;
 }
+/*fin*/
 
 
-
-/* Apply custom styles to the select element */
+/* select */
 .custom-select {
-    background-color: #175d17b1; /* Background color */
-    border: 1px solid #ccc; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px; /* Spacing inside the select */
-    width: 100%; /* Full width */
-    font-size: 16px; /* Text size */
-    color: #333; /* Text color */
+    background-color: #489a48b1; 
+    border: 2px solid;
+    border-color: #104d30;
+    border-radius: 5px; 
+    padding: 7px; 
+    width: 100%; 
+    font-size: 13px; 
+    color: #000000; 
 }
-
-/* Style for option elements within the select */
 .custom-select option {
-    background-color: #779974; /* Background color for options */
-    color: #000000; /* Text color for options */
+    background-color: #779974; 
+    color: #000000; 
 }
-
-/* Hover effect for select */
 .custom-select:hover {
-    border-color: #eae7e7;
-    color: #396e4d; /* Change border color on hover */
+    border-color: #bebebe;
+    color: #396e4d;
+}
+.custom-select:focus {
+    border-color: #c2dac0; 
+}
+/*fin*/
+
+/* image */
+.form-label {
+    color: #000000; 
 }
 
-/* Focus style for select */
-.custom-select:focus {
-    border-color: #779974;  /* Add a subtle box shadow */
+.form-control-file {
+    border: 2px solid #396e4d; 
+    border-radius: 10px;
 }
+/*fin*/
+
+
+

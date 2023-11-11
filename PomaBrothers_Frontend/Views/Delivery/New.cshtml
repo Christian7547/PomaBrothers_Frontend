@@ -3,12 +3,12 @@
 }
 
 <h1 style="text-align:center">Nueva entrega</h1>
-
 <hr />
 <link rel="stylesheet" href="~/css/Forms.css">
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 mx-auto cardBPC">
+    <div class="row justify-content-center">
+        <div class="col-md-6 cardActualizar">
             <br />
             <label class="fw-bold">Proveedor:</label>
             <select id="cmbSupplier" class="custom-select">
@@ -26,7 +26,7 @@
             <h3>Productos:</h3>
             <br />
             <div style="text-align:center">
-                <button class="btn btncardD"
+                <button class="buttonV w-50"
                         onclick=""
                         data-id=""
                         data-toggle="modal"
@@ -67,7 +67,7 @@
             <br />
             <br />
             <div style="text-align:center">
-                <button data-toggle="modal" class="btn btncardD" data-target="#mdlWarehouse">
+                <button data-toggle="modal" class="buttonG w-50" data-target="#mdlWarehouse">
                     Guardar en almacén
                 </button>
             </div>
@@ -79,8 +79,8 @@
 
 <div class="modal fade" id="mdlAddItem">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content Model2">
-            <div class="modal-header">
+        <div class="modal-content DetalleModel">
+            <div class="modal-header text-center">
                 <h4>Agregar producto</h4>
             </div>
             <div class="modal-body">
@@ -88,22 +88,22 @@
                     <div class="col">
                         <form>
                             <div class="form-group">
-                                <label for="txtName" class="control-label">Nombre del producto:</label>
-                                <input type="text" id="txtName" class="form-control" />
+                                <label for="txtName" class="control-label fw-bold">Nombre del producto:</label>
+                                <input type="text" id="txtName" class="form-control inputf" />
                             </div>
                             <div class="form-group">
-                                <label for="txtSerie" class="control-label">Número de serie:</label>
-                                <input type="text" id="txtSerie" class="form-control" />
+                                <label for="txtSerie" class="control-label fw-bold">Número de serie:</label>
+                                <input type="text" id="txtSerie" class="form-control inputf" />
                             </div>
                             <div class="form-group">
-                                <label for="txtDescription" class="control-label">Descripción:</label>
-                                <textarea rows="8" id="txtDescription" class="form-control"></textarea>
+                                <label for="txtDescription" class="control-label fw-bold">Descripción:</label>
+                                <textarea rows="8" id="txtDescription" class="form-control inputf"></textarea>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Modelo:</label>
+                                <label class="control-label fw-bold">Modelo:</label>
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input class="form-control" id="txtSearchModel" placeholder="Buscar Modelo..." />
+                                        <input class="form-control fw-bold" id="txtSearchModel" placeholder="Buscar Modelo..." />
                                         <ul id="showModels"></ul>
                                         <input id="txtModelId" hidden />
                                     </div>
@@ -113,16 +113,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="txtPurchasePrice" class="control-label">Precio de compra:</label>
-                                <input type="number" id="txtPurchasePrice" class="form-control" />
+                                <label for="txtPurchasePrice" class="control-label fw-bold">Precio de compra:</label>
+                                <input type="number" id="txtPurchasePrice" class="form-control inputf" />
                             </div>
                             <div class="form-group">
-                                <label for="txtSalePrice" class="control-label">Precio de venta:</label>
-                                <input type="number" id="txtSalePrice" class="form-control" />
+                                <label for="txtSalePrice" class="control-label fw-bold">Precio de venta:</label>
+                                <input type="number" id="txtSalePrice" class="form-control inputf" />
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Seleccione la categoría:</label>
-                                <select class="form-select" id="categorySelected">
+                                <label class="control-label fw-bold">Seleccione la categoría:</label>
+                                <select class="form-select custom-select inputf" id="categorySelected">
                                     @if (ViewBag.Categories != null)
                                     {
                                         @foreach (var category in (List<Category>)ViewBag.Categories)
@@ -133,22 +133,26 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="txtColor" class="control-label">Color:</label>
-                                <input type="text" id="txtColor" class="form-control" />
+                                <label for="txtColor" class="control-label fw-bold">Color:</label>
+                                <input type="text" id="txtColor" class="form-control inputf" />
                             </div>
                             <div class="mb-3">
-                                <label for="imagenItem" class="control-label">Seleccione una imagen</label>
-                                <input name="image" id="imagenItem" type="file" class="form-control-file" required />
-                                <img src="" id="previa" width="400">
+                                <br />
+                                <label for="imagenItem" class="form-label fw-bold">Seleccionar imagen:</label>
+                                <input name="image" id="imagenItem" type="file" class="form-control-file inputf" required />
+                                <div class="mt-3">
+                                    <img src="" id="previa" width="400"/>
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="control-label">Garantía:</label>
+                                <label class="control-label fw-bold">Garantía:</label>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input class="form-control" id="txtDurationWarranty" />
+                                        <input class="form-control inputf" id="txtDurationWarranty" />
                                     </div>
                                     <div class="col-md-8">
-                                        <select class="form-select" id="cmbTypeWarranty">
+                                        <select class="form-select custom-select" id="cmbTypeWarranty">
                                             <option value="" disabled selected>Seleccione tipo de garantía</option>
                                             <option value=""></option>
                                             <option value=""></option>
@@ -160,9 +164,19 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btn bntIns" data-dismiss="modal" onclick="addItem()">Añadir</button>
-                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cerrar</button>
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="button" class="buttonG" data-dismiss="modal" onclick="addItem()">Añadir</button>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="button" class="buttonV" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -170,33 +184,34 @@
 
 <div class="modal fade" id="newModel">
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content detailsModal2">
-            <div class="modal-header">
-                <h4 class="modal-title">Añadir modelo</h4>
+        <div class="modal-content AñadirModeloModel">
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Añadir modelo</h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding-left: 10px; padding-right:10px">
                 <form>
                     <div class="mb-3">
-                        <label for="txtModel" class="col-form-label">Modelo:</label>
-                        <input type="text" class="form-control" id="txtModel">
+                        <label for="txtModel" class="col-form-label fw-bold">Modelo:</label>
+                        <input type="text" class="form-control inputf" id="txtModel">
                     </div>
                     <div class="mb-3">
-                        <label for="txtMarker" class="col-form-label">Marca:</label>
-                        <input type="text" class="form-control" id="txtMarker">
+                        <label for="txtMarker" class="col-form-label fw-bold">Marca:</label>
+                        <input type="text" class="form-control inputf" id="txtMarker">
                     </div>
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" role="switch" id="cbxCapacity" />
-                            <label for="cbxCapacity" class="form-check-label">Añadir capacidad o tamaño</label>
+                            <input type="checkbox" class="form-check-input inputf" role="switch" id="cbxCapacity" />
+                            <label for="cbxCapacity" class="form-check-label fw-bold">Añadir capacidad o tamaño</label>
                         </div>
                     </div>
                     <div class="form-group" id="capacityDiv">
                         <div class="row">
                             <div class="col-md-4">
-                                <input class="form-control" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                <input class="form-control inputf" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                <br />
                             </div>
                             <div class="col-md-8">
-                                <select class="form-control" id="cmbMeasurementUnit">
+                                <select class="form-control fw-bold" id="cmbMeasurementUnit">
                                     <option value="" disabled selected>Seleccione la unidad de medida</option>
                                     <option value="Litros">Litros</option>
                                     <option value="Kilogramos">Kilogramos</option>
@@ -209,23 +224,35 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btn bntIns" value="Añadir" />
-                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cancelar</button>
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="buttonG" value="Añadir" />
+                    </div>
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="mdlWarehouse">
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content detailsModal2">
-            <div class="modal-header">
-                <h4 class="modal-title">Seleccione el almacén</h4>
+        <div class="modal-content AñadirModeloModel">
+            <div class="modal-header text-center">
+                <h4 class="modal-title ttextitos">Seleccione el almacén</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding-left: 10px; padding-right:10px">
+               
                 <div class="form-group">
-                    <select class="form-select" id="cmbWarehouse">
+                    <select class="form-select custom-select inputf" id="cmbWarehouse">
                         <option value="" disabled selected>...</option>
                         @if (ViewBag.Warehouses != null)
                         {
@@ -237,10 +264,21 @@
                     </select>
                 </div>
             </div>
-            <div class="modal-footer">
-                <input type="submit" id="btnSaveInWarehouse" onclick="sendData()" data-dismiss="modal" class="btn bntIns" value="Guardar" />
-                <button type="button" class="btn btnExitModelDV" data-dismiss="modal">Cancelar</button>
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" id="btnSaveInWarehouse" onclick="sendData()" data-dismiss="modal" class="buttonG" value="Guardar" />
+                    </div>
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
             </div>
+           
         </div>
     </div>
 </div>
@@ -365,7 +403,7 @@
                 newRow.insertCell(3).textContent = printItemsArray[i].price;
 
                 var removeButton = document.createElement("button");
-                removeButton.classList.add("btn", "btnExitModelDV");
+                removeButton.classList.add("btn", "btncardE");
                 removeButton.textContent = "Eliminar";
                 removeButton.onclick = () => {
                     deleteItemOfTable(i);

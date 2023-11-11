@@ -4,20 +4,20 @@
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
 <h1 style="text-align:center">Lista Proveedor</h1>
-<br />
+<hr />
 
 <div class="container mt-5">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-1 row-cols-xl-3 g-4">
         @foreach (var item in ViewBag.Data)
         {
             <div class="col">
-                <div class="cardBP mb-3 border-success mx-auto" style="max-width: 600px;">
+                <div class="cardVerT mb-3 border-success mx-auto" style="max-width: 600px;">
                     <br>
-                    <div class="card-header textitos" style="text-align:center">@item._BussinesName</div>
+                    <div class="card-header fw-bold textitos text-center" >@item._BussinesName</div>
                     <hr />
                     <div class="row">
                         <div class="col-md-7">
-                            <div class="card-body">
+                            <div class="card-body" style="padding-left: 10px;">
                                 <p>
                                     <label class="text-sm fw-bold">Teléfono:</label>
                                     <label class="text-sm">@item._Phone</label>
@@ -43,15 +43,15 @@
                                         data-id="@item._SupID"
                                         data-toggle="modal"
                                         data-target="#detailsModal"
-                                        class="btncardD w-100 mb-2">
+                                        class="btncardD w-100 h-100 mb-2">
                                     Ver detalles
                                 </button>
-                                <a asp-action="Edit" asp-route-id="@item._SupID" class="w-100 mb-2 btncardA">Actualizar</a>
+                                <a asp-action="Edit" asp-route-id="@item._SupID" class="w-100 h-100 mb-2 btncardA">Actualizar</a>
                                 <button type="button"
                                         data-id="@item._SupID"
                                         data-toggle="modal"
                                         data-target="#deleteModal"
-                                        class="btncardE w-100 mb-2">
+                                        class="btncardE w-100 h-100 mb-2">
                                     Eliminar
                                 </button>
                             </div>
@@ -71,26 +71,27 @@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content deleteModal2" style="text-align:center">
+        <div class="modal-content ModalDelete" style="text-align:center">
 
-            <div class="modal-header">
-                <h3 class="">Confirmar acción</h3>
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Confirmar acción</h5>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el registro?</p>
+                <h4>Desea eliminar el registro?</h4>
                 <input id="IdS" type="hidden" />
             </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btncardD w-100" value="Confirmar" />
+
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div>
+                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm w-100 h-100" value="Confirmar" />
+                        <br />
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btncardE w-100" data-dismiss="modal">Cancelar</button>
+                <div class="col-md-6">
+                    <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
                 </div>
-                <div class="col-md-1"></div>
             </div>
             <br />
             <br />
@@ -102,44 +103,36 @@
 @*Modal for details*@
 <div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content detailsModal2">
-            <div class="modal-header">
-                <h5 class="modal-title" id="lblBussinesName"></h5>
+        <div class="modal-content DetalleModel">
+            <div class="modal-header text-center">
+                <h5 class="ttextitos mx-auto" id="lblBussinesName"></h5>
             </div>
+           
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="mt-1">
-                            <label for="lblphone" class="fw-bold">Teléfono:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblmanager" class="fw-bold">Encargado:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblci" class="fw-bold">CI:</label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lbladdress" class="fw-bold">Dirección:</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mt-1">
+                            <label for="lblphone" class="fw-bold">Teléfono: </label>
                             <label id="lblPhone"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblmanager" class="fw-bold">Encargado:</label>
                             <label id="lblManager"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lblci" class="fw-bold">CI:</label>
                             <label id="lblCi"></label>
                         </div>
                         <div class="mt-1">
+                            <label for="lbladdress" class="fw-bold">Dirección:</label>
                             <label id="lblAddress"></label>
                         </div>
                     </div>
+                   
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
-                <button type="button" class="btncardE w-50" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btnmodalCancel w-50 h-100" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
