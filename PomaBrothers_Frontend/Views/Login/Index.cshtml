@@ -1,15 +1,17 @@
 ﻿@model PomaBrothers_Frontend.Models.Employee
-@{
+
+
+@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger mt-3">
+        @ViewData["ErrorMessage"]
+    </div>
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
 
-<div class="alert alert-dismissible alert-danger" @ViewData["alert"]>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    <strong>Error al validar tus credenciales</strong> porfavor revisa que el correo y tu contraseña sean correctos, o requistrate <a asp-action="Register" class="alert-link">AQUI</a>
-</div>
 <div class="tab-pane fade show active" style="text-align:center" id="login" role="tabpanel" aria-labelledby="login-tab">
-    <h2 class="text-center mt-4 mb-4 font-weight-bold" style="text-transform: uppercase;">INICIAR SECION</h2>
+    <h2 class="text-center mt-4 mb-4 font-weight-bold" style="text-transform: uppercase;">INICIAR SESION</h2>
     <form asp-action="Login">
         <div class="container mt-5">
             <div class="row">
@@ -19,8 +21,8 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Correo</label>
-                        <input type="text" class="form-control inputf" placeholder="Ingresa tu Correo" required="" asp-for="User">
+                        <label>Usuario</label>
+                        <input type="text" class="form-control inputf" placeholder="Ingresa tu Usuario" required asp-for="User">
                     </div>
                     <div class="form-group">
                         <label>Contraseña</label>
@@ -37,3 +39,9 @@
     </form>
 </div>
 
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>

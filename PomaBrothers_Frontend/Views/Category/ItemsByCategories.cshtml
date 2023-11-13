@@ -72,11 +72,10 @@
             </div>
         }
     </div>
-</div>
+</div>\
 
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
-    @* "fade" is for adding animation*@
     <div class=" modal-dialog modal-dialog-centered">
         <div class="modal-content ModalDelete" style="text-align:center">
 
@@ -104,18 +103,17 @@
         </div>
     </div>
 </div>
-@*---------------------------*@
 
 @*Modal for details*@
-<div class="modal fade" id="detailsModal"> 
-    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+<div class="modal fade" id="detailsModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content DetalleModel">
             <div class="modal-header text-center">
                 <h5 class="ttextitos mx-auto" id="lblName"></h5>
             </div>
             <div class="modal-body">
-                
-                <img id="imagenItem"  class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Imagen Producto" />
+
+                <img id="imagenItem" class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Imagen Producto" />
                 <p>
                     <label id="lblDescription"></label>
                 </p>
@@ -145,14 +143,13 @@
                             <label for="lblWarranty" class="fw-bold">Garantía:</label>
                             <label id="lblWarranty"></label>
                             <label id="lblTypeWarranty"></label>
-                            
                         </div>
                         <div class="mt-1">
                             <label for="lblCapacity" id="lblInfo" class="fw-bold"></label>
                             <label id="lblCapacity"></label>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">
@@ -161,6 +158,13 @@
         </div>
     </div>
 </div>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
 
 
 @section Scripts{

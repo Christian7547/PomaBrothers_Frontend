@@ -1,3 +1,15 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using QuestPDF.Infrastructure;
+using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using System.Net;
+
 namespace PomaBrothers_Frontend
 {
     public class Program
@@ -8,6 +20,16 @@ namespace PomaBrothers_Frontend
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(cookie =>
+                {
+                    cookie.Cookie.Name = "sesion";
+                    cookie.LoginPath = "/Login/Login";
+                    cookie.ExpireTimeSpan = TimeSpan.FromMinutes(15); // Configura el tiempo de inactividad deseado en minutos
+                    cookie.SlidingExpiration = true;
+                    cookie.LogoutPath = "/Login/Logout";
+                });
 
             var app = builder.Build();
 
@@ -22,8 +44,10 @@ namespace PomaBrothers_Frontend
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

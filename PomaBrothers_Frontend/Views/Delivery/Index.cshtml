@@ -6,6 +6,82 @@
 <hr />
 
 <div class="container mt-8">
+<div>
+    <button class="btn btn-success m-4"
+            data-toggle="modal"
+            data-target="#modalReports">
+        Reporte de entregas
+    </button>
+</div>
+
+<div class="modal fade" id="modalReports">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Reportes de entregas</h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-success"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample1"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample1">
+                                Reporte de entregas por rango de fechas
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample2"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample2">
+                                Ver proveedor de un producto
+                            </button>
+                        </div>
+                    </div>
+                </p>
+                <div class="row">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card card-body">
+                            <p>
+                                <label for="txtStartDate" class="form-label">Desde:</label>
+                                <input id="txtStartDate" type="date" class="form-control" placeholder="Seleccione una fecha"/>
+                            </p>
+                            <p>
+                                <label for="txtEndDate" class="form-label">Hasta:</label>
+                                <input id="txtEndDate" type="date" class="form-control" placeholder="Seleccione una fecha"/>
+                            </p>
+                            <div>
+                                <input type="submit" class="btn btn-success" onclick="generatedPdfByDateRange()" value="Generar reporte" data-dismiss="modal" />
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <div class="card card-body">
+                            <p>
+                                <label for="txtProduct" class="form-label">Buscar producto:</label>
+                                <input id="txtProduct" type="text" class="form-control" placeholder="Ingrese el nombre del producto"/>
+                                <input id="txtProductId" type="hidden"/>
+                                <ul id="showProducts"></ul>
+                            </p>
+                            <div>
+                                <input type="submit" class="btn btn-success" data-dismiss="modal" value="Generar reporte" onclick="generatedPDFSupplierByProduct()"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <table class="table table-bordered table-responsive-xl ttablita" id="tableInvoices">
@@ -27,6 +103,8 @@
 <div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
         <div class="modal-content detailsModalVenta">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
             </div>
@@ -76,6 +154,12 @@
     </div>
 </div>
 
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
 
 @section Scripts{
     <script>
@@ -87,7 +171,18 @@
         const lblBussinesName = document.getElementById('lblBussinesName');
         const lblPhone = document.getElementById('lblPhone');
 
+        const txtStartDate = document.getElementById('txtStartDate');
+        const txtEndDate = document.getElementById('txtEndDate');
+
+        const txtProduct = document.getElementById('txtProduct');
+        const txtProductId = document.getElementById('txtProductId');
+        const showProducts = document.getElementById('showProducts');
+
         document.addEventListener('DOMContentLoaded', () => {
+            txtProduct.addEventListener('input', () => {
+                showProducts.style.display = 'block';
+                searchProduct(txtProduct.value);
+            });
             getInvoices();
         });
 
@@ -143,6 +238,74 @@
                 row.insertCell(2).textContent = detail.item.serie;
                 row.insertCell(3).textContent = detail.purchasePrice;
             });
+        }
+
+        function searchProduct(productName) {
+            fetch(`/Item/SearchProduct?searchProduct=${productName}`)
+            .then(res => res.json())
+            .then(data => {
+                showProducts.innerHTML = '';
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.style.cursor = 'pointer';
+                    li.textContent = item.productName;
+                    li.addEventListener('click', () => {
+                        showProducts.style.display = 'none';
+                        txtProduct.value = li.textContent;
+                        txtProductId.value = item.productId;
+                    });
+                    showProducts.appendChild(li);
+                });
+            })
+            .catch(error => console.log(error))
+        }
+
+        function generatedPdfByDateRange(){
+            let startDate = txtStartDate.value;
+            let endDate = txtEndDate.value;
+            fetch(`/DeliveryReports/GeneratedReportByDateRange?startDate=${startDate}&finishDate=${endDate}`)
+            .then(res => {
+                if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                    return res.blob();
+                } else if (!res.ok){
+                    return res.text().then(text => {
+                        throw new Error(text || 'No se pudo generar el reporte');
+                    });
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, '_blank');
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error al descargar el archivo: ', error);
+                alert(error.message);
+            });
+        }
+
+        function generatedPDFSupplierByProduct(){
+            let id = txtProductId.value;
+            fetch(`/DeliveryReports/GeneratedReportSupplierByProduct?productId=${id}`)
+            .then(res => {
+                if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                    return res.blob();
+                } else if (!res.ok) {
+                    return res.text().then(text => {
+                        throw new Error('No se pudo generar el reporte');
+                    });
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, '_blank');
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error al descargar el archivo: ', error);
+                alert(error.message);
+            })
         }
     </script>
 }

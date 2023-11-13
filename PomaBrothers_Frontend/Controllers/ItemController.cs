@@ -1,12 +1,18 @@
 ﻿using Firebase.Auth;
 using Firebase.Storage;
 using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
+using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace PomaBrothers_Frontend.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private HttpClient httpClient = new();
@@ -57,6 +63,64 @@ namespace PomaBrothers_Frontend.Controllers
                 }).ToList();
             ViewBag.Data = query;
             return View();
+        }
+
+        //Sale
+        public async Task<List<Customer>> GetCustomersAsync()
+        {
+            HttpResponseMessage request = await httpClient.GetAsync("Customer/GetMany");
+            request.EnsureSuccessStatusCode();
+            string json = request.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<List<Customer>>(json);
+        }
+
+        public async Task<Sale> RegisterSaleAsync(Sale s)
+        {
+            HttpResponseMessage request = await httpClient.PostAsJsonAsync("Sale/Create", s);
+            request.EnsureSuccessStatusCode();
+            string json = request.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<Sale>(json);
+        }
+
+        public async Task<ActionResult> IndexSale()
+        {
+
+            var getItems = await GetItemsAsync();
+            var getModels = await GetModelsAsync();
+            var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
+                (i, m) => new
+                {
+                    _Name = i.Name,
+                    _Price = i.Price,
+                    _Color = i.Color,
+                    _Serie = i.Serie,
+                    _Marker = m.Marker,
+                    ItemID = i.Id,
+                    ModelID = m.Id
+                }).ToList();
+            ViewBag.Data = query;
+            var customers = await GetCustomersAsync();
+            ViewBag.Customers = customers.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = $"{c.Ci}-{c.LastName}"
+            });
+            return View();
+        }
+
+        public async Task<ActionResult> CreateSale(int id, int total)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            Sale sale = new()
+            {
+                EmployeeId = int.Parse(userIdClaim),
+                CustomerId = id,
+                Total = total,
+                RegisterDate = DateTime.Now
+            };
+            await RegisterSaleAsync(sale);
+
+            return RedirectToAction("Index", "Sale");
         }
 
         public async Task<List<Item>> GetItemsAsync() //Get All
@@ -175,6 +239,16 @@ namespace PomaBrothers_Frontend.Controllers
             List<ItemModel> list = JsonConvert.DeserializeObject<List<ItemModel>>(serializeList);
             return Json(list);
         }
+
+        public async Task<ActionResult> SearchProduct(string searchProduct)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"Item/SearchProduct/{searchProduct}");
+            var serializeList = request.Content.ReadAsStringAsync().Result;
+            List<ProductSearchDTO> list = JsonConvert.DeserializeObject<List<ProductSearchDTO>>(serializeList);
+            return Json(list);
+        }
         #endregion
+
+        
     }
 }

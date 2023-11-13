@@ -58,7 +58,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Role" class="control-label fw-bold"></label>
-                                    <input asp-for="Role" class="form-control inputf" />
+                                        <select asp-for="Role" class="form-control">
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vendedor">Vendedor</option>
+                                        </select>
                                     <span asp-validation-for="Role" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -92,6 +95,13 @@
         </div>
     </div>
 </form>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
 
 @section Scripts {
     @{

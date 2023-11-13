@@ -12,95 +12,99 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-10">
-                    <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
-                        <h4 class="card-title text-center fw-bold">Datos del Empleado</h4>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="Name" class="control-label fw-bold"></label>
-                                    <input asp-for="Name" class="form-control inputf" />
-                                    <span asp-validation-for="Name" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LastName" class="control-label fw-bold"></label>
-                                    <input asp-for="LastName" class="form-control inputf" />
-                                    <span asp-validation-for="LastName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="SecondLastName" class="control-label fw-bold"></label>
-                                    <input asp-for="SecondLastName" class="form-control inputf" />
-                                    <span asp-validation-for="SecondLastName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Ci" class="control-label fw-bold"></label>
-                                    <input asp-for="Ci" type="number" class="form-control inputf" />
-                                    <span asp-validation-for="Ci" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Phone" class="control-label fw-bold"></label>
-                                    <input asp-for="Phone" type="number" class="form-control inputf" />
-                                    <span asp-validation-for="Phone" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="User" class="control-label fw-bold"></label>
-                                    <input asp-for="User" class="form-control inputf" />
-                                    <span asp-validation-for="User" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password" class="control-label fw-bold"></label>
-                                    <input asp-for="Password" class="form-control inputf" />
-                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Role" class="control-label fw-bold"></label>
-                                    <input asp-for="Role" class="form-control inputf" />
-                                    <span asp-validation-for="Role" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="RegisterDate" class="control-label fw-bold"></label>
-                                    <input asp-for="RegisterDate" type="datetime-local" class="form-control inputf" />
-                                    <span asp-validation-for="RegisterDate" class="text-danger"></span>
-                                </div>
+                 <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                     <h4 class="card-title text-center fw-bold">Datos del Empleado</h4>
+                     <hr />
+                     <div class="row">
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label asp-for="Name" class="control-label fw-bold"></label>
+                                 <input asp-for="Name" class="form-control inputf" />
+                                 <span asp-validation-for="Name" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="LastName" class="control-label fw-bold"></label>
+                                 <input asp-for="LastName" class="form-control inputf" />
+                                 <span asp-validation-for="LastName" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="SecondLastName" class="control-label fw-bold"></label>
+                                 <input asp-for="SecondLastName" class="form-control inputf" />
+                                 <span asp-validation-for="SecondLastName" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="Ci" class="control-label fw-bold"></label>
+                                 <input asp-for="Ci" type="number" class="form-control inputf" />
+                                 <span asp-validation-for="Ci" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="Phone" class="control-label fw-bold"></label>
+                                 <input asp-for="Phone" type="number" class="form-control inputf" />
+                                 <span asp-validation-for="Phone" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="User" class="control-label fw-bold"></label>
+                                 <input asp-for="User" class="form-control inputf" />
+                                 <span asp-validation-for="User" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <label asp-for="Password" class="control-label fw-bold"></label>
+                                 <input asp-for="Password" class="form-control inputf" />
+                                 <span asp-validation-for="Password" class="text-danger"></span>
+                             </div>
+                            <div class="form-group">
+                                <label asp-for="Role" class="control-label fw-bold"></label>
+                                <select asp-for="Role" class="form-control">
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Vendedor">Vendedor</option>
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group collapse">
-                                    <label asp-for="UrlImage" class="control-label fw-bold"></label>
-                                    <input asp-for="UrlImage" class="form-control inputf" />
-                                    <span asp-validation-for="UrlImage" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Employee Image">
-                                </div>
-                                <div class="form-group">
-                                    <br />
-                                    <label id="image" class="control-label fw-bold">Seleccione una imagen</label>
-                                    <input name="image" type="file" accept=".jpg" class="form-control-file inputf" />
-                                </div>
-                                <br />
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="submit" value="Actualizar" class="buttonA" />
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <a asp-action="Index" class="buttonV">Volver</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                         </div>
+                         <div class="col-md-6">
+                             <div class="form-group collapse">
+                                 <label asp-for="UrlImage" class="control-label fw-bold"></label>
+                                 <input asp-for="UrlImage" class="form-control inputf" />
+                                 <span asp-validation-for="UrlImage" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                                 <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@Model.UrlImage" alt="Employee Image">
+                             </div>
+                             <div class="form-group">
+                                 <br />
+                                 <label id="image" class="control-label fw-bold">Seleccione una imagen</label>
+                                 <input name="image" type="file" accept=".jpg" class="form-control-file inputf" />
+                             </div>
+                             <br />
+                             <br />
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="form-group">
+                                         <input type="submit" value="Actualizar" class="buttonA" />
+                                     </div>
+                                     <br />
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="form-group">
+                                         <a asp-action="Index" class="buttonV">Volver</a>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
             </div>
         </div>
-        <br />
-        <br />
     </div>
+
 </form>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
 
 @section Scripts {
     @{

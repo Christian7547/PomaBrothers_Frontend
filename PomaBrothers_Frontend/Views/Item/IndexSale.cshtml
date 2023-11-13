@@ -1,0 +1,339 @@
+﻿@{
+    ViewData["Title"] = "Productos";
+}
+
+<h1>Productos</h1>
+<hr />
+<div id="vista1" style="float: left; width: 80%;">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var item in ViewBag.Data)
+        {
+            <div class="col">
+                <div class="card mb-3 border-success" style="max-width: 640px;">
+                    <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-body">
+                                        <p>
+                                            <label class="text-sm fw-bold">Marca:</label>
+                                            <label class="text-sm">@item._Marker</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                            <label class="text-sm">@item._Price</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Color:</label>
+                                            <label class="text-sm">@item._Color</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Serie:</label>
+                                            <label class="text-sm">@item._Serie</label>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <button class="btn btn-success w-100 mb-2" onclick="addToCart('@item._Name', '@item._Price')"> + </button>
+                                        <button class="btn btn-danger w-100 mb-2" onclick="removeFromCart('@item._Name', '@item._Price')"> - </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="vista" style="float: left; width: 20%;">
+    <div>
+        <h2>Cliente:</h2>
+        <div>
+            <select id="Customers">
+                @foreach (var item in ViewBag.Customers)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+            <div class="col-md-2">
+                <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newCustomer">+</button>
+            </div>
+        </div>
+    </div>
+    <div id="selectedProducts">
+        <h2>Productos Seleccionados:</h2>
+        <ul id="productList"></ul>
+    </div>
+
+    <!-- Total de la compra -->
+    <div>
+        <h2>Total de la Compra:</h2>
+        <input id="totalPrice" type="text" value="0" readonly>
+    </div>
+    <button id="registerSaleButton" class="btn btn-primary">Registrar Venta</button>
+</div>
+
+<div class="modal fade" id="newCustomer">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Customer</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtName" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="txtName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtLastName" class="col-form-label">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="txtLastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtSecondLastName" class="col-form-label">Apellido Materno:</label>
+                        <input type="text" class="form-control" id="txtSecondLastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtEmail" class="col-form-label">Correo Electronico:</label>
+                        <input type="email" class="form-control" id="txtEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtCi" class="col-form-label">CI:</label>
+                        <input type="text" class="form-control" id="txtCi">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnAddCustomer" onclick="addCustomer()" data-dismiss="modal" class="btn btn-success" value="Add" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
+
+@section Scripts{
+    <script>
+        const txtId = document.getElementById('logId');
+        const lblName = document.getElementById('lblName');
+        const lblModel = document.getElementById('lblModel');
+        const lblMarker = document.getElementById('lblMarker');
+        const lblSerie = document.getElementById('lblSerie');
+        const lblDescription = document.getElementById('lblDescription');
+        const lblColor = document.getElementById('lblColor');
+        const lblPrice = document.getElementById('lblPrice');
+        const lblWarranty = document.getElementById('lblWarranty');
+        const lblTypeWarranty = document.getElementById('lblTypeWarranty');
+        const lblInfo = document.getElementById('lblInfo');
+        const lblCapacity = document.getElementById('lblCapacity');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+            btnsDelete.forEach((button) => {
+                button.addEventListener('click', () => {
+                    var id = button.getAttribute('data-id');
+                    txtId.value = id;
+                });
+            });
+        });
+
+        function showDetails(id) {
+            fetch(`/Item/GetItem?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        console.error(response);
+                    }
+                })
+                .then(data => {
+                    lblName.textContent = data.name;
+                    lblMarker.textContent = data.itemModel.marker;
+                    lblModel.textContent = data.itemModel.modelName;
+                    lblSerie.textContent = data.serie;
+                    lblDescription.textContent = data.description;
+                    lblColor.textContent = data.color;
+                    lblPrice.textContent = `${data.price} Bs.`;
+                    lblWarranty.textContent = data.durationWarranty;
+                    lblTypeWarranty.textContent = data.typeWarranty;
+                    if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null) {
+                        lblInfo.style.display = 'none';
+                        lblCapacity.style.display = 'none';
+                    }
+                    else {
+                        lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                    }
+                    if (data.itemModel.id != 1) {
+                        lblInfo.textContent = 'Capacidad: ';
+                    }
+                    else {
+                        lblInfo.textContent = 'Pantalla: ';
+                    }
+                })
+                .catch(error => console.log(error))
+        }
+
+        function confirmDelete() {
+            const id = txtId.value;
+            fetch(`/Item/Delete?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
+        }
+
+        function addCustomer() {
+            const customer = {
+                name: document.getElementById('txtName').value,
+                lastName: document.getElementById('txtLastName').value,
+                secondLastName: document.getElementById('txtSecondLastName').value,
+                email: document.getElementById('txtEmail').value,
+                ci: document.getElementById('txtCi').value
+            };
+
+            fetch('/Customer/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customer)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Cliente guardado correctamente');
+                        location.reload();
+                        // Puedes realizar acciones adicionales aquí, como borrar el formulario.
+                    } else {
+                        console.log('Error al guardar el cliente');
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+    <script>
+        var cart = {};
+
+        // Función para agregar productos al carrito
+        // Función para agregar productos al carrito
+        function addToCart(productName, price) {
+            // Convierte el precio a un número
+            var numericPrice = parseFloat(price);
+
+            if (cart[productName] === undefined) {
+                cart[productName] = {
+                    count: 1,
+                    price: numericPrice,
+                };
+            } else {
+                cart[productName].count++;
+            }
+
+            if (cart[productName].count === 0) {
+                // Si la cantidad llega a 0, elimina el producto de la lista
+                delete cart[productName];
+                removeFromCart(productName);
+            } else {
+                updateCart(productName, cart[productName].count);
+                updateTotalPrice(numericPrice);
+            }
+        }
+
+        // Función para quitar productos del carrito
+        function removeFromCart(productName, price) {
+            if (cart[productName] === undefined || cart[productName].count === 0) {
+                return;
+            }
+
+            // Obtener la cantidad actual antes de restarla
+            var currentCount = cart[productName].count;
+
+            // Restar la cantidad y actualizar el carrito y el total
+            cart[productName].count--;
+
+            if (cart[productName].count === 0) {
+                // Si la cantidad llega a 0, eliminar el producto de la lista y del carrito
+                delete cart[productName];
+                updateCart(productName, 0);  // Actualizar la lista con cantidad 0
+            } else {
+                updateCart(productName, cart[productName].count);
+            }
+
+            // Calcular la diferencia de precios correctamente
+            var priceDifference = currentCount * price;
+            updateTotalPrice(-priceDifference);
+        }
+
+        function updateCart(productName, count) {
+            var productList = document.getElementById("productList");
+            var items = productList.getElementsByTagName("li");
+
+            // Actualizar la lista solo si la cantidad es mayor que 0
+            if (count > 0) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].textContent.startsWith(productName)) {
+                        items[i].textContent = productName + ": " + count;
+                        return;
+                    }
+                }
+                var listItem = document.createElement("li");
+                listItem.textContent = productName + ": " + count;
+                productList.appendChild(listItem);
+            } else {
+                // Si la cantidad es 0, eliminar el producto de la lista
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].textContent.startsWith(productName)) {
+                        productList.removeChild(items[i]);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Función para actualizar el precio total
+        function updateTotalPrice() {
+            var totalPriceInput = document.getElementById("totalPrice");
+            var currentTotal = 0;
+            for (var productName in cart) {
+                currentTotal += cart[productName].count * cart[productName].price;
+            }
+            totalPriceInput.value = currentTotal;
+        }
+    </script>
+
+    <script>
+        // Agregar un evento click al botón para registrar la venta y redirigir
+        document.getElementById("registerSaleButton").addEventListener("click", function () {
+            // Obtener el ID del cliente seleccionado
+            var customerId = document.getElementById("Customers").value;
+            var totalValue = document.getElementById("totalPrice").value;
+            // Obtener el valor total de la compra (asegúrate de que tengas acceso a esta variable en tu JavaScript)
+
+            // Construir la URL con los parámetros
+            var url = "/Item/CreateSale?id=" + customerId + "&total=" + totalValue;
+
+            // Redirigir a la URL
+            window.location.href = url;
+        });
+    </script>
+    }

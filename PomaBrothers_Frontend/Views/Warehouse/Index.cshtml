@@ -75,7 +75,7 @@
     </div>
 </div>
 
-@*Modal for Items*@
+@*Modal for Models*@
 <div class="modal fade" id="showItemsModal">
     <div class="cardVerT modal-dialog modal-dialog-centered modal-fullscreen-md">
         <div class="modal-content">
@@ -84,6 +84,10 @@
                 <hr />
             </div>
             <div class="modal-body" style="padding-left: 10px;" id="bodyContainerModal">
+                <h4 class="modal-title">Modelos disponibles</h4>
+                <button type="button" class="btn-close" id="btnCloseModal" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bodyContainerModal"> 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btnmodalCancel" id="btnClearModal" data-dismiss="modal">Cerrar</button>
@@ -92,6 +96,29 @@
     </div>
 </div>
 
+@*Modal for Items*@
+<div class="modal fade" id="showItems">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Productos</h4>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="printItemsDiv">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+<script src="~/js/session.js" asp-append-version="true"></script>
 
 
 @section Scripts{
@@ -150,14 +177,15 @@
                                <div class="col-md-4">
                                   <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
                                             class="btn btn-success h-50 fw-bold mt-5"
-                                            type="button">
+                                            type="button"
+                                            data-toggle="modal"
+                                            data-target="#showItems">
                                      Ver Productos
                                   </button>
                                </div>
                           </div>
                           
-                          <hr/>
-                          <div id="printItemsDiv"></div>`;
+                          <hr/>`;
             bodyContainerModal.insertAdjacentHTML('beforeend', html);
             printItemsDiv = document.getElementById('printItemsDiv');
         }
