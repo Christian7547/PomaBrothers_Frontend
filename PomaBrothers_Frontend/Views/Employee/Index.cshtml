@@ -123,7 +123,7 @@
 
 @section Scripts{
     <script>
-        const txtId = document.getElementById('logId');
+        const employeeIdInput = document.getElementById('employeeId');
         const lblName = document.getElementById('lblName');
         const lblLastName = document.getElementById('lblLastName');
         const lblCi = document.getElementById('lblCi');
@@ -132,11 +132,11 @@
         const detailsImage = document.getElementById('detailsImage');
 
         document.addEventListener('DOMContentLoaded', () => {
-            var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+            var btnsDelete = document.querySelectorAll('[data-target="#deleteModal"]');
             btnsDelete.forEach((button) => {
                 button.addEventListener('click', () => {
                     var id = button.getAttribute('data-id');
-                    txtId.value = id;
+                    employeeIdInput.value = id;
                 });
             });
         });
@@ -146,8 +146,7 @@
                 .then(response => {
                     if (response.ok) {
                         return response.json();
-                    }
-                    else {
+                    } else {
                         console.error(response);
                     }
                 })
@@ -163,14 +162,13 @@
         }
 
         function confirmDelete() {
-            const id = txtId.value;
+            const id = employeeIdInput.value;
             fetch(`/Employee/Delete?id=${id}`)
                 .then(response => {
                     if (response.ok) {
                         document.getElementById('deleteModal').style.display = 'none';
                         location.reload();
-                    }
-                    else {
+                    } else {
                         console.log('Internal server error');
                     }
                 })
