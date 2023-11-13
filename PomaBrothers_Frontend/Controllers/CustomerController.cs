@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PomaBrothers_Frontend.Models;
 using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
@@ -23,6 +24,21 @@ namespace PomaBrothers_Frontend.Controllers
             var serializeList = request.Content.ReadAsStringAsync().Result;
             List<CustomerDTO> list = JsonConvert.DeserializeObject<List<CustomerDTO>>(serializeList);
             return Json(list);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Customer customer)
+        {
+            try
+            {
+                HttpResponseMessage request = await httpClient.PostAsJsonAsync("Customer/CustomerCreate", customer);
+                request.EnsureSuccessStatusCode();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

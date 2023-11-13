@@ -3,62 +3,56 @@
 }
 
 <h1>Empleados</h1>
-<div class="row">
-    <div class="col-md-9">
-    </div>
-    <div class="col-md-3">
-        <div class="row">
-            <div class="col-md-4">
-                <label class="fw-bold form-label">Filtrar por:</label>
-            </div>
-            <div class="col">
-                <!-- Puedes agregar opciones de filtrado si es necesario -->
-            </div>
-        </div>
-    </div>
-</div>
 <hr />
 <div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var employee in ViewBag.Data)
+    @foreach (var item in ViewBag.Data)
     {
         <div class="col">
             <div class="card mb-3 border-success" style="max-width: 640px;">
-                <div class="card-header bg-transparent border-light fw-bold">@employee.Name @employee.LastName</div>
+                <div class="card-header bg-transparent border-light fw-bold">@item.Name</div>
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
+                        <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Employee Image">
                     </div>
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col">
                                 <div class="card-body">
                                     <p>
-                                        <label class="text-sm fw-bold">Cédula:</label>
-                                        <label class="text-sm">@employee.Ci</label>
+                                        <label class="text-sm fw-bold">Nombre:</label>
+                                        <label class="text-sm">@item.Name</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">Apellido:</label>
+                                        <label class="text-sm">@item.LastName</label>
+                                    </p>
+                                    <p>
+                                        <label class="text-sm fw-bold">CI:</label>
+                                        <label class="text-sm">@item.Ci</label>
                                     </p>
                                     <p>
                                         <label class="text-sm fw-bold">Teléfono:</label>
-                                        <label class="text-sm">@employee.Phone</label>
+                                        <label class="text-sm">@item.Phone</label>
                                     </p>
                                     <p>
                                         <label class="text-sm fw-bold">Usuario:</label>
-                                        <label class="text-sm">@employee.User</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Rol:</label>
-                                        <label class="text-sm">@employee.Role</label>
-                                    </p>
-                                    <p>
-                                        <label class="text-sm fw-bold">Fecha de Registro:</label>
-                                        <label class="text-sm">@employee.RegisterDate.ToString("dd/MM/yyyy")</label>
+                                        <label class="text-sm">@item.User</label>
                                     </p>
                                 </div>
                             </div>
                             <div class="col d-flex align-items-center justify-content-center">
                                 <div class="d-flex flex-column align-items-end">
-                                    <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
                                     <button type="button"
-                                            data-id="@employee.Id"
+                                            onclick="showDetails(@item.Id)"
+                                            data-id="@item.Id"
+                                            data-toggle="modal"
+                                            data-target="#detailsModal"
+                                            class="btn btn-success w-100 mb-2">
+                                        Ver detalles
+                                    </button>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                    <button type="button"
+                                            data-id="@item.Id"
                                             data-toggle="modal"
                                             data-target="#deleteModal"
                                             class="btn btn-danger w-100">
@@ -74,49 +68,117 @@
     }
 </div>
 
-<!-- Modal for delete -->
+<!-- Modal para eliminar -->
 <div class="modal fade" id="deleteModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Confirmar acción</h4>
             </div>
+
             <div class="modal-body">
                 <p>Desea eliminar el registro?</p>
-                <input id="employeeId" type="hidden" />
+                <input id="logId" type="hidden" />
             </div>
+
             <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" data-dismiss="modal" />
+                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
+<!-- Modal para detalles -->
+<div class="modal fade" id="detailsModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblName"></h5>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Employee Image" id="detailsImage">
+                <p>
+                    <label id="lblLastName" class="fw-bold">Apellido:</label>
+                </p>
+                <p>
+                    <label id="lblCi" class="fw-bold">CI:</label>
+                </p>
+                <p>
+                    <label id="lblPhone" class="fw-bold">Teléfono:</label>
+                </p>
+                <p>
+                    <label id="lblUser" class="fw-bold">Usuario:</label>
+                </p>
+            </div>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
+
+<script src="~/js/countdown.js"></script>
+
+
+@section Scripts{
     <script>
-        const employeeId = document.getElementById('employeeId');
+        const txtId = document.getElementById('logId');
+        const lblName = document.getElementById('lblName');
+        const lblLastName = document.getElementById('lblLastName');
+        const lblCi = document.getElementById('lblCi');
+        const lblPhone = document.getElementById('lblPhone');
+        const lblUser = document.getElementById('lblUser');
+        const detailsImage = document.getElementById('detailsImage');
 
-        function confirmDelete() {
-            const id = employeeId.value;
+        document.addEventListener('DOMContentLoaded', () => {
+            var btnsDelete = document.querySelectorAll('[data-toggle="modal"]');
+            btnsDelete.forEach((button) => {
+                button.addEventListener('click', () => {
+                    var id = button.getAttribute('data-id');
+                    txtId.value = id;
+                });
+            });
+        });
 
-            // Enviar una solicitud DELETE a tu API
-            fetch(`/api/Employee/Delete?id={employeeId}`, {
-                method: 'DELETE'
-            })
+        function showDetails(id) {
+            fetch(`/Employee/GetEmployee?id=${id}`)
                 .then(response => {
                     if (response.ok) {
-                        // Actualizar la página o realizar otras acciones después de la eliminación
-                        location.reload(); // Esto recargará la página después de la eliminación
-                    } else {
-                        // Manejar el caso de error, por ejemplo, mostrar un mensaje de error
-                        console.error('Error al eliminar el empleado');
+                        return response.json();
+                    }
+                    else {
+                        console.error(response);
                     }
                 })
-                .catch(error => {
-                    console.error('Error al eliminar el empleado', error);
-                });
+                .then(data => {
+                    lblName.textContent = data.name;
+                    lblLastName.textContent = `Apellido: ${data.lastName}`;
+                    lblCi.textContent = `CI: ${data.ci}`;
+                    lblPhone.textContent = `Teléfono: ${data.phone}`;
+                    lblUser.textContent = `Usuario: ${data.user}`;
+                    detailsImage.src = data.urlImage;
+                })
+                .catch(error => console.log(error))
+        }
+
+        function confirmDelete() {
+            const id = txtId.value;
+            fetch(`/Employee/Delete?id=${id}`)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
         }
     </script>
-
 }

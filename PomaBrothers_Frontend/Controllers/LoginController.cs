@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 
 namespace PomaBrothers_Frontend.Controllers
@@ -22,23 +26,53 @@ namespace PomaBrothers_Frontend.Controllers
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Login(string user, string password)
         {
             try
             {
-                var data = new { User = user, Password = password };
-                var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                var requestContent = new StringContent("", Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync($"api/Login/Login?user={user}&password={password}", requestContent);
 
-                HttpResponseMessage request = await httpClient.PutAsync($"api/Login/Login" , content);
-                //request.EnsureSuccessStatusCode();
-                return RedirectToAction("Index", "Employee");
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<Employee>(json);
+
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, result!.Id.ToString()),
+                        new Claim(ClaimTypes.Role, result.Role)
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                    ViewData["WelcomeMessage"] = "Bienvenido " + user;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewData["ErrorMessage"] = "Credenciales incorrectas";
+                    return View("Index");
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            // Cierra la sesión del usuario
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //Response.Cookies.Delete("sesion");
+            // Redirige al usuario a la página de inicio u otra página de tu elección
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
+

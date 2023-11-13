@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,7 +22,6 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item ">
                         <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('carrusel')">Inicio</a>
                     </li>
@@ -36,9 +34,50 @@
                     <li class="nav-item ">
                         <a class="dropdown-item text-dark nav-link" href="javascript:void(0);" onclick=" scrollToSection('contactUs')">Contáctanos</a>
                     </li>
+
+                    @if (User.IsInRole("Vendedor"))
+                    {
+                    // Mostrar opciones para el rol de Administrador
                     <li class="nav-item">
-                        <a class="dropdown-item text-dark nav-link" asp-controller="Login" asp-action="Index">Iniciar Sesión</a>
+                        <a class="dropdown-item text-dark nav-link" asp-area="" asp-controller="Warehouse" asp-action="Index">Almacenes</a>
                     </li>
+                    <li class="nav-item dropdown" href="javascript:void(0);">
+                        <a class="nav-link dropdown-item text-dark " id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
+                            Productos
+                        </a>
+                        <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Item" asp-action="Index">Ver productos</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Delivery" asp-action="Index">Ver entregas</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Delivery" asp-action="New">Nueva entrega</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Category" asp-action="Index">Categorías</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="nav-item dropdown" href="javascript:void(0);">
+                        <a class="nav-link dropdown-item text-dark " id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
+                            Ventas
+                        </a>
+                        <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Sale" asp-action="Index">Registro de ventas</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    }
+                    else if (User.IsInRole("Administrador"))
+                    {
+                    // Mostrar opciones para el rol de Vendedor
                     <li class="nav-item">
                         <a class="dropdown-item text-dark nav-link" asp-area="" asp-controller="Warehouse" asp-action="Index">Almacenes</a>
                     </li>
@@ -61,6 +100,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item dropdown" href="javascript:void(0);">
                         <a class="nav-link dropdown-item text-dark " id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-align: center;">
                             Ventas
@@ -68,6 +108,9 @@
                         <ul class="dropdown-menu stlvar" aria-labelledby="navbarDropdownMenuLink">
                             <li>
                                 <a class="dropdown-item text-dark" asp-controller="Sale" asp-action="Index">Registro de ventas</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-dark" asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
                             </li>
                         </ul>
                     </li>
@@ -89,8 +132,32 @@
                             <li> <a class="dropdown-item text-dark" asp-controller="Employee" asp-action="Create">Agregar empleado</a></li>
                         </ul>
                     </li>
+                    }
                 </ul>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <form id="logoutForm" asp-controller="Login" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-link nav-link text-dark">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mr-0">
+                            <!-- Agrega la clase mr-0 aquí -->
+                            <a class="dropdown-item text-dark nav-link" asp-area="" asp-controller="Login" asp-action="Index">Iniciar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            }
         </nav>
     </header>
 

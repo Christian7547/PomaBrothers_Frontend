@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Storage;
 
@@ -9,7 +15,7 @@ namespace PomaBrothers_Frontend.Controllers
 {
     public class EmployeeController : Controller
     {
-        private HttpClient httpClient = new();
+        private readonly HttpClient httpClient = new();
 
         public EmployeeController()
         {
@@ -17,6 +23,7 @@ namespace PomaBrothers_Frontend.Controllers
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
         public async Task<string> Storage(Stream file, string name)
         {
             string email = "catier@gmail.com";
@@ -47,7 +54,7 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<List<Employee>> GetEmployeesAsync()
         {
-            HttpResponseMessage request = await httpClient.GetAsync("api/Employee");
+            HttpResponseMessage request = await httpClient.GetAsync("api/Employee/GetMany");
             if (request.IsSuccessStatusCode)
             {
                 var serializeList = await request.Content.ReadAsStringAsync();
@@ -56,7 +63,7 @@ namespace PomaBrothers_Frontend.Controllers
             return new List<Employee>();
         }
 
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -68,8 +75,8 @@ namespace PomaBrothers_Frontend.Controllers
             {
                 Stream img = image.OpenReadStream();
                 string url = await Storage(img, image.FileName);
-                employee.UrlImage= url;
-                HttpResponseMessage request = await httpClient.PostAsJsonAsync("api/Employee", employee);
+                employee.UrlImage = url;
+                HttpResponseMessage request = await httpClient.PostAsJsonAsync("api/Employee/NewEmployee", employee);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Employee");
             }
@@ -90,13 +97,14 @@ namespace PomaBrothers_Frontend.Controllers
         {
             try
             {
-                if(image != null)
+                if (image != null)
                 {
                     Stream img = image.OpenReadStream();
                     string url = await Storage(img, image.FileName);
                     employee.UrlImage = url;
                 }
-                HttpResponseMessage request = await httpClient.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
+
+                HttpResponseMessage request = await httpClient.PutAsJsonAsync("api/Employee/EditEmployee", employee);
                 request.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Employee");
             }
@@ -108,7 +116,7 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<Employee> GetEmployeeAsync(int id)
         {
-            HttpResponseMessage request = await httpClient.GetAsync($"api/Employee/{id}");
+            HttpResponseMessage request = await httpClient.GetAsync($"api/Employee/GetOne/{id}");
             if (request.IsSuccessStatusCode)
             {
                 var serializeObject = await request.Content.ReadAsStringAsync();
@@ -126,39 +134,15 @@ namespace PomaBrothers_Frontend.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            HttpResponseMessage request = await httpClient.DeleteAsync($"api/Employee/{id}");
+            HttpResponseMessage request = await httpClient.DeleteAsync($"api/Employee/RemoveEmployee/{id}");
             request.EnsureSuccessStatusCode();
             return RedirectToAction("Index", "Employee");
         }
 
-
-        //// GET: Employee/Login
-        //public IActionResult Login()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(string user, string password)
-        //{
-        //    // Validar las credenciales (aquí puedes verificar en tu base de datos)
-        //    //var employee = await _context.Employees.FirstOrDefaultAsync(e => e.User == user && e.Password == password);
-
-        //    //if (employee != null)
-        //    //{
-        //    //    // Autenticación exitosa
-        //    //    // Puedes agregar lógica adicional aquí
-
-        //    //    // Redireccionar a la página de inicio después del inicio de sesión
-        //    //    return RedirectToAction("Index", "Home");
-        //    //}
-        //    //else
-        //    //{
-        //    //    // Autenticación fallida
-        //    //    ViewBag.ErrorMessage = "Credenciales incorrectas";
-        //    //    return View();
-        //    //}
-        //}
+        
     }
 }
+
+
+
+
