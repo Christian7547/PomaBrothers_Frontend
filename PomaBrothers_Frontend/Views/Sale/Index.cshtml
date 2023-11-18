@@ -97,6 +97,10 @@
                     <!-- Aquí se agregan las filas de datos de ventas -->
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -187,6 +191,9 @@
         const txtStartDate = document.getElementById('txtStartDate');
         const txtEndDate = document.getElementById('txtEndDate');
 
+        const rowsPerPages = 10; 
+        let currentSales = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             txtCustomer.addEventListener('input', () => {
                 showCustomers.style.display = 'block';
@@ -203,15 +210,18 @@
                 }
             })
             .then(data => {
+                currentSales = data;
                 showSales(data);    
             })
             .catch(error => console.error(error));
         }
 
-        function showSales(data){
+        function showSales(data, page = 1){
             const tbody = tableSales.getElementsByTagName('tbody')[0];
             tbody.innerHTML = '';
-            for (let i = 0; i < data.length; i++) {
+            const start = (page - 1) * rowsPerPages;
+            const end = start + rowsPerPages; 
+            for (let i = start; i < end && i < data.length; i++) {
                 var row = tbody.insertRow();
                 row.insertCell(0).textContent = data[i].registerDate;
                 let secondLastName;
@@ -234,6 +244,28 @@
                     showItems(data[i].saleDetails);
                 }
                 row.insertCell(3).appendChild(btnDetails);
+            }
+            buildPagination(data.length, page);
+        }
+
+        function buildPagination(totalItems, currentPage) {
+            const pageCount = Math.ceil(totalItems / rowsPerPages); 
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= pageCount; i++) { 
+                const li = document.createElement('li');
+                li.className = 'page-item ' + (i === currentPage ? 'active' : '');
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.textContent = i;
+                a.href = '#';
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showSales(currentSales, i); 
+                });
+                li.appendChild(a);
+                pagination.appendChild(li); 
             }
         }
 

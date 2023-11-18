@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Storage;
+using System.Collections;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -45,10 +46,15 @@ namespace PomaBrothers_Frontend.Controllers
             return downloadURL;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 6)
         {
             var employees = await GetEmployeesAsync();
-            ViewBag.Data = employees;
+            int totalEmployees = employees.Count;
+
+            var paginatedData = employees.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.Data = paginatedData;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEmployees / pageSize);
             return View();
         }
 

@@ -1,9 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Productos";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
-<h1 style="text-align:center">Lista Productos</h1>
+<h1 style="text-align:center">Productos</h1>
 <hr />
 <div class="container mt-5">
     <div class ="row row-cols-1 row-cols-xl-2 g-4">
@@ -71,8 +73,19 @@
             </div>
         }
     </div>
-   
+    <nav class="mt-3">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
 </div>
+
+
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
@@ -103,7 +116,7 @@
         </div>
     </div>
 </div>
-@*---------------------------*@
+
 @*Modal for details*@
 <div class="modal fade" id="detailsModal"> 
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">

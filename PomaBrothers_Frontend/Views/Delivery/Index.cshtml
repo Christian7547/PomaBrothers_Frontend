@@ -96,6 +96,11 @@
                 <tbody>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                   
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -103,52 +108,54 @@
 <div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
         <div class="modal-content detailsModalVenta">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
-            </div>
-            <div class="modal-body">
-                <h5 class="fw-bold">Productos:</h5>
-                <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Modelo</th>
-                            <th>Serie</th>
-                            <th>Precio de compra (Bs.)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td>
-                                <label class="control-label fw-bold">Total:</label>
-                            </td>
-                            <td>
-                                <span id="lblTotal" class="fw-bold"></span>
-                                <label class="fw-bold">Bs.</label>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mt-1">
-                            <label for="lblBussinesName" class="fw-bold fs-6">Proveedor:</label>
-                            <label id="lblBussinesName" class="fs-6"></label>
-                        </div>
-                        <div class="mt-1">
-                            <label for="lblPhone" class="fw-bold fs-6">Teléfono:</label>
-                            <label id="lblPhone" class="fs-6"></label>
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="fw-bold">Productos:</h5>
+                        <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Modelo</th>
+                                    <th>Serie</th>
+                                    <th>Precio de compra (Bs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <label class="control-label fw-bold">Total:</label>
+                                    </td>
+                                    <td>
+                                        <span id="lblTotal" class="fw-bold"></span>
+                                        <label class="fw-bold">Bs.</label>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mt-1">
+                                    <label for="lblBussinesName" class="fw-bold fs-6">Proveedor:</label>
+                                    <label id="lblBussinesName" class="fs-6"></label>
+                                </div>
+                                <div class="mt-1">
+                                    <label for="lblPhone" class="fw-bold fs-6">Teléfono:</label>
+                                    <label id="lblPhone" class="fs-6"></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btnmodalCancel w-80" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer" >
-                <button type="button" class="btn btnmodalCancel w-80" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -178,6 +185,9 @@
         const txtProductId = document.getElementById('txtProductId');
         const showProducts = document.getElementById('showProducts');
 
+        const rowsPerPages = 10; //cantidad de elementos que se mostraran por pagina
+        let currentInvoices = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             txtProduct.addEventListener('input', () => {
                 showProducts.style.display = 'block';
@@ -194,15 +204,18 @@
                 }
             })
             .then(data => {
+                currentInvoices = data;
                 showInvoices(data);
             })
             .catch(error => console.error(error));
         }
 
-        function showInvoices(invoices){
+        function showInvoices(invoices, page = 1){
             const tbody = tableInvoices.getElementsByTagName('tbody')[0];
             tbody.innerHTML = '';
-            for (let i = 0; i < invoices.length; i++) {
+            const start = (page - 1) * rowsPerPages; //calcula el indice del primer elemento que se debe mostrar en la pagina
+            const end = start + rowsPerPages; //calcula el indice limite para mostrar elementos en una pagina
+            for (let i = start; i < end && i < invoices.length; i++) {
                 var row = tbody.insertRow();
                 row.insertCell(0).textContent = invoices[i].registerDate;
                 row.insertCell(1).textContent = invoices[i].supplier.bussinesName;
@@ -218,6 +231,28 @@
                     showItems(invoices[i].deliveryDetails);
                 }
                 row.insertCell(3).appendChild(btnDetails);
+            }
+            buildPagination(invoices.length, page);
+        }
+
+        function buildPagination(totalItems, currentPage) {
+            const pageCount = Math.ceil(totalItems / rowsPerPages); //total de facturas entre la cantidad de elementos que quiero mostrar por pagina, Math.ceil hace un redondeo
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= pageCount; i++) { //bucle que recorre el total de paginas para crear un boton por pagina
+                const li = document.createElement('li');
+                li.className = 'page-item ' + (i === currentPage ? 'active' : '');
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.textContent = i;
+                a.href = '#';
+                a.addEventListener('click', function (e) {
+                    e.preventDefault(); //evita que la pagina se desplace hacia arriba
+                    showInvoices(currentInvoices, i); //actualiza la pagina para mostrar los siguientes elementos
+                });
+                li.appendChild(a); //agrega el enlace al elemento de la pagina
+                pagination.appendChild(li); //agrega el li al contenedor de paginacion 
             }
         }
 
