@@ -2,7 +2,6 @@
 using Firebase.Storage;
 using Microsoft.AspNetCore.Mvc;
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
@@ -95,6 +94,7 @@ namespace PomaBrothers_Frontend.Controllers
                     _Color = i.Color,
                     _Serie = i.Serie,
                     _Marker = m.Marker,
+                    _UrlImage = i.UrlImage,
                     ItemID = i.Id,
                     ModelID = m.Id
                 }).ToList();

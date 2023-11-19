@@ -1,4 +1,4 @@
-/*boton Volver - Actualizarsi - Guardar*/
+/*boton Volver - Actualizarsi - Guardar - Rep*/
 .buttonV {
     display: block;
     background-color: #b4b5b0;
@@ -16,6 +16,25 @@
 .buttonV:hover{
     color: white;
     background-color: #3c543c;
+} 
+.btnRep1 {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    background-color: #81b584;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    transition: height 0.3s ease-in-out; 
+}
+.btnRep1:hover{
+    color: white;
+    background-color: rgb(34, 81, 35);
 } 
 
 
@@ -95,7 +114,18 @@ body{
     font-size: 20px;
     font-weight: bold;
 }
-
+.cardPro{
+    
+    background-color: #E6EAE6(237, 240, 240); 
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #5DDF64;
+}
+.cardPro:hover{
+    color: black;
+    background-color: #639a78;
+}
 /*card Ver Productos - Empleados - Proveedores*/
 .cardVerT{
     
@@ -159,7 +189,7 @@ body{
 /*fin*/
 
 
-/*botones dentro de card   Actualizar - Eliminar - Ver Detalles*/
+/*botones dentro de card   Actualizar - Eliminar - Ver Detalles - Ver Reportes*/
 .btncardA {
     display: block;
     overflow: hidden;
@@ -199,6 +229,53 @@ body{
     height: 100%; 
     width: 100%;
 }
+
+
+.btnreportes {
+    overflow: hidden;
+    position: relative;
+    background-color: #0cbd128b;
+    color: black;
+    padding: 12px;
+    font-size: 18px;
+    box-shadow: 5px 5px 10px rgba(89, 157, 101, 0.5);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    transition: height 0.3s ease-in-out; 
+}
+.btnreportes::after {
+    content: "Reporte";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    font-size: 18px;
+    background-color: #1b7923;
+    color: rgb(255, 255, 255);
+    padding: 12px;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    transition: opacity 0.1s ease-in-out, height 0.3s ease-in-out; 
+}
+.btnreportes:hover {
+    height: auto; 
+    
+}
+.btnreportes:hover::after {
+    opacity: 1;
+    height: 100%; 
+    width: 100%;
+}
+
+
+
+
+
+
+
 
 
 .btncardD {
@@ -298,6 +375,22 @@ body{
 }
 /*fin*/
 
+/*Modal Reporte*/
+.ModalRep{
+    background-color: #b1b6b1f2; 
+    box-shadow: 10px 10px 10px rgba(102, 138, 95, 0.667);
+    border-radius: 20px;
+    border: 3px solid;
+    border-color: rgb(145, 222, 164);
+}
+.ModalRep:hover{
+    color: black;
+    background-color: #1f5634;
+}
+
+
+
+/*fin*/
 
 /*modal detalles*/
 .DetalleModel{

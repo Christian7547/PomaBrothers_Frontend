@@ -20,7 +20,7 @@
                         <tr>
                             <td>@warehouse.Name</td>
                             <td style="text-align:center">
-                                
+
                                 <button type="button"
                                         onclick="getModelsAsync(@warehouse.Id)"
                                         data-id="@warehouse.Id"
@@ -77,17 +77,13 @@
 
 @*Modal for Models*@
 <div class="modal fade" id="showItemsModal">
-    <div class="cardVerT modal-dialog modal-dialog-centered modal-fullscreen-md">
+    <div class="cardVerT modal-dialog modal-dialog-centered modal-fullscreen-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="text-align:center">Productos disponibles</h4>
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Modelos disponibles</h4>
                 <hr />
             </div>
-            <div class="modal-body" style="padding-left: 10px;" id="bodyContainerModal">
-                <h4 class="modal-title">Modelos disponibles</h4>
-                <button type="button" class="btn-close" id="btnCloseModal" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="bodyContainerModal"> 
+            <div class="modal-body" id="bodyContainerModal">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btnmodalCancel" id="btnClearModal" data-dismiss="modal">Cerrar</button>
@@ -99,15 +95,15 @@
 @*Modal for Items*@
 <div class="modal fade" id="showItems">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" style="background: #758d7e;border: 1px solid; border-color: black;">
+            <div class="modal-header text-center">
                 <h4 class="modal-title">Productos</h4>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="printItemsDiv">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btnmodalCancel" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -129,63 +125,62 @@
         const bodyContainerModal = document.getElementById('bodyContainerModal');
 
         var printItemsDiv;
-        
+
 
         function getModelsAsync(id) {
             fetch(`/Warehouse/ShowModelsAvailable?id=${id}`)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return null;
-            })
-            .then(data => {
-                data.forEach(section => {
-                    printModels(section);
-                });
-            })
-            .catch(error => console.error(error))
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    return null;
+                })
+                .then(data => {
+                    data.forEach(section => {
+                        printModels(section);
+                    });
+                })
+                .catch(error => console.error(error))
         }
-        
-        function printModels(section){
+
+        function printModels(section) {
             let capacity;
-            if (section.itemModel.capacityOrSize != null && section.itemModel.measurementUnit != null){
+            if (section.itemModel.capacityOrSize != null && section.itemModel.measurementUnit != null) {
                 capacity = section.itemModel.capacityOrSize + ' ' + section.itemModel.measurementUnit;
             }
-            else
-            {
+            else {
                 capacity = 'Sin capacidad';
             }
             const html = `<div class="row">
-                               <div class="col-md-5 p-3">
-                                  <p>
-                                    <label for="lblName" class="fw-bold">Modelo:</label>
-                                    <label id="lblName">${section.itemModel.modelName}</label>
-                                  </p>
-                                  <p>
-                                    <label for="lblMarker" class="fw-bold">Marca:</label>
-                                        <label id="lblMarker">${section.itemModel.marker}</label>
-                                  </p>
-                                  <p>
-                                        <label>${capacity}</label>
-                                  </p>
-                                  <p>
-                                    <label for="lblQuantity" class="fw-bold">Cantidad:</label>
-                                    <label id="lblQuantity">${section.modelQuantity}</label>
-                                  </p>
-                               </div>
-                               <div class="col-md-4">
-                                  <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
-                                            class="btn btn-success h-50 fw-bold mt-5"
-                                            type="button"
-                                            data-toggle="modal"
-                                            data-target="#showItems">
-                                     Ver Productos
-                                  </button>
-                               </div>
-                          </div>
-                          
-                          <hr/>`;
+                                       <div class="col-md-5 p-3">
+                                          <p>
+                                            <label for="lblName" class="fw-bold">Modelo:</label>
+                                            <label id="lblName">${section.itemModel.modelName}</label>
+                                          </p>
+                                          <p>
+                                            <label for="lblMarker" class="fw-bold">Marca:</label>
+                                                <label id="lblMarker">${section.itemModel.marker}</label>
+                                          </p>
+                                          <p>
+                                                <label>${capacity}</label>
+                                          </p>
+                                          <p>
+                                            <label for="lblQuantity" class="fw-bold">Cantidad:</label>
+                                            <label id="lblQuantity">${section.modelQuantity}</label>
+                                          </p>
+                                       </div>
+                                       <div class="col-md-4">
+                                          <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
+                                                            class="buttonG h-50 fw-bold mt-5"
+                                                    type="button"
+                                                    data-toggle="modal"
+                                                    data-target="#showItems">
+                                             Ver Productos
+                                          </button>
+                                       </div>
+                                  </div>
+
+                                  <hr/>`;
             bodyContainerModal.insertAdjacentHTML('beforeend', html);
             printItemsDiv = document.getElementById('printItemsDiv');
         }
@@ -211,37 +206,37 @@
                             for (let j = i; j < i + 2 && j < data.length; j++) {
                                 const item = data[j];
                                 const html = `<div class="col-md-6">
-                                                <div class="cardVerT mb-3 border-success" style="max-width: 640px;">
-                                                    <div class="card-header border-light fw-bold text-center">${item.name}</div>
-                                                    <hr>
-                                                    <div class="row g-0">
+                                                        <div class="cardVerT mb-3 border-success" style="max-width: 640px;">
+                                                            <div class="card-header border-light fw-bold text-center">${item.name}</div>
+                                                            <hr>
+                                                            <div class="row g-0">
 
-                                                        <div class="col-md-3">
-                                                                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="${item.urlImage}" alt="Imagen del artículo">
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="card-body">
-                                                                        <p>
-                                                                            <label class="text-sm fw-bold">Color:</label>
-                                                                            <label class="text-sm">${item.color}</label>
-                                                                        </p>
-                                                                        <p>
-                                                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                                                            <label class="text-sm">${item.price}</label>
-                                                                        </p>
-                                                                        <p>
-                                                                            <label class="text-sm fw-bold">N° de serie:</label>
-                                                                            <label class="text-sm">${item.serie}</label>
-                                                                        </p>
+                                                                <div class="col-md-3">
+                                                                                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="${item.urlImage}" alt="Imagen del artículo">
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <div class="card-body">
+                                                                                <p>
+                                                                                    <label class="text-sm fw-bold">Color:</label>
+                                                                                    <label class="text-sm">${item.color}</label>
+                                                                                </p>
+                                                                                <p>
+                                                                                    <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                                                    <label class="text-sm">${item.price}</label>
+                                                                                </p>
+                                                                                <p>
+                                                                                    <label class="text-sm fw-bold">N° de serie:</label>
+                                                                                    <label class="text-sm">${item.serie}</label>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>`;
+                                                    </div>`;
                                 const temp = document.createElement('div');
                                 temp.innerHTML = html;
                                 row.appendChild(temp.firstChild);
@@ -254,21 +249,21 @@
                 .catch(error => console.error(error))
         }
 
-        
+
 
         function confirmDelete() {
             const id = txtId.value;
             fetch(`/Warehouse/Delete?id=${id}`)
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('deleteModal').style.display = 'none';
-                    location.reload();
-                }
-                else {
-                    console.log('Internal server error');
-                }
-            })
-            .catch(error => console.error(error))
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('deleteModal').style.display = 'none';
+                        location.reload();
+                    }
+                    else {
+                        console.log('Internal server error');
+                    }
+                })
+                .catch(error => console.error(error))
         }
 
 

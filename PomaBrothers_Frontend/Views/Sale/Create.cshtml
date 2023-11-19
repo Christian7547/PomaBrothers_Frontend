@@ -4,9 +4,11 @@
     ViewData["Title"] = "Ventas";
 }
 
-<h1>Ventas</h1>
+<h1 style="text-align:center">Nueva Vebta</h1>
 <hr />
+<link rel="stylesheet" href="~/css/Forms.css">
 
+    
 <form asp-action="Create">
     <div class="container">
     <div class="row">
@@ -55,17 +57,17 @@
 <hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h4>Productos</h4>
-            <button class="btn btn-success"
-                    onclick=""
+            <button class="buttonV w-50"
+                    onclick="" 
                     data-id=""
                     data-toggle="modal"
                     data-target="#mdlAddItem">
                 Añadir Productos
             </button>
             <div class="table-responsive">
-                <table class="table table-borderless mt-3" id="tableItems">
+                <table class="table ttablita mt-3" id="tableItems">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -96,23 +98,22 @@
 </div>
 
 <div class="modal fade" id="mdlAddItem">
-    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1>Produto</h1>
-                <h1>Produto</h1>
+                <h1>Produtos: </h1>
             </div>
             <div class="container mt-5">
                 <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center mx-auto">
                     @foreach (var category in (List<Category>)ViewBag.GetCategories)
                     {
                         <div class="col">
-                            <div class="card border-success">
-                                <div class="card-body">
-                                    <h2 class="card-title">@category.Name</h2>
-                                    <a asp-action="ItemsByCategories"
-                                       asp-route-id="@category.Id"
-                                       class="btn btn-success">
+                            <div class="cardVerT mb-3 border-success mx-auto">
+                                <div class="card-body" style="padding-left: 10px; padding-right:10px">
+                                    <br>
+                                    <div class="card-header fw-bold textitos text-center">@category.Name</div>
+                                    <hr />
+                                    <a asp-action="ItemsByCategories" asp-route-id="@category.Id" class="buttonV w-100 h-100 mb-3">
                                         Ver productos
                                     </a>
                                 </div>
@@ -127,14 +128,15 @@
 
 <div class="container">
     <div class="form-group">
-        <input type="submit" value="Aceptar" class="btn btn-success w-25" />
-        <a asp-action="Index" class="btn btn-success w-25">Volver</a>
+        <input type="submit" value="Aceptar" class="btn btn-success w-100" />
+        <a asp-action="Index" class="btn btn-success mt-2 w-100">Volver</a>
     </div>
 </div>
 
 <div id="countdown" style="display: none;">
     <span id="countdown-value" hidden>900</span>
 </div>
+
 
 <script src="~/js/countdown.js"></script>
 
