@@ -68,7 +68,7 @@ namespace PomaBrothers_Frontend.Reports.Implementation.DeliveryReports
                 table.Cell().Element(CellStyleData).Text("Marca:").Bold();
                 table.Cell().ColumnSpan(3).Element(CellStyleData).Text(_productSupplierDTO.ItemMarker);
 
-                table.Cell().Element(CellStyleData).Text("Serie:").Bold();
+                table.Cell().Element(CellStyleData).Text("N° de Serie:").Bold();
                 table.Cell().ColumnSpan(3).Element(CellStyleData).Text(_productSupplierDTO.Serie);
 
                 table.Cell().Element(CellStyleData).Text("Precio de compra:").Bold();

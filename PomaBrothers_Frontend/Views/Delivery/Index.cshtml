@@ -34,13 +34,23 @@
                             </button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success"
+                                <button class="btn btn-success h-100"
                                     type="button"
                                     data-toggle="collapse"
                                     data-target="#multiCollapseExample2"
                                     aria-expanded="false"
                                     aria-controls="multiCollapseExample2">
-                                Ver proveedor de un producto
+                                Proveedor de un producto
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample3"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample3">
+                                Productos de un proveedor por rango de fechas
                             </button>
                         </div>
                     </div>
@@ -66,12 +76,34 @@
                         <div class="card card-body">
                             <p>
                                 <label for="txtProduct" class="form-label">Buscar producto:</label>
-                                <input id="txtProduct" type="text" class="form-control" placeholder="Ingrese el nombre del producto"/>
+                                <input id="txtProduct" type="text" class="form-control" placeholder="Ingrese el nombre o Nro. De serie del producto"/>
                                 <input id="txtProductId" type="hidden"/>
                                 <ul id="showProducts"></ul>
                             </p>
                             <div>
                                 <input type="submit" class="btn btn-success" data-dismiss="modal" value="Generar reporte" onclick="generatedPDFSupplierByProduct()"/>
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div class="collapse multi-collapse" id="multiCollapseExample3">
+                        <div class="card card-body">
+                            <p>
+                                <label for="txtSupplier" class="form-label">Buscar proveedor:</label>
+                                <input id="txtSupplier" type="text" class="form-control" placeholder="Ingrese el proveedor" />
+                                <input id="txtSupplierId" style="display: none" />
+                                <ul id="showSuppliers"></ul>
+                            </p>
+                            <p>
+                                <label for="txtStartDateOrder" class="form-label">Desde:</label>
+                                <input id="txtStartDateOrder" type="date" class="form-control" placeholder="Seleccione una fecha" />
+                            </p>
+                            <p>
+                                <label for="txtEndDateOrder" class="form-label">Hasta:</label>
+                                <input id="txtEndDateOrder" type="date" class="form-control" placeholder="Seleccione una fecha" />
+                            </p>
+                            <div>
+                                <input type="submit" class="btn btn-success" onclick="generatedPDFProductBySupplierBetweenDates()" value="Generar reporte" data-dismiss="modal" />
                             </div>
                         </div>
                     </div>
@@ -185,6 +217,12 @@
         const txtProductId = document.getElementById('txtProductId');
         const showProducts = document.getElementById('showProducts');
 
+        const txtSupplier = document.getElementById('txtSupplier');
+        const txtSupplierId = document.getElementById('txtSupplierId');
+        const showSuppliers = document.getElementById('showSuppliers');
+        const txtStartDateOrder = document.getElementById('txtStartDateOrder');
+        const txtEndDateOrder = document.getElementById('txtEndDateOrder');
+
         const rowsPerPages = 10; //cantidad de elementos que se mostraran por pagina
         let currentInvoices = [];
 
@@ -193,6 +231,10 @@
                 showProducts.style.display = 'block';
                 searchProduct(txtProduct.value);
             });
+            txtSupplier.addEventListener('input', () => {
+                showSuppliers.style.display = 'block';
+                searchSupplier(txtSupplier.value);
+            })
             getInvoices();
         });
 
@@ -284,7 +326,7 @@
                     const li = document.createElement('li');
                     li.className = 'list-group-item';
                     li.style.cursor = 'pointer';
-                    li.textContent = item.productName;
+                    li.textContent = item.productName + ' -- # Serie: ' + item.productSerie;
                     li.addEventListener('click', () => {
                         showProducts.style.display = 'none';
                         txtProduct.value = li.textContent;
@@ -301,6 +343,8 @@
             let endDate = txtEndDate.value;
             fetch(`/DeliveryReports/GeneratedReportByDateRange?startDate=${startDate}&finishDate=${endDate}`)
             .then(res => {
+                txtStartDate.value = '';
+                txtEndDate.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok){
@@ -315,7 +359,7 @@
                 window.URL.revokeObjectURL(url);
             })
             .catch(error => {
-                console.error('Error al descargar el archivo: ', error);
+                console.warn('Error al descargar el archivo: ', error);
                 alert(error.message);
             });
         }
@@ -324,6 +368,8 @@
             let id = txtProductId.value;
             fetch(`/DeliveryReports/GeneratedReportSupplierByProduct?productId=${id}`)
             .then(res => {
+                txtProductId.value = '';
+                txtProduct.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok) {
@@ -340,6 +386,56 @@
             .catch(error => {
                 console.error('Error al descargar el archivo: ', error);
                 alert(error.message);
+            })
+        }
+
+        function searchSupplier(supplierName){
+            fetch(`/Supplier/SearchSupplier?likeSupplier=${supplierName}`)
+            .then(res => res.json())
+            .then(data => {
+                showSuppliers.innerHTML = '';
+                data.forEach(supplier => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.style.cursor = 'pointer';
+                    li.textContent = supplier.supplierBussinesName;
+                    li.addEventListener('click', () => {
+                        showSuppliers.style.display = 'none';
+                        txtSupplier.value = li.textContent;
+                        txtSupplierId.value = supplier.supplierId;
+                    });
+                    showSuppliers.appendChild(li);
+                })
+            })
+            .catch(err => console.error(err))
+        }
+
+        function generatedPDFProductBySupplierBetweenDates(){
+            let id = txtSupplierId.value;
+            let startDateOrder = txtStartDateOrder.value;
+            let endDateOrder = txtEndDateOrder.value;
+            fetch(`/DeliveryReports/GeneratedReportItemsBySupplierBetweenDatesReport?supplierId=${id}&startDate=${startDateOrder}&endDate=${endDateOrder}`)
+            .then(res => {
+                txtSupplierId.value = '';
+                txtSupplier.value = '';
+                txtStartDateOrder.value = '';
+                txtEndDateOrder.value = '';
+                if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                    return res.blob();
+                } else if (!res.ok) {
+                    return res.text().then(text => {
+                        throw new Error(text || 'No se pudo generar el reporte');
+                    });
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, '_blank');
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+                console.warn('Error al descargar el archivo: ', err);
+                alert(err.message);
             })
         }
     </script>

@@ -18,17 +18,17 @@
                         <div class="col-md-6">
                             <input asp-for="Id" type="hidden" />
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Nombre</label>
                                 <input asp-for="Name" class="form-control inputf" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Serie" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Serie</label>
                                 <input asp-for="Serie" class="form-control inputf" />
                                 <span asp-validation-for="Serie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Description" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Descripción</label>
                                 <textarea asp-for="Description" rows="8" class="form-control inputf"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
@@ -47,17 +47,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Price" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Precio</label>
                                 <input asp-for="Price" type="number" class="form-control inputf" />
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Color" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Color</label>
                                 <input asp-for="Color" class="form-control inputf" />
                                 <span asp-validation-for="Color" class="text-danger"></span>
                             </div>
                             <div class="form-group collapse">
-                                <label asp-for="UrlImage" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Imagen</label>
                                 <input asp-for="UrlImage" class="form-control inputf" />
                                 <span asp-validation-for="UrlImage" class="text-danger"></span>
                             </div>
@@ -72,30 +72,25 @@
                                 <br />
                                 <label for="imagenItem" class="form-label fw-bold">Seleccionar imagen:</label>
                                 <input name="image" id="imagenItem" type="file" class="form-control-file inputf"/>
-
-
                             </div>
                             <div class="form-group">
-                                <label asp-for="DurationWarranty" class="control-label fw-bold"></label>
+                                <label class="control-label fw-bold">Garantía</label>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input asp-for="DurationWarranty" class="form-control inputf" id="txtDurationWarranty" />
                                         <br />
                                     </div>
-                                    
                                     <div class="col-md-8">
-                                       
-                                        <select asp-for="TypeWarranty" class="form-control custom-select inputf" id="cmbTypeWarranty">
-                                            <option value="" selected disabled>@ViewBag.Type</option>
-                                            <option value=""></option>
+                                        <select asp-for="TypeWarranty" class="form-select custom-select inputf" id="cmbTypeWarranty">
+                                            <option value="@ViewBag.Type">@ViewBag.Type</option>
                                             <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="CategoryId" class="control-label fw-bold"></label>
-                                <select asp-for="CategoryId" class="form-control custom-select inputf" id="categorySelected">
+                                <label class="control-label fw-bold">Categoría</label>
+                                <select asp-for="CategoryId" class="form-select custom-select inputf" id="categorySelected">
                                     @foreach (var category in (List<Category>)ViewBag.Data)
                                     {
                                         <option value="@category.Id">@category.Name</option>
@@ -128,69 +123,68 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="editModel">
-        <div class=" modal-dialog modal-dialog-centered">
-            <div class="modal-content AñadirModeloModel">
-                <div class="modal-header text-center">
-                    <h5 class="textitos mx-auto">Añadir modelo</h5>
-                </div>
-                <div class="modal-body" style="padding-left: 10px; padding-right:10px">
-                    <form>
-                        <div class="mb-3">
-                            <label for="txtModel" class="col-form-label fw-bold">Modelo:</label>
-                            <input type="text" class="form-control inputf" id="txtModel">
-                        </div>
-                        <div class="mb-3">
-                            <label for="txtMarker" class="col-form-label fw-bold">Marca:</label>
-                            <input type="text" class="form-control inputf" id="txtMarker">
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input inputf" role="switch" id="cbxCapacity" />
-                                <label for="cbxCapacity" class="form-check-label fw-bold">Añadir capacidad o tamaño</label>
-                            </div>
-                        </div>
-                        <div class="form-group" id="capacityDiv">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input class="form-control inputf fw-bold" id="txtCapacityOrSize" placeholder="Capacidad" />
-                                    <br />
-                                </div>
-                                <div class="col-md-8">
-                                    
-                                    <select class="form-control custom-select" id="cmbMeasurementUnit">
-                                        <option value="" disabled selected>Seleccione la unidad de medida</option>
-                                        <option value="Litros">Litros</option>
-                                        <option value="Kilogramos">Kilogramos</option>
-                                        <option value="Pulgadas">Pulgadas</option>
-                                        <option value="Watts">Watts</option>
-                                        <option value="Metros/hora">M3/h </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row" style="padding-left: 10px; padding-right:10px">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btnmodalConfirm w-100 h-100" value="Añadir" />
-                        </div>
-                        <br />
+</form>
+<div class="modal fade" id="editModel">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content AñadirModeloModel">
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Añadir modelo</h5>
+            </div>
+            <div class="modal-body" style="padding-left: 10px; padding-right:10px">
+                <form>
+                    <div class="mb-3">
+                        <label for="txtModel" class="col-form-label fw-bold">Modelo:</label>
+                        <input type="text" class="form-control inputf" id="txtModel">
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
+                    <div class="mb-3">
+                        <label for="txtMarker" class="col-form-label fw-bold">Marca:</label>
+                        <input type="text" class="form-control inputf" id="txtMarker">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input inputf" role="switch" id="cbxCapacity" />
+                            <label for="cbxCapacity" class="form-check-label fw-bold">Añadir capacidad o tamaño</label>
                         </div>
+                    </div>
+                    <div class="form-group" id="capacityDiv">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control inputf fw-bold" id="txtCapacityOrSize" placeholder="Capacidad" />
+                                <br />
+                            </div>
+                            <div class="col-md-8">
+                                    
+                                <select class="form-control custom-select" id="cmbMeasurementUnit">
+                                    <option value="" disabled selected>Seleccione la unidad de medida</option>
+                                    <option value="Litros">Litros</option>
+                                    <option value="Kilogramos">Kilogramos</option>
+                                    <option value="Pulgadas">Pulgadas</option>
+                                    <option value="Watts">Watts</option>
+                                    <option value="Metros/hora">M3/h </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" id="btnAdd" onclick="addModel()" data-dismiss="modal" class="btnmodalConfirm w-100 h-100" value="Añadir" />
+                    </div>
+                    <br />
+                </div>
+                    
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-</form>
 <div id="countdown" style="display: none;">
     <span id="countdown-value" hidden>900</span>
 </div>
@@ -228,20 +222,19 @@
         });
 
         txtDurationWarranty.addEventListener('input', () => {
-            cmbTypeWarranty.options[0].text = 'Seleccione tipo de garantía';
             if (txtDurationWarranty.value === '1') {
-                cmbTypeWarranty.options[1].text = 'Año';
-                cmbTypeWarranty.options[1].value = 'Año';
+                cmbTypeWarranty.options[0].text = 'Año';
+                cmbTypeWarranty.options[0].value = 'Año';
 
-                cmbTypeWarranty.options[2].text = 'Mes';
-                cmbTypeWarranty.options[2].value = 'Mes';
+                cmbTypeWarranty.options[1].text = 'Mes';
+                cmbTypeWarranty.options[1].value = 'Mes';
             }
             else {
-                cmbTypeWarranty.options[1].text = 'Años';
-                cmbTypeWarranty.options[1].value = 'Años';
+                cmbTypeWarranty.options[0].text = 'Años';
+                cmbTypeWarranty.options[0].value = 'Años';
 
-                cmbTypeWarranty.options[2].text = 'Meses';
-                cmbTypeWarranty.options[2].value = 'Meses';
+                cmbTypeWarranty.options[1].text = 'Meses';
+                cmbTypeWarranty.options[1].value = 'Meses';
             }
         });
 

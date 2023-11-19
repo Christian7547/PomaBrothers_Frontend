@@ -75,7 +75,7 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
                     throw;
                 }
             }
-            return NotFound("There were no sales in this date range");
+            return NotFound("No hubo ventas en el rango de fechas especificado");
         }
 
         public async Task<List<SaleDTO>> GetPurchasedDTOAsync(DateTime startDate, DateTime finishDate)

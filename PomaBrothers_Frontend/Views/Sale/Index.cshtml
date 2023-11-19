@@ -325,6 +325,8 @@
             let id = txtCustomerId.value;
             fetch(`/SalesReports/GeneratedReportPurchasesCustomer?customerId=${id}`)
             .then(res => {
+                txtCustomer.value = '';
+                txtCustomerId.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok) {
@@ -349,6 +351,8 @@
             let endDate = txtEndDate.value;
             fetch(`/SalesReports/GeneratedReportSalesByDateRange?startDate=${startDate}&finishDate=${endDate}`)
             .then(res => {
+                txtStartDate.value = '';
+                txtEndDate.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok) {

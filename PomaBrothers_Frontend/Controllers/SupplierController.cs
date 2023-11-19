@@ -6,6 +6,7 @@ using PomaBrothers_Frontend.Models;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuestPDF.Helpers;
+using PomaBrothers_Frontend.Models.DTOModels;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -124,7 +125,14 @@ namespace PomaBrothers_Frontend.Controllers
 
                 throw new Exception(ex.Message);
             }
+        }
 
+        public async Task<ActionResult> SearchSupplier(string likeSupplier)
+        {
+            HttpResponseMessage request = await httpClient.GetAsync($"Supplier/SearchSupplier/{likeSupplier}");
+            var serializeList = request.Content.ReadAsStringAsync().Result;
+            List<SupplierSearchDTO> list = JsonConvert.DeserializeObject<List<SupplierSearchDTO>>(serializeList);
+            return Json(list);
         }
     }
 }
