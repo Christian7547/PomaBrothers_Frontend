@@ -103,10 +103,13 @@ hr{
     border: 2px solid black;
 
 }
-body{
+body {
     background: linear-gradient(to bottom, hwb(120 82% 17% / 0.571), rgba(52, 227, 99, 0.495));
     background-attachment: fixed;
 }
+
+
+
 .bodlog{
     background-color: #937171d8;
 }
@@ -471,26 +474,26 @@ body{
 
 /* Estilo para la tabla */
 .ttablita {
-    background-color: #175d17b1;
+    background-color: #779779;
     color: black; 
     border: rgb(174, 177, 174);
     box-shadow: 5px 5px 10px rgba(9, 9, 9, 0.5);
-    
-
+    border-radius: 15px;
+    overflow: hidden; /* Agregamos esto para que el border-radius afecte a las esquinas internas */
 }
 .ttablita tbody tr:nth-child(odd) {
     background-color: #f1fff1b1;
     
 }
 .ttablita tbody tr:nth-child(odd):hover {
-    background-color: #779974;
+    background-color: #66C76B;
     
 }
 .ttablita tbody tr:nth-child(even) {
     background-color: #f1fff1b1;
 }
 .ttablita tbody tr:nth-child(even):hover {
-    background-color: #779974;
+    background-color: #66C76B;
 }
 /* Estilo para encabezados */
 .ttablita thead {
@@ -506,7 +509,7 @@ body{
 }
 
 .modal-dialog.modal-fullscreen-md {
-    max-width: 70%;
+    max-width: 80%;
 }
 /*fin*/
 
@@ -545,6 +548,7 @@ body{
     border-radius: 10px;
 }
 /*fin*/
+
 
 
 

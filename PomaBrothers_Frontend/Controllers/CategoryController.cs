@@ -30,11 +30,20 @@ namespace PomaBrothers_Frontend.Controllers
             return JsonConvert.DeserializeObject<List<Category>>(json);
         }
 
-        public async Task<IActionResult> ItemsByCategories([FromRoute]int id)
+        public async Task<IActionResult> ItemsByCategories([FromRoute]int id, int page = 1, int pageSize = 6)
         {
             var items = await GetItemsCategoryAsync(id);
             if(items != null)
-                return View(items);
+            {
+                int totalItems = items.Count;
+
+                var paginatedData = items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                ViewBag.Data = paginatedData;
+                ViewBag.CurrentPage = page;
+                ViewBag.CategoryId = id;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+                return View();
+            }
             return View();
         }
 

@@ -44,7 +44,7 @@ namespace PomaBrothers_Frontend.Controllers
         }
 
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 6)
         {
             var getItems = await GetItemsAsync();
             var getModels = await GetModelsAsync();
@@ -60,7 +60,12 @@ namespace PomaBrothers_Frontend.Controllers
                     ItemID = i.Id,
                     ModelID = m.Id
                 }).ToList();
-            ViewBag.Data = query;
+            int totalItems = query.Count;
+
+            var paginatedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.Data = paginatedData;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
             return View();
         }
 
@@ -248,7 +253,5 @@ namespace PomaBrothers_Frontend.Controllers
             return Json(list);
         }
         #endregion
-
-        
     }
 }

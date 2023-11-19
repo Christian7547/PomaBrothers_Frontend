@@ -1,112 +1,91 @@
-﻿@model  List<Item>
-
-@{
+﻿﻿@{
     ViewData["Title"] = "Productos";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    int categoryId = ViewBag.CategoryId;
 }
+
 <link rel="stylesheet" href="~/css/Forms.css">
+
 <br />
-<h1 style="text-align:center">Lista Productos</h1>
+<h1 style="text-align:center">Productos</h1>
 <hr />
-
-@{
-    if (Model != null)
-    {
-        <div class="container mt-5">
-            <div class="row row-cols-1 row-cols-xl-2 g-4">
-                @foreach (var item in Model)
-                {
-                    <div class="col">
-                        <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
-                            <br>
-                            <div class="card-header fw-bold textitos text-center">@item.Name</div><hr />
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-xl-2 g-4">
+        @foreach (var item in (List<Item>)ViewBag.Data)
+        {
+            <div class="col">
+                <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header fw-bold textitos text-center">@item.Name</div><hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Producto Image">
+                        </div>
+                        <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Producto Image">
+                                <div class="col">
+                                    <div class="card-body" style="padding-left: 10px;">
+                                        <p>
+                                            <label class="text-sm fw-bold">Marca:</label>
+                                            <label class="text-sm">@item.ItemModel.Marker</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                            <label class="text-sm">@item.Price</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Color:</label>
+                                            <label class="text-sm">@item.Color</label>
+                                        </p>
+                                        <p>
+                                            <label class="text-sm fw-bold">Serie:</label>
+                                            <label class="text-sm">@item.Serie</label>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="card-body" style="padding-left: 10px;">
-                                                <p>
-                                                    <label class="text-sm fw-bold">Marca:</label>
-                                                    <label class="text-sm">@item.ItemModel.Marker</label>
-                                                </p>
-                                                <p>
-                                                    <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                                    <label class="text-sm">@item.Price</label>
-                                                </p>
-                                                <p>
-                                                    <label class="text-sm fw-bold">Color:</label>
-                                                    <label class="text-sm">@item.Color</label>
-                                                </p>
-                                                <p>
-                                                    <label class="text-sm fw-bold">Serie:</label>
-                                                    <label class="text-sm">@item.Serie</label>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col d-flex align-items-center justify-content-center">
-                                            <div class="d-flex flex-column align-items-end">
-                                                <button type="button"
-                                                        onclick="showDetails(@item.Id)"
-                                                        data-id="@item.Id"
-                                                        data-toggle="modal"
-                                                        data-target="#detailsModal"
-                                                        class="btncardD w-100 h-100 mb-2">
-                                                    Detalle
-                                                </button>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <button type="button"
+                                                onclick="showDetails(@item.Id)"
+                                                data-id="@item.Id"
+                                                data-toggle="modal"
+                                                data-target="#detailsModal"
+                                                class="btncardD w-100 h-100 mb-2">
+                                            Detalle
+                                        </button>
 
-                                                <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 h-100 mb-2">
-                                                    Actualizar
-                                                </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 h-100 mb-2">
+                                            Actualizar
+                                        </a>
 
-                                                <button type="button"
-                                                        data-id="@item.Id"
-                                                        data-toggle="modal"
-                                                        data-target="#deleteModal"
-                                                        class="btncardE w-100 h-100 mb-5">
-                                                    Eliminar
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <button type="button"
+                                                data-id="@item.Id"
+                                                data-toggle="modal"
+                                                data-target="#deleteModal"
+                                                class="btncardE w-100 h-100 mb-5">
+                                            Eliminar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="container mt-2">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-8">
-                    <div class="cardVerT border-success mx-auto">
-                        <div class="card-body" style="padding-left: 10px;">
-                        <br>
-                            <h3 class="card-title text-center">No se asignaron productos a esta categoría.</h3>
-                            <hr>
-
-                            <br>
-                            <h5 class="textitos">Desea añadir un producto?</h5>
-
-
-                            <div class="form-group">
-                                <a asp-controller="Delivery" asp-action="New" class="buttonG w-50">Añadir producto</a>
-                                <br>
-                                <a asp-action="Index" class="buttonV w-50">Volver</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
-
-    }
-}
-
+        }
+    </div>
+    <nav class="mt-3">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("ItemsByCategories", new { id = categoryId, page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
 
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">

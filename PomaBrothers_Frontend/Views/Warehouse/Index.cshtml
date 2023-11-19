@@ -2,11 +2,13 @@
 
 }
 <link rel="stylesheet" href="~/css/Forms.css">
-<h1 style="text-align:center">Almacenes</h1>
+<br />
+<h3 style="text-align:center">Almacenes</h3>
 <hr />
 <div class="container mt-6">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <br />
             <table class="table table-bordered table-responsive-xl ttablita">
                 <thead>
                     <tr>
@@ -28,7 +30,7 @@
                                         data-target="#showItemsModal"
                                         class="btnmodalConfirm w-90">
                                     Inspeccionar
-                                </button>
+                                </button>  |  
                                 <button type="button"
                                         data-id="@warehouse.Id"
                                         data-toggle="modal"
@@ -98,7 +100,7 @@
         <div class="modal-content" style="background: #758d7e;border: 1px solid; border-color: black;">
             <div class="modal-header text-center">
                 <h4 class="modal-title">Productos</h4>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+               
             </div>
             <div class="modal-body" id="printItemsDiv">
             </div>
@@ -169,9 +171,9 @@
                                             <label id="lblQuantity">${section.modelQuantity}</label>
                                           </p>
                                        </div>
-                                       <div class="col-md-4">
+                                       <div class="col-md-5">
                                           <button id="btnShowModels" onclick="printItems(${section.itemModel.id})"
-                                                            class="buttonG h-50 fw-bold mt-5"
+                                                            class="buttonG h-40 w-100 fw-bold mt-5"
                                                     type="button"
                                                     data-toggle="modal"
                                                     data-target="#showItems">

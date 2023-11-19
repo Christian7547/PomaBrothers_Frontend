@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\Item\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Images\imagen1.jpg" />
     <None Include="wwwroot\Images\imagen2.jpg" />
     <None Include="wwwroot\Images\imagen3.jpg" />

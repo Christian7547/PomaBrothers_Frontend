@@ -4,6 +4,8 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using PomaBrothers_Frontend.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using QuestPDF.Helpers;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -17,7 +19,7 @@ namespace PomaBrothers_Frontend.Controllers
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 6)
         {
             var getSupplier = await GetSupplierAsync();
             var query = getSupplier.Select(item => new
@@ -28,10 +30,12 @@ namespace PomaBrothers_Frontend.Controllers
                 _Phone = item.Phone,
                 _Ci = item.Ci,
                 _Address = item.Address
-                
             }).ToList();
-
-            ViewBag.Data = query;
+            int totalSuppliers = query.Count;
+            var paginatedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.Data = paginatedData;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalSuppliers / pageSize);
             return View();
         }
 
