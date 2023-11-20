@@ -1,24 +1,22 @@
 ﻿<link rel="stylesheet" href="~/css/Forms.css">
 
 
-<h1 style="text-align:center">Ventas</h1>
+<h3 style="text-align:center">Ventas</h3>
 <hr />
 
-<div class="container mt-8">
-    <div>
-        <button class="btnreportes m-4"
+<div class="container mt-10" style="text-align: right;">
+        <button class="btnreportes m-1"
                 data-toggle="modal"
                 data-target="#modalSales">
             Reporte de ventas
         </button>
-    </div>
 </div>
 
 
 <div class="modal fade" id="modalSales">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content ModalRep" style="text-align:center">
-            <div class="modal-heade text-centerr">
+            <div class="modal-heade text-center">
                 <br />
                 <h4 class="textitos mx-auto">Reportes de ventas</h4>
                 <hr />
@@ -85,9 +83,13 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-10">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
             <!-- Aumenta el ancho de la columna -->
             <table class="table table-bordered table-responsive-xl ttablita" id="tableSales">
                 <thead class="thead-dark">
@@ -102,10 +104,7 @@
                     <!-- Aquí se agregan las filas de datos de ventas -->
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </nav>
+           
         </div>
     </div>
 </div>
@@ -330,6 +329,8 @@
             let id = txtCustomerId.value;
             fetch(`/SalesReports/GeneratedReportPurchasesCustomer?customerId=${id}`)
             .then(res => {
+                txtCustomer.value = '';
+                txtCustomerId.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok) {
@@ -354,6 +355,8 @@
             let endDate = txtEndDate.value;
             fetch(`/SalesReports/GeneratedReportSalesByDateRange?startDate=${startDate}&finishDate=${endDate}`)
             .then(res => {
+                txtStartDate.value = '';
+                txtEndDate.value = '';
                 if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
                     return res.blob();
                 } else if (!res.ok) {

@@ -147,6 +147,7 @@ namespace PomaBrothers_Frontend.Controllers
             ViewBag.Data = await GetCategoriesAsync();
             return View(item);
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(Item item, IFormFile? image)
         {

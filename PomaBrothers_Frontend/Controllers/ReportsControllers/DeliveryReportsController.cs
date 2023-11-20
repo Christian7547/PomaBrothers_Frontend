@@ -41,7 +41,7 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
                     throw;
                 }
             }
-            return NotFound("There are no orders placed in that date range");
+            return NotFound("No hay pedidos realizados entre las fechas indicadas");
         }
 
 
@@ -81,6 +81,35 @@ namespace PomaBrothers_Frontend.Controllers.ReportsControllers
             {
                 string json = httpRequest.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<ProductSupplierDTO>(json);
+            }
+            return null!;
+        }
+
+        public async Task<ActionResult> GeneratedReportItemsBySupplierBetweenDatesReport(int supplierId, DateTime startDate, DateTime endDate)
+        {
+            var suppliersWithItems = await GetItemsBySupplierBetweenDatesReport(supplierId, startDate, endDate);
+            if(suppliersWithItems != null)
+            {
+                var memoryStream = new MemoryStream();
+                ProductsBySupplierBetweenDatesReport report = new(_host, suppliersWithItems, startDate, endDate);
+                report.TitleReport = "reporte\npedidos";
+                report.CreateDocument().GeneratePdf(memoryStream);
+                memoryStream.Position = 0;
+                return File(memoryStream.ToArray(), "application/pdf");
+            }
+            return NotFound("No hay pedidos realizados al proveedor indicado entre esas fechas");
+        }
+
+        public async Task<SupplierItemsDTO> GetItemsBySupplierBetweenDatesReport(int supplierId, DateTime startDate, DateTime endDate)
+        {
+            string formattedStartDate = Uri.EscapeDataString(startDate.ToString("MM/dd/yyyy"));
+            string formattedFinishDate = Uri.EscapeDataString(endDate.ToString("MM/dd/yyyy"));
+            string route = $"DeliveryReports/ItemsBySupplierBetweenDates?supplierId={supplierId}&startDate={formattedStartDate}&endDate={formattedFinishDate}";
+            HttpResponseMessage httpRequest = await _httpClient.GetAsync(route);
+            if(httpRequest.IsSuccessStatusCode)
+            {
+                string json = httpRequest.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<SupplierItemsDTO>(json);
             }
             return null!;
         }

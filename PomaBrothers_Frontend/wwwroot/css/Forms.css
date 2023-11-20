@@ -550,5 +550,14 @@ body {
 /*fin*/
 
 
+.img-bord {
+    border: 3px solid;
+    border-color: #66C76B;
+    border-radius: 10px;  /* Puedes ajustar el ancho y el color del borde según tus preferencias */
+    box-shadow: 8px 8px 10px rgba(9, 9, 9, 0.5);
+    overflow: hidden;
+}
+
+
 
 

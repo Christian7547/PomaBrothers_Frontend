@@ -6,17 +6,28 @@
 
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
-<h1 style="text-align:center">Empleados</h1>
+<h3 style="text-align:center">Empleados</h3>
 <hr />
 <div class="container mt-5">
+    <nav class="mt-3">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
     <div class="row row-cols-1 row-cols-xl-2 g-4">
         @foreach (var employee in ViewBag.Data)
         {
             <div class="col">
                 <div class="cardVerT mb-3 border-success mx-auto" style="max-width: 600px;">
+                    <br>
                     <div class="card-header fw-bold textitos text-center">@employee.Name</div><hr />
                     <div class="row g-0">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
                         </div>
                         <div class="col-md-8">
@@ -60,7 +71,7 @@
                                                 data-id="@employee.Id"
                                                 data-toggle="modal"
                                                 data-target="#deleteModal"
-                                                class="btncardE w-100 h-100 mb-2">
+                                                class="btncardE w-100 h-100 mb-5">
                                             Eliminar
                                         </button>
                                     </div>
@@ -72,16 +83,7 @@
             </div>
         }
     </div>
-    <nav class="mt-3">
-        <ul class="pagination">
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
+   
 </div>
 
 <!-- Modal for delete -->

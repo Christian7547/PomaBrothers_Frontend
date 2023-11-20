@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
-<h1 class="text-center">Actualizar Empleado</h1>
+<h3 class="text-center">Actualizar Empleado</h3>
 <hr />
 
 <form asp-action="Edit" enctype="multipart/form-data">
@@ -54,7 +54,7 @@
                              </div>
                             <div class="form-group">
                                 <label asp-for="Role" class="control-label fw-bold"></label>
-                                <select asp-for="Role" class="form-control custom-select inputf">
+                                <select asp-for="Role" class="form-control custom-select inputf fw-bold">
                                     <option value="Administrador">Administrador</option>
                                     <option value="Vendedor">Vendedor</option>
                                 </select>

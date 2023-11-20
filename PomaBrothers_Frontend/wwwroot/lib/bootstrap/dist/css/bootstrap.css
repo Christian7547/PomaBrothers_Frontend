@@ -4741,29 +4741,29 @@ textarea.form-control-lg {
 }
 
 .pagination {
-  --bs-pagination-padding-x: 0.75rem;
-  --bs-pagination-padding-y: 0.375rem;
-  --bs-pagination-font-size: 1rem;
-  --bs-pagination-color: #fff;
-  --bs-pagination-bg: #18bc9c;
-  --bs-pagination-border-width: 0;
-  --bs-pagination-border-color: transparent;
-  --bs-pagination-border-radius: var(--bs-border-radius);
-  --bs-pagination-hover-color: #fff;
-  --bs-pagination-hover-bg: #0f7864;
-  --bs-pagination-hover-border-color: transparent;
-  --bs-pagination-focus-color: var(--bs-link-hover-color);
-  --bs-pagination-focus-bg: var(--bs-secondary-bg);
-  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25);
-  --bs-pagination-active-color: #fff;
-  --bs-pagination-active-bg: #0f7864;
-  --bs-pagination-active-border-color: transparent;
-  --bs-pagination-disabled-color: #ecf0f1;
-  --bs-pagination-disabled-bg: #3be6c4;
-  --bs-pagination-disabled-border-color: transparent;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
+    --bs-pagination-padding-x: 0.75rem;
+    --bs-pagination-padding-y: 0.375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: #fff;
+    --bs-pagination-bg: #21ce5d;
+    --bs-pagination-border-width: 0;
+    --bs-pagination-border-color: transparent;
+    --bs-pagination-border-radius: var(--bs-border-radius);
+    --bs-pagination-hover-color: #fff;
+    --bs-pagination-hover-bg: #0bdf29b5;
+    --bs-pagination-hover-border-color: transparent;
+    --bs-pagination-focus-color: var(--bs-link-hover-color);
+    --bs-pagination-focus-bg: var(--bs-secondary-bg);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25);
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #13731d;
+    --bs-pagination-active-border-color: transparent;
+    --bs-pagination-disabled-color: #ecf0f1;
+    --bs-pagination-disabled-bg: #3be6c4;
+    --bs-pagination-disabled-border-color: transparent;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
 }
 
 .page-link {

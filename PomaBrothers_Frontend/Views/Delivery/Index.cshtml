@@ -1,77 +1,111 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Entregas";
 }
 <link rel="stylesheet" href="~/css/Forms.css">
-<h1 style="text-align:center">Entregas</h1>
+<h3 style="text-align:center">Entregas</h3>
 <hr />
 
-    <div>
-        <button class="btn btn-success m-4"
-                data-toggle="modal"
-                data-target="#modalReports">
-            Reporte de entregas
-        </button>
-    </div>
+<div class="container mt-10" style="text-align: right;">
+    <button class="btnreportes m-1"
+            data-toggle="modal"
+            data-target="#modalReports">
+        Reporte de entregas
+    </button>
+</div>
 
-    <div class="modal fade" id="modalReports">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold">Reportes de entregas</h5>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <div class="row">
-                            <div class="col">
-                                <button class="btn btn-success"
-                                        type="button"
-                                        data-toggle="collapse"
-                                        data-target="#multiCollapseExample1"
-                                        aria-expanded="false"
-                                        aria-controls="multiCollapseExample1">
-                                    Reporte de entregas por rango de fechas
-                                </button>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-success"
-                                        type="button"
-                                        data-toggle="collapse"
-                                        data-target="#multiCollapseExample2"
-                                        aria-expanded="false"
-                                        aria-controls="multiCollapseExample2">
-                                    Ver proveedor de un producto
-                                </button>
+
+<div class="modal fade" id="modalReports">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content ModalRep" style="text-align:center">
+            <div class="modal-header text-center">
+                <br />
+                <h4 class="textitos mx-auto">Reportes de entregas</h4>
+                <hr />
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="row text-center">
+                        <div class="col">
+                            <button class="btn btnRep1 w-100"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample1"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample1">
+                                Reporte de entregas por rango de fechas
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btnRep1 w-100 h-100"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample2"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample2">
+                                Proveedor de un producto
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btnRep1 w-100"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#multiCollapseExample3"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample3">
+                                Productos de un proveedor por rango de fechas
+                            </button>
+                        </div>
+                    </div>
+                </p>
+                <div class="row">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card card-body cardVerT">
+                            <p>
+                                <label for="txtStartDate" class="form-label fw-bold">Desde:</label>
+                                <input id="txtStartDate" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
+                            </p>
+                            <p>
+                                <label for="txtEndDate" class="form-label fw-bold">Hasta:</label>
+                                <input id="txtEndDate" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
+                            </p>
+                            <div>
+                                <input type="submit" class="buttonV" onclick="generatedPdfByDateRange()" value="Generar reporte" data-dismiss="modal" />
                             </div>
                         </div>
-                    </p>
-                    <div class="row">
-                        <div class="collapse multi-collapse" id="multiCollapseExample1">
-                            <div class="card card-body">
-                                <p>
-                                    <label for="txtStartDate" class="form-label">Desde:</label>
-                                    <input id="txtStartDate" type="date" class="form-control" placeholder="Seleccione una fecha" />
-                                </p>
-                                <p>
-                                    <label for="txtEndDate" class="form-label">Hasta:</label>
-                                    <input id="txtEndDate" type="date" class="form-control" placeholder="Seleccione una fecha" />
-                                </p>
-                                <div>
-                                    <input type="submit" class="btn btn-success" onclick="generatedPdfByDateRange()" value="Generar reporte" data-dismiss="modal" />
-                                </div>
+                    </div>
+                    <p></p>
+                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <div class="card card-body cardVerT">
+                            <p>
+                                <label for="txtProduct" class="form-label fw-bold">Buscar producto:</label>
+                                <input id="txtProduct" type="text" class="form-control inputf" placeholder="Ingrese el nombre o Nro. De serie del producto" />
+                                <input id="txtProductId" type="hidden" />
+                                <ul id="showProducts"></ul>
+                            </p>
+                            <div>
+                                <input type="submit" class="buttonV" data-dismiss="modal" value="Generar reporte" onclick="generatedPDFSupplierByProduct()" />
                             </div>
                         </div>
-                        <p></p>
-                        <div class="collapse multi-collapse" id="multiCollapseExample2">
-                            <div class="card card-body">
-                                <p>
-                                    <label for="txtProduct" class="form-label">Buscar producto:</label>
-                                    <input id="txtProduct" type="text" class="form-control" placeholder="Ingrese el nombre del producto" />
-                                    <input id="txtProductId" type="hidden" />
-                                    <ul id="showProducts"></ul>
-                                </p>
-                                <div>
-                                    <input type="submit" class="btn btn-success" data-dismiss="modal" value="Generar reporte" onclick="generatedPDFSupplierByProduct()" />
-                                </div>
+                    </div>
+                    <p></p>
+                    <div class="collapse multi-collapse" id="multiCollapseExample3">
+                        <div class="card card-body cardVerT">
+                            <p>
+                                <label for="txtSupplier" class="form-label fw-bold">Buscar proveedor:</label>
+                                <input id="txtSupplier" type="text" class="form-control inputf" placeholder="Ingrese el proveedor" />
+                                <input id="txtSupplierId" style="display: none" />
+                                <ul class="inputf" id="showSuppliers"></ul>
+                            </p>
+                            <p>
+                                <label for="txtStartDateOrder" class="form-label fw-bold">Desde:</label>
+                                <input id="txtStartDateOrder" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
+                            </p>
+                            <p>
+                                <label for="txtEndDateOrder" class="form-label fw-bold">Hasta:</label>
+                                <input id="txtEndDateOrder" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
+                            </p>
+                            <div>
+                                <input type="submit" class="buttonV" onclick="generatedPDFProductBySupplierBetweenDates()" value="Generar reporte" data-dismiss="modal" />
                             </div>
                         </div>
                     </div>
@@ -79,89 +113,87 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container mt-2">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <table class="table table-bordered table-responsive-xl ttablita" id="tableInvoices">
-                    <thead>
+<div class="container mt-2">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
+            <table class="table table-bordered table-responsive-xl ttablita" id="tableInvoices">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Total (Bs.)</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailsModal">
+    <div class=" modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content detailsModalVenta">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
+            </div>
+            <div class="modal-body">
+                <h5 class="fw-bold">Productos:</h5>
+                <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
+                    <thead class="thead-dark">
                         <tr>
-                            <th>Fecha</th>
-                            <th>Proveedor</th>
-                            <th>Total (Bs.)</th>
-                            <th>Detalles</th>
+                            <th>Nombre</th>
+                            <th>Modelo</th>
+                            <th>Serie</th>
+                            <th>Precio de compra (Bs.)</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                <label class="control-label fw-bold">Total:</label>
+                            </td>
+                            <td>
+                                <span id="lblTotal" class="fw-bold"></span>
+                                <label class="fw-bold">Bs.</label>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination" id="pagination">
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="detailsModal">
-        <div class=" modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-            <div class="modal-content detailsModalVenta">
-                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="lblDateInvoice"></h5>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mt-1">
+                            <label for="lblBussinesName" class="fw-bold fs-6">Proveedor:</label>
+                            <label id="lblBussinesName" class="fs-6"></label>
                         </div>
-                        <div class="modal-body">
-                            <h5 class="fw-bold">Productos:</h5>
-                            <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Modelo</th>
-                                        <th>Serie</th>
-                                        <th>Precio de compra (Bs.)</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td>
-                                            <label class="control-label fw-bold">Total:</label>
-                                        </td>
-                                        <td>
-                                            <span id="lblTotal" class="fw-bold"></span>
-                                            <label class="fw-bold">Bs.</label>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mt-1">
-                                        <label for="lblBussinesName" class="fw-bold fs-6">Proveedor:</label>
-                                        <label id="lblBussinesName" class="fs-6"></label>
-                                    </div>
-                                    <div class="mt-1">
-                                        <label for="lblPhone" class="fw-bold fs-6">Teléfono:</label>
-                                        <label id="lblPhone" class="fs-6"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btnmodalCancel w-80" data-dismiss="modal">Cerrar</button>
+                        <div class="mt-1">
+                            <label for="lblPhone" class="fw-bold fs-6">Teléfono:</label>
+                            <label id="lblPhone" class="fs-6"></label>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnmodalCancel w-80" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <div id="countdown" style="display: none;">
-        <span id="countdown-value" hidden>900</span>
-    </div>
+<div id="countdown" style="display: none;">
+    <span id="countdown-value" hidden>900</span>
+</div>
 
 <script src="~/js/countdown.js"></script>
 
@@ -183,6 +215,12 @@
         const txtProductId = document.getElementById('txtProductId');
         const showProducts = document.getElementById('showProducts');
 
+        const txtSupplier = document.getElementById('txtSupplier');
+        const txtSupplierId = document.getElementById('txtSupplierId');
+        const showSuppliers = document.getElementById('showSuppliers');
+        const txtStartDateOrder = document.getElementById('txtStartDateOrder');
+        const txtEndDateOrder = document.getElementById('txtEndDateOrder');
+
         const rowsPerPages = 10; //cantidad de elementos que se mostraran por pagina
         let currentInvoices = [];
 
@@ -191,24 +229,28 @@
                 showProducts.style.display = 'block';
                 searchProduct(txtProduct.value);
             });
+            txtSupplier.addEventListener('input', () => {
+                showSuppliers.style.display = 'block';
+                searchSupplier(txtSupplier.value);
+            })
             getInvoices();
         });
 
         function getInvoices() {
             fetch('/Delivery/GetInvoicesWithDetails')
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-            })
-            .then(data => {
-                currentInvoices = data;
-                showInvoices(data);
-            })
-            .catch(error => console.error(error));
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(data => {
+                    currentInvoices = data;
+                    showInvoices(data);
+                })
+                .catch(error => console.error(error));
         }
 
-        function showInvoices(invoices, page = 1){
+        function showInvoices(invoices, page = 1) {
             const tbody = tableInvoices.getElementsByTagName('tbody')[0];
             tbody.innerHTML = '';
             const start = (page - 1) * rowsPerPages; //calcula el indice del primer elemento que se debe mostrar en la pagina
@@ -250,11 +292,11 @@
                     showInvoices(currentInvoices, i); //actualiza la pagina para mostrar los siguientes elementos
                 });
                 li.appendChild(a); //agrega el enlace al elemento de la pagina
-                pagination.appendChild(li); //agrega el li al contenedor de paginacion 
+                pagination.appendChild(li); //agrega el li al contenedor de paginacion
             }
         }
 
-        function showDetailsOfInvoice(invoice){
+        function showDetailsOfInvoice(invoice) {
             lblTotal.textContent = invoice.total;
             lblDateInvoice.textContent = `Recibo del ${invoice.registerDate}`;
             lblBussinesName.textContent = invoice.supplier.bussinesName;
@@ -275,70 +317,124 @@
 
         function searchProduct(productName) {
             fetch(`/Item/SearchProduct?searchProduct=${productName}`)
-            .then(res => res.json())
-            .then(data => {
-                showProducts.innerHTML = '';
-                data.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.style.cursor = 'pointer';
-                    li.textContent = item.productName;
-                    li.addEventListener('click', () => {
-                        showProducts.style.display = 'none';
-                        txtProduct.value = li.textContent;
-                        txtProductId.value = item.productId;
+                .then(res => res.json())
+                .then(data => {
+                    showProducts.innerHTML = '';
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
+                        li.style.cursor = 'pointer';
+                        li.textContent = item.productName + ' -- # Serie: ' + item.productSerie;
+                        li.addEventListener('click', () => {
+                            showProducts.style.display = 'none';
+                            txtProduct.value = li.textContent;
+                            txtProductId.value = item.productId;
+                        });
+                        showProducts.appendChild(li);
                     });
-                    showProducts.appendChild(li);
-                });
-            })
-            .catch(error => console.log(error))
+                })
+                .catch(error => console.log(error))
         }
 
-        function generatedPdfByDateRange(){
+        function generatedPdfByDateRange() {
             let startDate = txtStartDate.value;
             let endDate = txtEndDate.value;
             fetch(`/DeliveryReports/GeneratedReportByDateRange?startDate=${startDate}&finishDate=${endDate}`)
-            .then(res => {
-                if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
-                    return res.blob();
-                } else if (!res.ok){
-                    return res.text().then(text => {
-                        throw new Error(text || 'No se pudo generar el reporte');
-                    });
-                }
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                window.open(url, '_blank');
-                window.URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('Error al descargar el archivo: ', error);
-                alert(error.message);
-            });
+                .then(res => {
+                    txtStartDate.value = '';
+                    txtEndDate.value = '';
+                    if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                        return res.blob();
+                    } else if (!res.ok) {
+                        return res.text().then(text => {
+                            throw new Error(text || 'No se pudo generar el reporte');
+                        });
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.warn('Error al descargar el archivo: ', error);
+                    alert(error.message);
+                });
         }
 
-        function generatedPDFSupplierByProduct(){
+        function generatedPDFSupplierByProduct() {
             let id = txtProductId.value;
             fetch(`/DeliveryReports/GeneratedReportSupplierByProduct?productId=${id}`)
-            .then(res => {
-                if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
-                    return res.blob();
-                } else if (!res.ok) {
-                    return res.text().then(text => {
-                        throw new Error('No se pudo generar el reporte');
-                    });
-                }
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                window.open(url, '_blank');
-                window.URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('Error al descargar el archivo: ', error);
-                alert(error.message);
-            })
+                .then(res => {
+                    txtProductId.value = '';
+                    txtProduct.value = '';
+                    if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                        return res.blob();
+                    } else if (!res.ok) {
+                        return res.text().then(text => {
+                            throw new Error('No se pudo generar el reporte');
+                        });
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Error al descargar el archivo: ', error);
+                    alert(error.message);
+                })
+        }
+
+        function searchSupplier(supplierName) {
+            fetch(`/Supplier/SearchSupplier?likeSupplier=${supplierName}`)
+                .then(res => res.json())
+                .then(data => {
+                    showSuppliers.innerHTML = '';
+                    data.forEach(supplier => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
+                        li.style.cursor = 'pointer';
+                        li.textContent = supplier.supplierBussinesName;
+                        li.addEventListener('click', () => {
+                            showSuppliers.style.display = 'none';
+                            txtSupplier.value = li.textContent;
+                            txtSupplierId.value = supplier.supplierId;
+                        });
+                        showSuppliers.appendChild(li);
+                    })
+                })
+                .catch(err => console.error(err))
+        }
+
+        function generatedPDFProductBySupplierBetweenDates() {
+            let id = txtSupplierId.value;
+            let startDateOrder = txtStartDateOrder.value;
+            let endDateOrder = txtEndDateOrder.value;
+            fetch(`/DeliveryReports/GeneratedReportItemsBySupplierBetweenDatesReport?supplierId=${id}&startDate=${startDateOrder}&endDate=${endDateOrder}`)
+                .then(res => {
+                    txtSupplierId.value = '';
+                    txtSupplier.value = '';
+                    txtStartDateOrder.value = '';
+                    txtEndDateOrder.value = '';
+                    if (res.ok && res.headers.get('Content-Type') === 'application/pdf') {
+                        return res.blob();
+                    } else if (!res.ok) {
+                        return res.text().then(text => {
+                            throw new Error(text || 'No se pudo generar el reporte');
+                        });
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(err => {
+                    console.warn('Error al descargar el archivo: ', err);
+                    alert(err.message);
+                })
         }
     </script>
-}
+    }
