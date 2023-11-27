@@ -194,6 +194,7 @@
         const rowsPerPages = 10; 
         let currentSales = [];
 
+
         document.addEventListener('DOMContentLoaded', () => {
             txtCustomer.addEventListener('input', () => {
                 showCustomers.style.display = 'block';
@@ -215,6 +216,8 @@
             })
             .catch(error => console.error(error));
         }
+
+
 
         function showSales(data, page = 1){
             const tbody = tableSales.getElementsByTagName('tbody')[0];

@@ -8,6 +8,9 @@ using PomaBrothers_Frontend.Models;
 using PomaBrothers_Frontend.Models.DTOModels;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Text;
+using System.Net.Http;
+using SkiaSharp;
 
 namespace PomaBrothers_Frontend.Controllers
 {
@@ -69,6 +72,15 @@ namespace PomaBrothers_Frontend.Controllers
             return View();
         }
 
+        //ventanaEmergente
+        public async Task<List<Sale>> GetLastSale()
+        {
+            HttpResponseMessage request = await httpClient.GetAsync("Sale/GetLastSale");
+            request.EnsureSuccessStatusCode();
+            string json = request.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<List<Sale>>(json);
+        }
+        
         //Sale
         public async Task<List<Customer>> GetCustomersAsync()
         {
@@ -76,14 +88,6 @@ namespace PomaBrothers_Frontend.Controllers
             request.EnsureSuccessStatusCode();
             string json = request.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Customer>>(json);
-        }
-
-        public async Task<Sale> RegisterSaleAsync(Sale s)
-        {
-            HttpResponseMessage request = await httpClient.PostAsJsonAsync("Sale/Create", s);
-            request.EnsureSuccessStatusCode();
-            string json = request.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<Sale>(json);
         }
 
         public async Task<ActionResult> IndexSale()
@@ -94,37 +98,55 @@ namespace PomaBrothers_Frontend.Controllers
             var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
                 (i, m) => new
                 {
+                    _Id = i.Id,
                     _Name = i.Name,
                     _Price = i.Price,
                     _Color = i.Color,
                     _Serie = i.Serie,
                     _Marker = m.Marker,
-                    ItemID = i.Id,
                     ModelID = m.Id
                 }).ToList();
             ViewBag.Data = query;
             var customers = await GetCustomersAsync();
-            ViewBag.Customers = customers.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = $"{c.Ci}-{c.LastName}"
-            });
             return View();
         }
 
-        public async Task<ActionResult> CreateSale(int id, int total)
+        public async Task<IActionResult> PostSale(SaleDetailDTO detail)
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            Sale sale = new()
-            {
-                EmployeeId = int.Parse(userIdClaim),
-                CustomerId = id,
-                Total = total,
-                RegisterDate = DateTime.Now
-            };
-            await RegisterSaleAsync(sale);
+            HttpResponseMessage request = await httpClient.PostAsJsonAsync("Sale/Create", detail);
+            request.EnsureSuccessStatusCode();
+            return Ok();
+        }
 
-            return RedirectToAction("Index", "Sale");
+        public async Task<ActionResult> CreateSale(int customerId, decimal total, [FromBody]List<ProductSaledDTO> itemsSaled)
+        {
+            SaleDetailDTO detail = new SaleDetailDTO();
+            List<SaleDetail> details = new();
+            foreach (var item in itemsSaled)
+            {
+                var productSaleDTO = new ProductSaledDTO();
+                productSaleDTO.ProductId = item.ProductId;
+                productSaleDTO.ProductPrice = item.ProductPrice;
+                productSaleDTO.ModelId = item.ModelId;
+                productSaleDTO.Status = 2;
+                detail.ProductSaled.Add(productSaleDTO);
+            }
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            detail.Total = total;
+            detail.CustomerId = customerId;
+            detail.EmployeeId = int.Parse(userIdClaim);
+            detail.RegisterDate = DateTime.Now;
+            
+            try
+            {
+                await PostSale(detail);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<List<Item>> GetItemsAsync() //Get All

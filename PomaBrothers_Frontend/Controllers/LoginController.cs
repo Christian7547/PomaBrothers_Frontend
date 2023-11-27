@@ -43,6 +43,7 @@ namespace PomaBrothers_Frontend.Controllers
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, result!.Id.ToString()),
+                        new Claim(ClaimTypes.Name, $"{result.Name} {result.LastName} {result.SecondLastName}"),
                         new Claim(ClaimTypes.Role, result.Role)
                     };
 
@@ -67,10 +68,7 @@ namespace PomaBrothers_Frontend.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            // Cierra la sesión del usuario
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            //Response.Cookies.Delete("sesion");
-            // Redirige al usuario a la página de inicio u otra página de tu elección
             return RedirectToAction("Index", "Home");
         }
     }

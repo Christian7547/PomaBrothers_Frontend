@@ -28,5 +28,29 @@ namespace PomaBrothers_Frontend.Controllers
             string json = request.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Sale>>(json);
         }
+
+        public async Task<IActionResult> DetailLastId()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("Sale/GetLatest");
+                response.EnsureSuccessStatusCode();
+                string json = await response.Content.ReadAsStringAsync();
+                var sale = JsonConvert.DeserializeObject<Sale>(json);
+
+                if (sale != null)
+                {
+                    return View(sale); 
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
+

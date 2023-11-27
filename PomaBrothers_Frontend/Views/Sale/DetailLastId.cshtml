@@ -1,0 +1,56 @@
+﻿@model PomaBrothers_Frontend.Models.Sale
+
+<div class="page-container">
+    <header class="page-header">
+        <h5 class="title fw-bold">Detalles de la Venta</h5>
+    </header>
+    <main class="page-body">
+        <div class="modal-body">
+            <h5 class="fw-bold">Productos:</h5>
+            <table class="table table-bordered table-responsive-xl ttablita" id="tableItems">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Garantía</th>
+                        <th>Serie</th>
+                        <th>Precio (Bs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Aquí se agregan las filas de detalles de productos -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>
+                            <label class="control-label fw-bold">Total:</label>
+                        </td>
+                        <td>
+                            <span id="lblTotal" class="fw-bold"></span>
+                            <label class="fw-bold">Bs.</label>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mt-2">
+                        <label for="lblClientName" class="fw-bold fs-6">Cliente:</label>
+                        <label id="lblClientName" class="fs-6" @Model.Customer.Name></label>
+                    </div>
+                    <div class="mt-2">
+                        <label for="lblCi" class="fw-bold fs-6">Carnet de identidad:</label>
+                        <label id="lblCi" class="fs-6" @Model.Customer.Ci></label>
+                    </div>
+                    <div class="mt-2">
+                        <label for="lblEmail" class="fw-bold fs-6">Correo electrónico:</label>
+                        <label id="lblEmail" class="fs-6" @Model.Customer.Email></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
