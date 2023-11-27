@@ -96,7 +96,7 @@ namespace PomaBrothers_Frontend.Controllers
                 }
                 return View();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View("Error");
             }

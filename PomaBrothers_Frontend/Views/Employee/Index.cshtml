@@ -6,23 +6,34 @@
 
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
-<h1 style="text-align:center">Empleados</h1>
+<h3 style="text-align:center">Empleados</h3>
 <hr />
 <div class="container mt-5">
+    <nav class="mt-3">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
     <div class="row row-cols-1 row-cols-xl-2 g-4">
         @foreach (var employee in ViewBag.Data)
         {
             <div class="col">
-                <div class="card mb-3 border-success" style="max-width: 640px;">
-                    <div class="card-header bg-transparent border-light fw-bold">@employee.Name</div>
+                <div class="cardVerT mb-3 border-success mx-auto" style="max-width: 600px;">
+                    <br>
+                    <div class="card-header fw-bold textitos text-center">@employee.Name</div><hr />
                     <div class="row g-0">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
                         </div>
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card-body">
+                                    <div class="card-body" style="padding-left: 10px;">
                                         <p>
                                             <label class="text-sm fw-bold">Nombre:</label>
                                             <label class="text-sm">@employee.Name</label>
@@ -52,15 +63,15 @@
                                                 data-id="@employee.Id"
                                                 data-toggle="modal"
                                                 data-target="#detailsModal"
-                                                class="btn btn-success w-100 mb-2">
+                                                class="btncardD w-100 h-100 mb-2">
                                             Ver detalles
                                         </button>
-                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success w-100 mb-2">Actualizar</a>
+                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 h-100 mb-2 btncardA">Actualizar</a>
                                         <button type="button"
                                                 data-id="@employee.Id"
                                                 data-toggle="modal"
                                                 data-target="#deleteModal"
-                                                class="btn btn-danger w-100">
+                                                class="btncardE w-100 h-100 mb-5">
                                             Eliminar
                                         </button>
                                     </div>
@@ -72,45 +83,47 @@
             </div>
         }
     </div>
-    <nav class="mt-3">
-        <ul class="pagination">
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
+   
 </div>
 
 <!-- Modal for delete -->
+
 <div class="modal fade" id="deleteModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Confirmar acción</h4>
+    @* "fade" is for adding animation*@
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content ModalDelete" style="text-align:center">
+
+            <div class="modal-header text-center">
+                <h5 class="textitos mx-auto">Confirmar acción</h5>
             </div>
 
             <div class="modal-body">
-                <p>Desea eliminar el registro?</p>
+                <h4>Desea eliminar el registro?</h4>
                 <input id="employeeId" type="hidden" />
             </div>
-
-            <div class="modal-footer">
-                <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btn btn-success" value="Confirmar" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <div class="row" style="padding-left: 10px; padding-right:10px">
+                <div class="col-md-6">
+                    <div>
+                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm w-100 h-100" value="Confirmar" />
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btnmodalCancel w-100 h-100" data-dismiss="modal">Cancelar</button>
+                </div>
             </div>
+            <br />
+            <br />
         </div>
     </div>
 </div>
 
 <!-- Modal for details -->
 <div class="modal fade" id="detailsModal">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="lblName"></h5>
+    <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content DetalleModel">
+            <div class="modal-header text-center">
+                <h5 class="ttextitos mx-auto" id="lblName"></h5>
             </div>
             <div class="modal-body">
                 <img class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Employee Image" id="detailsImage">
@@ -127,8 +140,8 @@
                     <label id="lblUser" class="fw-bold">Usuario:</label>
                 </p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger w-50" data-dismiss="modal">Cerrar</button>
+            <div class="d-flex align-items-center justify-content-center modal-footer">
+                <button type="button" class="btnmodalCancel w-50 h-100" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

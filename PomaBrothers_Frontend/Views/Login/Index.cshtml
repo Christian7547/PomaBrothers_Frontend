@@ -11,25 +11,28 @@
 <br />
 
 <div class="tab-pane fade show active" style="text-align:center" id="login" role="tabpanel" aria-labelledby="login-tab">
-    <h2 class="text-center mt-4 mb-4 font-weight-bold" style="text-transform: uppercase;">INICIAR SESION</h2>
     <form asp-action="Login">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-5">
-                    <img src="~/images/logo.png" class="img-fluid" style="width:600px; height:400px;">
+                    <img src="~/images/logo.png" class="img-fluid img-bord" style="width:600px; height:400px;">
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
+                    <br />
+                    <h2 class="text-center fw-bold" style="text-transform: uppercase;">INICIAR SESIÓN</h2>
+                    <br />
                     <div class="form-group">
-                        <label>Usuario</label>
+                        <label class="fw-bold text-left">Usuario</label>
                         <input type="text" class="form-control inputf" placeholder="Ingresa tu Usuario" required asp-for="User">
-                    </div>
+                    </div><br />
                     <div class="form-group">
-                        <label>Contraseña</label>
+                        <label class="fw-bold text-left">Contraseña</label>
                         <input type="password" class="form-control inputf" placeholder="Ingresa tu contraseña" required="" asp-for="Password">
                     </div>
+                    <br />
                     <div class="mt-2 mb-5">
-                        <button class="buttonG" type="submit">ACEPTAR</button>
+                        <button class="buttonG w-50 fw-bold" type="submit">ACEPTAR</button>
                     </div>
                 </div>
                 <div class="col-md-2"></div>

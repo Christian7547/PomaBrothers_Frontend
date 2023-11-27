@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Hermanos Poma</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -54,11 +54,10 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ventas</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Sale" asp-action="Index">Registro de ventas</a>
-                                    <a class="dropdown-item text-dark" asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
+                                    <a class="dropdown-item " asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
                                 </div>
                             </li>
-                            
+
                         }
                         else if (User.IsInRole("Administrador"))
                         {
@@ -81,7 +80,7 @@
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ventas</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="Sale" asp-action="Index">Registro de ventas</a>
-                                    <a class="dropdown-item text-dark" asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
+                                    <a class="dropdown-item" asp-controller="Item" asp-action="IndexSale">Nueva ventas</a>
                                 </div>
                             </li>
 
@@ -100,8 +99,8 @@
                                 </div>
                             </li>
                         }
+                       
                     </ul>
-
                 </div>
             </div>
             @if (User.Identity.IsAuthenticated)
@@ -133,14 +132,15 @@
                     </ul>
                 </div>
             }
+
         </nav>
     </header>
 
 
-    <div class="">
+    <div>
         <main role="main">
+                @RenderBody()
 
-            @RenderBody()
         </main>
     </div>
 
@@ -156,7 +156,7 @@
                 section.scrollIntoView({ behavior: 'smooth' });
             }
         }
-        
+
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

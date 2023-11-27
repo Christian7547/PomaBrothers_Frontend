@@ -1,29 +1,31 @@
 ﻿<link rel="stylesheet" href="~/css/Forms.css">
 
 
-<h1 style="text-align:center">Ventas</h1>
+<h3 style="text-align:center">Ventas</h3>
 <hr />
 
-<div class="container mt-8">
-<div>
-    <button class="btn btn-success m-4"
-            data-toggle="modal"
-            data-target="#modalSales">
-        Reporte de ventas
-    </button>
+<div class="container mt-10" style="text-align: right;">
+        <button class="btnreportes m-1"
+                data-toggle="modal"
+                data-target="#modalSales">
+            Reporte de ventas
+        </button>
 </div>
+
 
 <div class="modal fade" id="modalSales">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Reportes de ventas</h5>
+        <div class="modal-content ModalRep" style="text-align:center">
+            <div class="modal-heade text-center">
+                <br />
+                <h4 class="textitos mx-auto">Reportes de ventas</h4>
+                <hr />
             </div>
             <div class="modal-body">
                 <p>
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-success"
+                            <button class="btnRep1"
                                     type="button"
                                     data-toggle="collapse"
                                     data-target="#multiCollapseExample1"
@@ -33,7 +35,7 @@
                             </button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success"
+                            <button class="btnRep1"
                                     type="button"
                                     data-toggle="collapse"
                                     data-target="#multiCollapseExample2"
@@ -46,31 +48,32 @@
                 </p>
                 <div class="row">
                     <div class="collapse multi-collapse" id="multiCollapseExample1">
-                        <div class="card card-body">
+                        <div class="card card-body cardVerT">
+                            
                             <p>
-                                <label for="txtCustomer" class="form-label">Buscar cliente:</label>
-                                <input id="txtCustomer" type="text" class="form-control" placeholder="Ingrese el CI del cliente..." />
+                                <label for="txtCustomer" class="form-label fw-bold">Buscar cliente:</label>
+                                <input id="txtCustomer" type="text" class="form-control inputf" placeholder="Ingrese el CI del cliente..." />
                                 <input id="txtCustomerId" type="hidden" />
-                                <ul id="showCustomers"></ul>
+                                <ul class="inputf" id="showCustomers"></ul>
                             </p>
                             <div>
-                                <input type="submit" class="btn btn-success" data-dismiss="modal" value="Generar reporte" onclick="generatedPdfCustomerPurchases()"  />
+                                <input type="submit" class="buttonV" data-dismiss="modal" value="Generar reporte" onclick="generatedPdfCustomerPurchases()" />
                             </div>
                         </div>
                     </div>
                     <p></p>
                     <div class="collapse multi-collapse" id="multiCollapseExample2">
-                        <div class="card card-body">
+                        <div class="card card-body cardVerT">
                             <p>
-                                <label for="txtStartDate" class="form-label">Desde:</label>
-                                <input id="txtStartDate" type="date" class="form-control" placeholder="Seleccione una fecha" />
+                                <label for="txtStartDate" class="form-label fw-bold">Desde:</label>
+                                <input id="txtStartDate" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
                             </p>
                             <p>
-                                <label for="txtEndDate" class="form-label">Hasta:</label>
-                                <input id="txtEndDate" type="date" class="form-control" placeholder="Seleccione una fecha" />
+                                <label for="txtEndDate" class="form-label fw-bold">Hasta:</label>
+                                <input id="txtEndDate" type="date" class="form-control inputf" placeholder="Seleccione una fecha" />
                             </p>
                             <div>
-                                <input type="submit" class="btn btn-success" onclick="generatedPdfByDateRange()" value="Generar reporte" data-dismiss="modal" />
+                                <input type="submit" class="buttonV" onclick="generatedPdfByDateRange()" value="Generar reporte" data-dismiss="modal" />
                             </div>
                         </div>
                     </div>
@@ -80,9 +83,13 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-10">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
             <!-- Aumenta el ancho de la columna -->
             <table class="table table-bordered table-responsive-xl ttablita" id="tableSales">
                 <thead class="thead-dark">
@@ -97,10 +104,7 @@
                     <!-- Aquí se agregan las filas de datos de ventas -->
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </nav>
+           
         </div>
     </div>
 </div>

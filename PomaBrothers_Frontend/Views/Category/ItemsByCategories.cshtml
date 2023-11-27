@@ -1,90 +1,138 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Productos";
-    int currentPage = ViewBag.CurrentPage;
-    int totalPages = ViewBag.TotalPages;
-    int categoryId = ViewBag.CategoryId;
+    int currentPage = ViewBag.CurrentPage ?? 0; 
+    int totalPages = ViewBag.TotalPages ?? 0;
+    int categoryId = ViewBag.CategoryId ?? 0;
 }
 
 <link rel="stylesheet" href="~/css/Forms.css">
+
 <br />
-<h1 style="text-align:center">Productos</h1>
+<h3 style="text-align:center">Productos</h3>
 <hr />
-<div class="container mt-5">
-    <div class="row row-cols-1 row-cols-xl-2 g-4">
-        @foreach (var item in (List<Item>)ViewBag.Data)
-        {
-            <div class="col">
-                <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
-                    <br>
-                    <div class="card-header fw-bold textitos text-center">@item.Name</div><hr />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Producto Image">
-                        </div>
-                        <div class="col-md-8">
+@{
+    if (categoryId != 0)
+    {
+        <div class="container mt-5">
+            <nav class="mt-3">
+                <ul class="pagination">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("ItemsByCategories", new { id = categoryId, page = i })">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+            <br />
+            <div class="row row-cols-1 row-cols-xl-2 g-4">
+
+                
+                @foreach (var item in (List<Item>)ViewBag.Data)
+                {
+                    <div class="col">
+                        <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
+                            <br/>
+                            <div class="card-header fw-bold textitos text-center">@item.Name</div><hr />
                             <div class="row">
-                                <div class="col">
-                                    <div class="card-body" style="padding-left: 10px;">
-                                        <p>
-                                            <label class="text-sm fw-bold">Marca:</label>
-                                            <label class="text-sm">@item.ItemModel.Marker</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                            <label class="text-sm">@item.Price</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Color:</label>
-                                            <label class="text-sm">@item.Color</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Serie:</label>
-                                            <label class="text-sm">@item.Serie</label>
-                                        </p>
-                                    </div>
+                                <div class="col-md-4">
+                                    <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@item.UrlImage" alt="Producto Image">
                                 </div>
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <div class="d-flex flex-column align-items-end">
-                                        <button type="button"
-                                                onclick="showDetails(@item.Id)"
-                                                data-id="@item.Id"
-                                                data-toggle="modal"
-                                                data-target="#detailsModal"
-                                                class="btncardD w-100 h-100 mb-2">
-                                            Detalle
-                                        </button>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="card-body" style="padding-left: 10px;">
+                                                <p>
+                                                    <label class="text-sm fw-bold">Marca:</label>
+                                                    <label class="text-sm">@item.ItemModel.Marker</label>
+                                                </p>
+                                                <p>
+                                                    <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                    <label class="text-sm">@item.Price</label>
+                                                </p>
+                                                <p>
+                                                    <label class="text-sm fw-bold">Color:</label>
+                                                    <label class="text-sm">@item.Color</label>
+                                                </p>
+                                                <p>
+                                                    <label class="text-sm fw-bold">Serie:</label>
+                                                    <label class="text-sm">@item.Serie</label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col d-flex align-items-center justify-content-center">
+                                            <div class="d-flex flex-column align-items-end">
+                                                <button type="button"
+                                                        onclick="showDetails(@item.Id)"
+                                                        data-id="@item.Id"
+                                                        data-toggle="modal"
+                                                        data-target="#detailsModal"
+                                                        class="btncardD w-100 h-100 mb-2">
+                                                    Detalle
+                                                </button>
 
-                                        <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 h-100 mb-2">
-                                            Actualizar
-                                        </a>
+                                                <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Item" class="btncardA w-100 h-100 mb-2">
+                                                    Actualizar
+                                                </a>
 
-                                        <button type="button"
-                                                data-id="@item.Id"
-                                                data-toggle="modal"
-                                                data-target="#deleteModal"
-                                                class="btncardE w-100 h-100 mb-5">
-                                            Eliminar
-                                        </button>
+                                                <button type="button"
+                                                        data-id="@item.Id"
+                                                        data-toggle="modal"
+                                                        data-target="#deleteModal"
+                                                        class="btncardE w-100 h-100 mb-5">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                }
+            </div>
+           
+        </div>
+    }
+
+    else
+    {
+         <div class="container">
+            <div class="row justify-content-center">
+                
+                <div class="col-xl-10">
+                    <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                    <br>
+                        <h4 class="card-title text-center fw-bold">No se asignaron productos a esta categoría</h4>
+                        <hr />
+                        <div class="row d-flex text-center">
+                                <br>
+                                <h4>Desea añadir un producto?</h4>
+                                <br>
+                        </div>
+                        <div class="row" style="padding-left: 10px; padding-right:10px">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a asp-controller="Delivery" asp-action="New" class="buttonG w-50">Añadir producto</a>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a asp-action="Index" class="buttonV w-50">Volver</a>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                   
                 </div>
             </div>
-        }
-    </div>
-    <nav class="mt-3">
-        <ul class="pagination">
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("ItemsByCategories", new { id = categoryId, page = i })">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-</div>
+         </div>
+    }
+}
+
 
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
@@ -181,6 +229,11 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+    <script>
         const txtId = document.getElementById('logId');
         const lblName = document.getElementById('lblName');
         const lblModel = document.getElementById('lblModel');
@@ -207,39 +260,39 @@
 
         function showDetails(id) {
             fetch(`/Item/GetItem?id=${id}`)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                else {
-                    console.error(response);
-                }
-            })
-            .then(data => {
-                lblName.textContent = data.name;
-                lblMarker.textContent = data.itemModel.marker;
-                lblModel.textContent = data.itemModel.modelName;
-                lblSerie.textContent = data.serie;
-                lblDescription.textContent = data.description;
-                lblColor.textContent = data.color;
-                lblPrice.textContent = `${data.price} Bs.`;
-                lblWarranty.textContent = data.durationWarranty;
-                lblTypeWarranty.textContent = data.typeWarranty;
-                if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null) {
-                    lblInfo.style.display = 'none';
-                    lblCapacity.style.display = 'none';
-                }
-                else {
-                    lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
-                }
-                if (data.itemModel.id != 1) {
-                    lblInfo.textContent = 'Capacidad: ';
-                }
-                else {
-                    lblInfo.textContent = 'Pantalla: ';
-                }
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        console.error(response);
+                    }
+                })
+                .then(data => {
+                    lblName.textContent = data.name;
+                    lblMarker.textContent = data.itemModel.marker;
+                    lblModel.textContent = data.itemModel.modelName;
+                    lblSerie.textContent = data.serie;
+                    lblDescription.textContent = data.description;
+                    lblColor.textContent = data.color;
+                    lblPrice.textContent = `${data.price} Bs.`;
+                    lblWarranty.textContent = data.durationWarranty;
+                    lblTypeWarranty.textContent = data.typeWarranty;
+                    if (data.itemModel.capacityOrSize === null && data.itemModel.measurementUnit === null) {
+                        lblInfo.style.display = 'none';
+                        lblCapacity.style.display = 'none';
+                    }
+                    else {
+                        lblCapacity.textContent = `${data.itemModel.capacityOrSize} ${data.itemModel.measurementUnit}`;
+                    }
+                    if (data.itemModel.id != 1) {
+                        lblInfo.textContent = 'Capacidad: ';
+                    }
+                    else {
+                        lblInfo.textContent = 'Pantalla: ';
+                    }
                     imagenItem.src = `${data.urlImage}`;
-            })
+                })
                 .catch(error => console.log(error))
         }
 

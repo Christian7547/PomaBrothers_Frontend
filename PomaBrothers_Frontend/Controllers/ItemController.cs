@@ -104,6 +104,10 @@ namespace PomaBrothers_Frontend.Controllers
                     _Color = i.Color,
                     _Serie = i.Serie,
                     _Marker = m.Marker,
+
+                    _UrlImage = i.UrlImage,
+                    ItemID = i.Id,
+
                     ModelID = m.Id
                 }).ToList();
             ViewBag.Data = query;

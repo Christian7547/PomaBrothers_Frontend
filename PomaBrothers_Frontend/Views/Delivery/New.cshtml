@@ -2,7 +2,7 @@
     ViewData["Title"] = "Nueva entrega";
 }
 
-<h1 style="text-align:center">Nueva entrega</h1>
+<h3 style="text-align:center">Nueva entrega</h3>
 <hr />
 <link rel="stylesheet" href="~/css/Forms.css">
 
@@ -108,7 +108,7 @@
                                         <input id="txtModelId" hidden />
                                     </div>
                                     <div class="col-md-2">
-                                        <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newModel">+</button>
+                                        <button class="supModel fw-bold" type="button" data-toggle="modal" data-target="#newModel">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                                         <input class="form-control inputf" id="txtDurationWarranty" />
                                     </div>
                                     <div class="col-md-8">
-                                        <select class="form-select custom-select" id="cmbTypeWarranty">
+                                        <select class="form-select custom-select fw-bold" id="cmbTypeWarranty">
                                             <option value="" disabled selected>Seleccione tipo de garantía</option>
                                             <option value=""></option>
                                             <option value=""></option>
@@ -211,7 +211,7 @@
                                 <br />
                             </div>
                             <div class="col-md-8">
-                                <select class="form-control fw-bold" id="cmbMeasurementUnit">
+                                <select class="form-control custom-select fw-bold" id="cmbMeasurementUnit">
                                     <option value="" disabled selected>Seleccione la unidad de medida</option>
                                     <option value="Litros">Litros</option>
                                     <option value="Kilogramos">Kilogramos</option>
@@ -252,7 +252,7 @@
             <div class="modal-body" style="padding-left: 10px; padding-right:10px">
                
                 <div class="form-group">
-                    <select class="form-select custom-select inputf" id="cmbWarehouse">
+                    <select class="form-select custom-select inputf fw-bold" id="cmbWarehouse">
                         <option value="" disabled selected>...</option>
                         @if (ViewBag.Warehouses != null)
                         {
