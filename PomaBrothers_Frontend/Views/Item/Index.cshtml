@@ -1,7 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Productos";
-    int currentPage = ViewBag.CurrentPage;
-    int totalPages = ViewBag.TotalPages;
+    int currentPage = 0;
+    int totalPages = 0;
+    if (ViewBag.CurrentPage != null && ViewBag.TotalPages != null)
+    {
+         currentPage = ViewBag.CurrentPage;
+         totalPages = ViewBag.TotalPages;
+    }
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
@@ -9,87 +14,128 @@
 <hr />
 
 
-<div class="container mt-5">
-    <nav class="mt-3">
-        <ul class="pagination">
-            @for (int i = 1; i <= totalPages; i++)
+@if (ViewBag.Data != null)
+{
+    <div class="container mt-5">
+        <nav class="mt-3">
+            <ul class="pagination">
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <div class="row row-cols-1 row-cols-xl-2 g-4">
+            @foreach (var item in ViewBag.Data)
             {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-    
-    <div class ="row row-cols-1 row-cols-xl-2 g-4">
-        @foreach (var item in ViewBag.Data)
-        {
-            <div class="col">
-                <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
-                    <br>
-                    <div class="card-header fw-bold textitos text-center">@item._Name</div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" alt="Producto Image"
-                                 src="@item._UrlImage" />
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-body" style="padding-left: 10px;">
-                                        <p>
-                                            <label class="text-sm fw-bold">Marca:</label>
-                                            <label class="text-sm">@item._Marker</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                            <label class="text-sm">@item._Price</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Color:</label>
-                                            <label class="text-sm">@item._Color</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Serie:</label>
-                                            <label class="text-sm">@item._Serie</label>
-                                        </p>
+                <div class="col">
+                    <div class="cardVerT border-success mx-auto" style="max-width: 600px;">
+                        <br>
+                        <div class="card-header fw-bold textitos text-center">@item._Name</div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" alt="Producto Image"
+                                     src="@item._UrlImage" />
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-body" style="padding-left: 10px;">
+                                            <p>
+                                                <label class="text-sm fw-bold">Marca:</label>
+                                                <label class="text-sm">@item._Marker</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                <label class="text-sm">@item._Price</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Color:</label>
+                                                <label class="text-sm">@item._Color</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Serie:</label>
+                                                <label class="text-sm">@item._Serie</label>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <div class="d-flex flex-column align-items-end">
-                                        <button type="button"
-                                                onclick="showDetails(@item.ItemID)"
-                                                data-id="@item.ItemID"
-                                                data-toggle="modal"
-                                                data-target="#detailsModal"
-                                                class="btncardD w-100 h-100 mb-2"> Detalle
-                                        </button>
+                                    <div class="col d-flex align-items-center justify-content-center">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <button type="button"
+                                                    onclick="showDetails(@item.ItemID)"
+                                                    data-id="@item.ItemID"
+                                                    data-toggle="modal"
+                                                    data-target="#detailsModal"
+                                                    class="btncardD w-100 h-100 mb-2">
+                                                Detalle
+                                            </button>
 
-                                        <a asp-action="Edit" asp-route-id="@item.ItemID" class="btncardA w-100 h-100 mb-2">
-                                            Actualizar
-                                        </a>
+                                            <a asp-action="Edit" asp-route-id="@item.ItemID" class="btncardA w-100 h-100 mb-2">
+                                                Actualizar
+                                            </a>
 
-                                        <button type="button"
-                                                data-id="@item.ItemID"
-                                                data-toggle="modal"
-                                                data-target="#deleteModal"
-                                                class="btncardE w-100 h-100 mb-5">Eliminar
-                                        </button>
+                                            <button type="button"
+                                                    data-id="@item.ItemID"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteModal"
+                                                    class="btncardE w-100 h-100 mb-5">
+                                                Eliminar
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-        <br />
-    </div>
-   
-</div>
+            }
+            <br />
+        </div>
 
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10">
+                <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                    <br>
+                    <h4 class="card-title text-center fw-bold">No se asignaron productos a esta categoría</h4>
+                    <hr />
+                    <div class="row d-flex text-center">
+                        <br>
+                        <h4>Desea añadir un producto?</h4>
+                        <br>
+                    </div>
+                    <div class="row" style="padding-left: 10px; padding-right:10px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a asp-controller="Delivery" asp-action="New" class="buttonG w-50">Añadir producto</a>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a asp-action="Index" class="buttonV w-50">Volver</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">

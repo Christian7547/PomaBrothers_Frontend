@@ -51,7 +51,9 @@ namespace PomaBrothers_Frontend.Controllers
         {
             var getItems = await GetItemsAsync();
             var getModels = await GetModelsAsync();
-            var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
+            if(getItems != null && getModels != null)
+            {
+                var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
                 (i, m) => new
                 {
                     _Name = i.Name,
@@ -63,12 +65,13 @@ namespace PomaBrothers_Frontend.Controllers
                     ItemID = i.Id,
                     ModelID = m.Id
                 }).ToList();
-            int totalItems = query.Count;
-
-            var paginatedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            ViewBag.Data = paginatedData;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+                int totalItems = query.Count;
+                var paginatedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                ViewBag.Data = paginatedData;
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+                return View();
+            }
             return View();
         }
 
