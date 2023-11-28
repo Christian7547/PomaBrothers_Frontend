@@ -81,7 +81,7 @@ namespace PomaBrothers_Frontend.Controllers
                 {
                     if (!string.IsNullOrEmpty(item.UrlImage))
                     {
-                        IFormFile imageFile = ConvertBase64ToIFormFile(item.UrlImage, item.Name);
+                        IFormFile imageFile = ConvertBase64ToIFormFile(item.UrlImage, item.Serie);
                         Stream img = imageFile.OpenReadStream();
                         string url = await StorageItem(img, imageFile.FileName);
                         item.UrlImage = url;
