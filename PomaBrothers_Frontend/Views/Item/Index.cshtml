@@ -1,7 +1,12 @@
 ﻿﻿@{
     ViewData["Title"] = "Productos";
-    int currentPage = ViewBag.CurrentPage;
-    int totalPages = ViewBag.TotalPages;
+    int currentPage = 0;
+    int totalPages = 0;
+    if (ViewBag.CurrentPage != null && ViewBag.TotalPages != null)
+    {
+        currentPage = ViewBag.CurrentPage;
+        totalPages = ViewBag.TotalPages;
+    }
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
