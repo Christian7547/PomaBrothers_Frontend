@@ -30,49 +30,13 @@
                                         data-target="#showItemsModal"
                                         class="btnmodalConfirm w-90">
                                     Inspeccionar
-                                </button>  |
-                                <button type="button"
-                                        data-id="@warehouse.Id"
-                                        data-toggle="modal"
-                                        data-target="#deleteModal"
-                                        class="btnmodalCancel w-90">
-                                    Eliminar
-                                </button>
+                                </button> 
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
 
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="deleteModal">
-    @* "fade" is for adding animation*@
-    <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content ModalDelete" style="text-align:center">
-
-            <div class="modal-header text-center">
-                <h5 class="textitos mx-auto">Confirmar acción</h5>
-            </div>
-
-            <div class="modal-body">
-                <h4>Desea eliminar el registro?</h4>
-                <input id="logId" type="hidden" />
-            </div>
-            <div class="row" style="padding-left: 10px; padding-right:10px">
-                <div class="col-md-6">
-                    <div>
-                        <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm" value="Confirmar" />
-                        <br />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <button type="button" class="btnmodalCancel" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-            <br />
-            <br />
         </div>
     </div>
 </div>
@@ -247,22 +211,8 @@
                         }
                         printItemsDiv.appendChild(containerCenter);
                     }
-                })
-                .catch(error => console.error(error))
-        }
-
-
-
-        function confirmDelete() {
-            const id = txtId.value;
-            fetch(`/Warehouse/Delete?id=${id}`)
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('deleteModal').style.display = 'none';
-                        location.reload();
-                    }
-                    else {
-                        console.log('Internal server error');
+                    else{
+                        printItemsDiv.textContent = 'Sin productos';
                     }
                 })
                 .catch(error => console.error(error))
