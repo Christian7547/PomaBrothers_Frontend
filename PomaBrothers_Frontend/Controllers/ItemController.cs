@@ -70,7 +70,6 @@ namespace PomaBrothers_Frontend.Controllers
                 ViewBag.Data = paginatedData;
                 ViewBag.CurrentPage = page;
                 ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
-                return View();
             }
             return View();
         }

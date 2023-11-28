@@ -1,90 +1,129 @@
 ﻿@{
     ViewData["Title"] = "Empleados";
-    int currentPage = ViewBag.CurrentPage;
-    int totalPages = ViewBag.TotalPages;
+    int currentPage = 0;
+    int totalPages = 0;
+    if (ViewBag.CurrentPage != null && ViewBag.TotalPages != null)
+    {
+        currentPage = ViewBag.CurrentPage;
+        totalPages = ViewBag.TotalPages;
+    }
 }
 
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
 <h3 style="text-align:center">Empleados</h3>
 <hr />
-<div class="container mt-5">
-    <nav class="mt-3">
-        <ul class="pagination">
-            @for (int i = 1; i <= totalPages; i++)
+
+@if (ViewBag.Data != null)
+{
+    <div class="container mt-5">
+        <nav class="mt-3">
+            <ul class="pagination">
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+        <div class="row row-cols-1 row-cols-xl-2 g-4">
+            @foreach (var employee in ViewBag.Data)
             {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-    <div class="row row-cols-1 row-cols-xl-2 g-4">
-        @foreach (var employee in ViewBag.Data)
-        {
-            <div class="col">
-                <div class="cardVerT mb-3 border-success mx-auto" style="max-width: 600px;">
-                    <br>
-                    <div class="card-header fw-bold textitos text-center">@employee.Name</div><hr />
-                    <div class="row g-0">
-                        <div class="col-md-4 mb-2">
-                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-body" style="padding-left: 10px;">
-                                        <p>
-                                            <label class="text-sm fw-bold">Nombre:</label>
-                                            <label class="text-sm">@employee.Name</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Apellido:</label>
-                                            <label class="text-sm">@employee.LastName</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">CI:</label>
-                                            <label class="text-sm">@employee.Ci</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Teléfono:</label>
-                                            <label class="text-sm">@employee.Phone</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Usuario:</label>
-                                            <label class="text-sm">@employee.User</label>
-                                        </p>
+                <div class="col">
+                    <div class="cardVerT mb-3 border-success mx-auto" style="max-width: 600px;">
+                        <br>
+                        <div class="card-header fw-bold textitos text-center">@employee.Name</div><hr />
+                        <div class="row g-0">
+                            <div class="col-md-4 mb-2">
+                                <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="@employee.UrlImage" alt="Employee Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-body" style="padding-left: 10px;">
+                                            <p>
+                                                <label class="text-sm fw-bold">Nombre:</label>
+                                                <label class="text-sm">@employee.Name</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Apellido:</label>
+                                                <label class="text-sm">@employee.LastName</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">CI:</label>
+                                                <label class="text-sm">@employee.Ci</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Teléfono:</label>
+                                                <label class="text-sm">@employee.Phone</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Usuario:</label>
+                                                <label class="text-sm">@employee.User</label>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <div class="d-flex flex-column align-items-end">
-                                        <button type="button"
-                                                onclick="showDetails(@employee.Id)"
-                                                data-id="@employee.Id"
-                                                data-toggle="modal"
-                                                data-target="#detailsModal"
-                                                class="btncardD w-100 h-100 mb-2">
-                                            Ver detalles
-                                        </button>
-                                        <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 h-100 mb-2 btncardA">Actualizar</a>
-                                        <button type="button"
-                                                data-id="@employee.Id"
-                                                data-toggle="modal"
-                                                data-target="#deleteModal"
-                                                class="btncardE w-100 h-100 mb-5">
-                                            Eliminar
-                                        </button>
+                                    <div class="col d-flex align-items-center justify-content-center">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <button type="button"
+                                                    onclick="showDetails(@employee.Id)"
+                                                    data-id="@employee.Id"
+                                                    data-toggle="modal"
+                                                    data-target="#detailsModal"
+                                                    class="btncardD w-100 h-100 mb-2">
+                                                Ver detalles
+                                            </button>
+                                            <a asp-action="Edit" asp-route-id="@employee.Id" class="w-100 h-100 mb-2 btncardA">Actualizar</a>
+                                            <button type="button"
+                                                    data-id="@employee.Id"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteModal"
+                                                    class="btncardE w-100 h-100 mb-5">
+                                                Eliminar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
+
     </div>
-   
-</div>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10">
+                <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                    <br>
+                    <h4 class="card-title text-center fw-bold">No se encontró ningún empleado</h4>
+                    <hr />
+                    <div class="row d-flex text-center">
+                        <br>
+                        <h4>Desea registrar un empleado?</h4>
+                        <br>
+                    </div>
+                    <div class="row" style="padding-left: 10px; padding-right:10px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a asp-controller="Employee" asp-action="Create" class="buttonG w-50">Registrar</a>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
 
 <!-- Modal for delete -->
 

@@ -49,12 +49,15 @@ namespace PomaBrothers_Frontend.Controllers
         public async Task<ActionResult> Index(int page = 1, int pageSize = 6)
         {
             var employees = await GetEmployeesAsync();
-            int totalEmployees = employees.Count;
+            if(employees != null)
+            {
+                int totalEmployees = employees.Count;
 
-            var paginatedData = employees.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            ViewBag.Data = paginatedData;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEmployees / pageSize);
+                var paginatedData = employees.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                ViewBag.Data = paginatedData;
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalEmployees / pageSize);
+            }
             return View();
         }
 
