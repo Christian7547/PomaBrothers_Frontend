@@ -98,7 +98,9 @@ namespace PomaBrothers_Frontend.Controllers
 
             var getItems = await GetItemsAsync();
             var getModels = await GetModelsAsync();
-            var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
+            if(getItems != null)
+            {
+                var query = getItems.Join(getModels, i => i.ModelId, m => m.Id,
                 (i, m) => new
                 {
                     _Id = i.Id,
@@ -113,7 +115,8 @@ namespace PomaBrothers_Frontend.Controllers
 
                     ModelID = m.Id
                 }).ToList();
-            ViewBag.Data = query;
+                ViewBag.Data = query;
+            }
             var customers = await GetCustomersAsync();
             return View();
         }

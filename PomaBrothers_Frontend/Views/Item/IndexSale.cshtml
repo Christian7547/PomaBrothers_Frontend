@@ -5,86 +5,106 @@
 <h1>Productos</h1>
 <hr />
 
-<div id="vista1" style="float: left; width: 80%;">
-    <div id="searchArea">
-        <input type="text" id="searchBox" placeholder="Buscar producto...">
-    </div>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        @foreach (var item in ViewBag.Data)
-        {
-            <div class="col">
-                <div class="card mb-3 border-success" style="max-width: 640px;">
-                    <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-body">
-                                        <p>
-                                            <label class="text-sm fw-bold">Marca:</label>
-                                            <label class="text-sm">@item._Marker</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Precio(Bs.):</label>
-                                            <label class="text-sm">@item._Price</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Color:</label>
-                                            <label class="text-sm">@item._Color</label>
-                                        </p>
-                                        <p>
-                                            <label class="text-sm fw-bold">Serie:</label>
-                                            <label class="text-sm">@item._Serie</label>
-                                        </p>
+@if (ViewBag.Data != null)
+{
+    <div id="vista1" style="float: left; width: 80%;">
+        <div id="searchArea">
+            <input type="text" id="searchBox" placeholder="Buscar producto...">
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach (var item in ViewBag.Data)
+            {
+                <div class="col">
+                    <div class="card mb-3 border-success" style="max-width: 640px;">
+                        <div class="card-header bg-transparent border-light fw-bold">@item._Name</div>
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img class="img-fluid rounded-start p-bg-opacity-10 w-100 h-100 p-3" src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaW1hbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-body">
+                                            <p>
+                                                <label class="text-sm fw-bold">Marca:</label>
+                                                <label class="text-sm">@item._Marker</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Precio(Bs.):</label>
+                                                <label class="text-sm">@item._Price</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Color:</label>
+                                                <label class="text-sm">@item._Color</label>
+                                            </p>
+                                            <p>
+                                                <label class="text-sm fw-bold">Serie:</label>
+                                                <label class="text-sm">@item._Serie</label>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <div class="d-flex flex-column align-items-end">
-                                        <button class="btn btn-success w-100 mb-2" onclick="addToCart( '@item._Name', '@item._Price', ' @item._Id ', '@item.ModelID')"> + </button>
-                                        <button class="btn btn-danger w-100 mb-2" onclick="removeFromCart('@item._Name', '@item._Price', '@item._Id')"> - </button>
+                                    <div class="col d-flex align-items-center justify-content-center">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <button class="btn btn-success w-100 mb-2" onclick="addToCart( '@item._Name', '@item._Price', ' @item._Id ', '@item.ModelID')"> + </button>
+                                            <button class="btn btn-danger w-100 mb-2" onclick="removeFromCart('@item._Name', '@item._Price', '@item._Id')"> - </button>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
 
-<div id="vista" style="float: left; width: 20%;">
-    <div>
-        <h2>Cliente:</h2>
+    <div id="vista" style="float: left; width: 20%;">
         <div>
-            <div class="card card-body">
-                <p>
-                    <label for="txtCustomer" class="form-label">Buscar cliente:</label>
-                    <input id="txtCustomer" type="text" class="form-control" placeholder="Ingrese el CI del cliente..." />
-                    <input id="txtCustomerId" type="hidden" />
-                    <ul id="showCustomers"></ul>
-                </p>
+            <h2>Cliente:</h2>
+            <div>
+                <div class="card card-body">
+                    <p>
+                        <label for="txtCustomer" class="form-label">Buscar cliente:</label>
+                        <input id="txtCustomer" type="text" class="form-control" placeholder="Ingrese el CI del cliente..." />
+                        <input id="txtCustomerId" type="hidden" />
+                        <ul id="showCustomers"></ul>
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newCustomer">+</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-success fw-bold" type="button" data-toggle="modal" data-target="#newCustomer">+</button>
+        </div>
+        <div id="selectedProducts">
+            <h2>Productos Seleccionados:</h2>
+            <ul id="productList"></ul>
+        </div>
+        <!-- Total de la compra -->
+        <div>
+            <h2>Total de la Compra:</h2>
+            <input id="totalPrice" type="text" value="0" readonly>
+        </div>
+        <button id="registerSaleButton" class="btn btn-primary">Registrar Venta</button>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10">
+                <div class="card-body cardActualizar" style="padding-left: 10px; padding-right:10px">
+                    <br>
+                    <h4 class="card-title text-center fw-bold">No hay productos en stock</h4>
+                    <hr />
+                    <br>
+                </div>
+
             </div>
         </div>
     </div>
-    <div id="selectedProducts">
-        <h2>Productos Seleccionados:</h2>
-        <ul id="productList"></ul>
-    </div>
-    <!-- Total de la compra -->
-    <div>
-        <h2>Total de la Compra:</h2>
-        <input id="totalPrice" type="text" value="0" readonly>
-    </div>
-    <button id="registerSaleButton" class="btn btn-primary">Registrar Venta</button>
-</div>
+}
 
 <div class="modal fade" id="newCustomer">
     <div class="modal-dialog modal-dialog-centered">
