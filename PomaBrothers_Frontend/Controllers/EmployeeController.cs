@@ -69,7 +69,7 @@ namespace PomaBrothers_Frontend.Controllers
                 var serializeList = await request.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<List<Employee>>(serializeList);
             }
-            return new List<Employee>();
+            return null!;
         }
 
         public ActionResult Create()
