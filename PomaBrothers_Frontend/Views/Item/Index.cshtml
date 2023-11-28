@@ -1,18 +1,12 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Productos";
-    int currentPage = 0;
-    int totalPages = 0;
-    if (ViewBag.CurrentPage != null && ViewBag.TotalPages != null)
-    {
-         currentPage = ViewBag.CurrentPage;
-         totalPages = ViewBag.TotalPages;
-    }
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
 }
 <link rel="stylesheet" href="~/css/Forms.css">
 <br />
 <h3 style="text-align:center">Productos</h3>
 <hr />
-
 
 @if (ViewBag.Data != null)
 {
@@ -97,8 +91,8 @@
             <br />
         </div>
 
-    </div>
 
+    </div>
 }
 else
 {
@@ -137,6 +131,10 @@ else
     </div>
 }
 
+
+
+
+
 @*Modal for delete*@
 <div class="modal fade" id="deleteModal">
     @* "fade" is for adding animation*@
@@ -153,9 +151,9 @@ else
             </div>
             <div class="row" style="padding-left: 10px; padding-right:10px">
                 <div class="col-md-6">
-                    <div >
+                    <div>
                         <input type="submit" id="btnDelete" onclick="confirmDelete()" class="btnmodalConfirm w-100 h-100" value="Confirmar" />
-                       <br />
+                        <br />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -169,15 +167,15 @@ else
 </div>
 
 @*Modal for details*@
-<div class="modal fade" id="detailsModal"> 
+<div class="modal fade" id="detailsModal">
     <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content DetalleModel">
             <div class="modal-header text-center">
                 <h5 class="ttextitos mx-auto" id="lblName"></h5>
             </div>
             <div class="modal-body">
-                
-                <img id="imagenItem"  class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Imagen Producto" />
+
+                <img id="imagenItem" class="img-fluid mb-2 w-100 h-100 p-1" src="" alt="Imagen Producto" />
                 <p>
                     <label id="lblDescription"></label>
                 </p>
@@ -207,14 +205,14 @@ else
                             <label for="lblWarranty" class="fw-bold">Garantía:</label>
                             <label id="lblWarranty"></label>
                             <label id="lblTypeWarranty"></label>
-                            
+
                         </div>
                         <div class="mt-1">
                             <label for="lblCapacity" id="lblInfo" class="fw-bold"></label>
                             <label id="lblCapacity"></label>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-center modal-footer">

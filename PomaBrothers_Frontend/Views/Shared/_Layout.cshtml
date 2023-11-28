@@ -101,38 +101,32 @@
                         }
                        
                     </ul>
+                    <ul class="navbar-nav ml-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <!-- Nombre del usuario y activador del menú desplegable -->
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @User.Identity.Name
+                                </a>
+                                <!-- Menú desplegable -->
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <form id="logoutForm" asp-controller="Login" asp-action="Logout" method="post">
+                                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link" asp-area="" asp-controller="Login" asp-action="Index">Iniciar Sesión</a>
+                            </li>
+                            
+                        }
+                    </ul>
                 </div>
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <!-- Nombre del usuario y activador del menú desplegable -->
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @User.Identity.Name
-                            </a>
-                            <!-- Menú desplegable -->
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <form id="logoutForm" asp-controller="Login" asp-action="Logout" method="post">
-                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            }
-            else
-            {
-                <div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index">Iniciar Sesión</a>
-                        </li>
-                    </ul>
-                </div>
-            }
-
         </nav>
     </header>
 
