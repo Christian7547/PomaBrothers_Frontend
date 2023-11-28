@@ -32,13 +32,6 @@ namespace PomaBrothers_Frontend.Controllers
             return warehouses;
         }
 
-        public async Task<IActionResult> Delete([FromQuery]int id)
-        {
-            HttpResponseMessage request = await httpClient.DeleteAsync($"Warehouse/Remove/{id}");
-            request.EnsureSuccessStatusCode();
-            return NoContent();
-        }
-
         #region Sections
         public async Task<ActionResult> ShowModelsAvailable([FromQuery]int id)
         {
