@@ -1,2 +1,8 @@
 # PomaBrothers_Frontend
-This is the frontend repository of the PomaBrothers application
+Repositorio de la aplicación frontend del proyecto Electrodomésticos
+
+Integrantes:
+
+Christian Gonzales Encinas
+Yerlin Nicol Rojas Vivanco
+Karen Poma Ticlla
